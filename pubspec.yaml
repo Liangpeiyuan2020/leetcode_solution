@@ -1,0 +1,14 @@
+
+name: lecode
+description: A new Flutter project.
+publish_to: none
+
+# 原则上尾号双数为商店正式版，如1.2.0、1.2.2
+# 奇数为开发或公测版，如1.2.1、1.2.3
+# 正式发布商店前记得改成偶数，开发时改成奇数
+version: 1.0.0+700
+
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+dependencies:
+  collection: ^1.18.0
