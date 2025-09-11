@@ -155,13 +155,15 @@ void main() {
 }
 
 /**
- 1. 两数之和
-给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 target  的那 两个 整数，并返回它们的数组下标。
-你可以假设每种输入只会对应一个答案，并且你不能使用两次相同的元素。
-你可以按任意顺序返回答案。
-输入：nums = [2,7,11,15], target = 9
-输出：[0,1]
-解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。
+ * 1. 两数之和
+ * 给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出和为目标值 target 的那两个整数，并返回它们的数组下标。
+ * 你可以假设每种输入只会对应一个答案。但是，数组中同一个元素在答案里不能重复出现。
+ * 你可以按任意顺序返回答案。
+ * 
+ * 示例 1：
+ * 输入：nums = [2,7,11,15], target = 9
+ * 输出：[0,1]
+ * 解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。
  */
 List<int> twoSum(List<int> nums, int target) {
   Map<int, int> numToIndex = {};
@@ -177,14 +179,16 @@ List<int> twoSum(List<int> nums, int target) {
 }
 
 /**
-   2. 两数相加
-给你两个 非空 的链表，表示两个非负的整数。它们每位数字都是按照 逆序 的方式存储的，并且每个节点只能存储 一位 数字。
-请你将两个数相加，并以相同形式返回一个表示和的链表。
-你可以假设除了数字 0 之外，这两个数都不会以 0 开头。
-输入：l1 = [2,4,3], l2 = [5,6,4]
-输出：[7,0,8]
-解释：342 + 465 = 807.
-   */
+ * 2. 两数相加
+ * 给你两个非空的链表，表示两个非负的整数。它们每位数字都是按照逆序的方式存储的，并且每个节点只能存储一位数字。
+ * 请你将两个数相加，并以相同形式返回一个表示和的链表。
+ * 你可以假设除了数字 0 之外，这两个数都不会以 0 开头。
+ * 
+ * 示例 1：
+ * 输入：l1 = [2,4,3], l2 = [5,6,4]
+ * 输出：[7,0,8]
+ * 解释：342 + 465 = 807。
+ */
 ListNode? addTwoNumbers(ListNode? l1, ListNode? l2) {
   ListNode dummy = ListNode(0);
   ListNode current = dummy;
@@ -204,12 +208,13 @@ ListNode? addTwoNumbers(ListNode? l1, ListNode? l2) {
 }
 
 /**
- 3. 无重复字符的最长子串
-给定一个字符串 s ，请你找出其中不含有重复字符的 最长 子串 的长度。
-
-输入: s = "abcabcbb"
-输出: 3 
-解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
+ * 3. 无重复字符的最长子串
+ * 给定一个字符串 s ，请你找出其中不含有重复字符的最长子串的长度。
+ * 
+ * 示例 1：
+ * 输入: s = "abcabcbb"
+ * 输出: 3 
+ * 解释: 因为无重复字符的最长子串是 "abc"，所以其长度为 3。
  */
 int lengthOfLongestSubstring(String s) {
   int slow = 0;
@@ -227,19 +232,19 @@ int lengthOfLongestSubstring(String s) {
 }
 
 /**
- 4. 寻找两个正序数组的中位数
-给定两个大小分别为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。请你找出并返回这两个正序数组的 中位数 。
-算法的时间复杂度应该为 O(log (m+n)) 。
-
-输入：nums1 = [1,3], nums2 = [2]
-输出：2.00000
-解释：合并数组 = [1,2,3] ，中位数 2
-示例 2：
-
-输入：nums1 = [1,2], nums2 = [3,4]
-输出：2.50000
-解释：合并数组 = [1,2,3,4] ，中位数 (2 + 3) / 2 = 2.5
-
+ * 4. 寻找两个正序数组的中位数
+ * 给定两个大小分别为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。请你找出并返回这两个正序数组的中位数。
+ * 算法的时间复杂度应该为 O(log (m+n)) 。
+ * 
+ * 示例 1：
+ * 输入：nums1 = [1,3], nums2 = [2]
+ * 输出：2.00000
+ * 解释：合并数组 = [1,2,3]，中位数 2
+ * 
+ * 示例 2：
+ * 输入：nums1 = [1,2], nums2 = [3,4]
+ * 输出：2.50000
+ * 解释：合并数组 = [1,2,3,4]，中位数 (2 + 3) / 2 = 2.5
  */
 double findMedianSortedArrays(List<int> nums1, List<int> nums2) {
   int totalLength = nums1.length + nums2.length;
@@ -279,11 +284,13 @@ double findMedianSortedArrays(List<int> nums1, List<int> nums2) {
 }
 
 /**
- 5. 最长回文子串
-给你一个字符串 s，找到 s 中最长的 回文 子串。
-输入：s = "babad"
-输出："bab"
-解释："aba" 同样是符合题意的答案。
+ * 5. 最长回文子串
+ * 给你一个字符串 s，找到 s 中最长的回文子串。
+ * 
+ * 示例 1：
+ * 输入：s = "babad"
+ * 输出："bab"
+ * 解释："aba" 同样是符合题意的答案。
  */
 String longestPalindrome(String s) {
   String longest = s.substring(0, 1);
@@ -323,27 +330,22 @@ String longestPalindrome(String s) {
   }
   return longest;
 }
+
 /**
- 6. Z 字形变换
-将一个给定字符串 s 根据给定的行数 numRows ，以从上往下、从左到右进行 Z 字形排列。
-
-比如输入字符串为 "PAYPALISHIRING" 行数为 3 时，排列如下：
-
-P   A   H   N
-A P L S I I G
-Y   I   R
-之后，你的输出需要从左往右逐行读取，产生出一个新的字符串，比如："PAHNAPLSIIGYIR"。
-
-请你实现这个将字符串进行指定行数变换的函数：
-
-string convert(string s, int numRows);
-示例 1：
-
-输入：s = "PAYPALISHIRING", numRows = 3
-输出："PAHNAPLSIIGYIR"
+ * 6. Z 字形变换
+ * 将一个给定字符串 s 根据给定的行数 numRows，以从上往下、从左到右进行 Z 字形排列。
+ * 之后，你的输出需要从左往右逐行读取，产生出一个新的字符串。
+ * 
+ * 示例 1：
+ * 输入：s = "PAYPALISHIRING", numRows = 3
+ * 输出："PAHNAPLSIIGYIR"
+ * 解释：
+ * P   A   H   N
+ * A P L S I I G
+ * Y   I   R
  */
-
 // "PAYPALISHIRING"
+
 String convert(String s, int numRows) {
   if (numRows <= 1) return s; // if only one row, return the string as is
   List<String> result = List.filled(numRows, '');
@@ -365,23 +367,14 @@ String convert(String s, int numRows) {
 }
 
 /**
- 7. 整数反转
-已解答
-中等
-相关标签
-premium lock icon
-相关企业
-给你一个 32 位的有符号整数 x ，返回将 x 中的数字部分反转后的结果。
-
-如果反转后整数超过 32 位的有符号整数的范围 [−231,  231 − 1] ，就返回 0。
-
-假设环境不允许存储 64 位整数（有符号或无符号）。
- 
-
-示例 1：
-
-输入：x = 123
-输出：321
+ * 7. 整数反转
+ * 给你一个 32 位的有符号整数 x，返回将 x 中的数字部分反转后的结果。
+ * 如果反转后整数超过 32 位的有符号整数的范围 [−2³¹, 2³¹ − 1]，就返回 0。
+ * 假设环境不允许存储 64 位整数（有符号或无符号）。
+ * 
+ * 示例 1：
+ * 输入：x = 123
+ * 输出：321
  */
 int reverse(int x) {
   // −231,  231 − 1
@@ -406,29 +399,16 @@ int reverse(int x) {
 
 /**
  * 8. 字符串转换整数 (atoi)
- 请你来实现一个 myAtoi(string s) 函数，使其能将字符串转换成一个 32 位有符号整数。
-
-函数 myAtoi(string s) 的算法如下：
-
-空格：读入字符串并丢弃无用的前导空格（" "）
-符号：检查下一个字符（假设还未到字符末尾）为 '-' 还是 '+'。如果两者都不存在，则假定结果为正。
-转换：通过跳过前置零来读取该整数，直到遇到非数字字符或到达字符串的结尾。如果没有读取数字，则结果为0。
-舍入：如果整数数超过 32 位有符号整数范围 [−231,  231 − 1] ，需要截断这个整数，使其保持在这个范围内。具体来说，小于 −231 的整数应该被舍入为 −231 ，大于 231 − 1 的整数应该被舍入为 231 − 1 。
-返回整数作为最终结果。
-示例 1：
-
-输入：s = "42"
-
-输出：42
-
-解释：加粗的字符串为已经读入的字符，插入符号是当前读取的字符。
-
-带下划线线的字符是所读的内容，插入符号是当前读入位置。
-第 1 步："42"（当前没有读入字符，因为没有前导空格）
-         ^
-第 2 步："42"（当前没有读入字符，因为这里不存在 '-' 或者 '+'）
-         ^
-第 3 步："42"（读入 "42"）
+ * 请你来实现一个 myAtoi(string s) 函数，使其能将字符串转换成一个 32 位有符号整数。
+ * 函数 myAtoi(string s) 的算法如下：
+ * 1. 读入字符串并丢弃无用的前导空格
+ * 2. 检查下一个字符为 '-' 还是 '+'（如果两者都不存在，则假定结果为正）
+ * 3. 读取数字字符，直到遇到非数字字符或到达字符串的结尾
+ * 4. 如果整数超过 32 位有符号整数范围 [−2³¹, 2³¹ − 1]，需要截断
+ * 
+ * 示例 1：
+ * 输入：s = "42"
+ * 输出：42
  */
 int myAtoi(String s) {
   s = s.trim();
@@ -449,6 +429,20 @@ int myAtoi(String s) {
   return result * flag;
 }
 
+/**
+ * 9. 回文数
+ * 给你一个整数 x，如果 x 是一个回文整数，返回 true；否则返回 false。
+ * 回文数是指正序（从左向右）和倒序（从右向左）读都是一样的整数。
+ * 
+ * 示例 1：
+ * 输入：x = 121
+ * 输出：true
+ * 
+ * 示例 2：
+ * 输入：x = -121
+ * 输出：false
+ * 解释：从左向右读为 "-121"，从右向左读为 "121-"，因此不是回文数。
+ */
 bool isPalindrome(int x) {
   String s = x.toString();
   int left = 0;
@@ -463,6 +457,17 @@ bool isPalindrome(int x) {
   return true;
 }
 
+/**
+ * 11. 盛最多水的容器
+ * 给定一个长度为 n 的整数数组 height。有 n 条垂线，第 i 条线的两个端点是 (i, 0) 和 (i, height[i])。
+ * 找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。
+ * 返回容器可以储存的最大水量。
+ * 
+ * 示例 1：
+ * 输入：[1,8,6,2,5,4,8,3,7]
+ * 输出：49 
+ * 解释：图中垂直线代表输入数组 [1,8,6,2,5,4,8,3,7]。在此情况下，容器能够容纳水的最大值为 49。
+ */
 int maxArea(List<int> height) {
 // [1,8,6,2,5,4,8,3,7]
 // 输出：49
@@ -481,6 +486,20 @@ int maxArea(List<int> height) {
   return sum;
 }
 
+/**
+ * 14. 最长公共前缀
+ * 编写一个函数来查找字符串数组中的最长公共前缀。
+ * 如果不存在公共前缀，返回空字符串 ""。
+ * 
+ * 示例 1：
+ * 输入：strs = ["flower","flow","flight"]
+ * 输出："fl"
+ * 
+ * 示例 2：
+ * 输入：strs = ["dog","racecar","car"]
+ * 输出：""
+ * 解释：输入不存在公共前缀。
+ */
 String longestCommonPrefix(List<String> strs) {
   String result = '';
   if (strs.length == 0) return result;
@@ -497,24 +516,19 @@ String longestCommonPrefix(List<String> strs) {
 }
 
 /**
- 15. 三数之和
-给你一个整数数组 nums ，判断是否存在三元组 [nums[i], nums[j], nums[k]] 满足 i != j、i != k 且 j != k ，同时还满足 nums[i] + nums[j] + nums[k] == 0 。请你返回所有和为 0 且不重复的三元组。
-
-注意：答案中不可以包含重复的三元组。
-
-输入：nums = [-1,0,1,2,-1,-4]
-输出：[[-1,-1,2],[-1,0,1]]
-解释：
-nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0 。
-nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0 。
-nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0 。
-不同的三元组是 [-1,0,1] 和 [-1,-1,2] 。
-注意，输出的顺序和三元组的顺序并不重要。
-示例 2：
-
-输入：nums = [0,1,1]
-输出：[]
-解释：唯一可能的三元组和不为 0 。
+ * 15. 三数之和
+ * 给你一个整数数组 nums，判断是否存在三元组 [nums[i], nums[j], nums[k]] 满足 i != j、i != k 且 j != k，
+ * 同时还满足 nums[i] + nums[j] + nums[k] == 0。请你返回所有和为 0 且不重复的三元组。
+ * 注意：答案中不可以包含重复的三元组。
+ * 
+ * 示例 1：
+ * 输入：nums = [-1,0,1,2,-1,-4]
+ * 输出：[[-1,-1,2],[-1,0,1]]
+ * 解释：
+ * nums[0] + nums[1] + nums[2] = (-1) + 0 + 1 = 0。
+ * nums[1] + nums[2] + nums[4] = 0 + 1 + (-1) = 0。
+ * nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0。
+ * 不同的三元组是 [-1,0,1] 和 [-1,-1,2]。
  */
 int threeSum(List<int> nums, int target) {
   //思路：先排序，然后固定一个数，双指针夹逼
@@ -545,33 +559,27 @@ int threeSum(List<int> nums, int target) {
   }
   return minDiff + target;
 }
+
 /**
- 16. 最接近的三数之和
-给你一个长度为 n 的整数数组 nums 和 一个目标值 target。请你从 nums 中选出三个整数，使它们的和与 target 最接近。
-
-返回这三个数的和。
-
-假定每组输入只存在恰好一个解。
-
-示例 1：
-
-输入：nums = [-1,2,1,-4], target = 1
-输出：2
-解释：与 target 最接近的和是 2 (-1 + 2 + 1 = 2)。
-示例 2：
-
-输入：nums = [0,0,0], target = 1
-输出：0
-解释：与 target 最接近的和是 0（0 + 0 + 0 = 0）。
- 
-
-提示：
-
-3 <= nums.length <= 1000
+ * 16. 最接近的三数之和
+ * 给你一个长度为 n 的整数数组 nums 和一个目标值 target。请你从 nums 中选出三个整数，使它们的和与 target 最接近。
+ * 返回这三个数的和。
+ * 假定每组输入只存在恰好一个解。
+ * 
+ * 示例 1：
+ * 输入：nums = [-1,2,1,-4], target = 1
+ * 输出：2
+ * 解释：与 target 最接近的和是 2 (-1 + 2 + 1 = 2)。
+ * 
+ * 示例 2：
+ * 输入：nums = [0,0,0], target = 1
+ * 输出：0
+ * 解释：与 target 最接近的和是 0（0 + 0 + 0 = 0）。
+ * 3 <= nums.length <= 1000
 -1000 <= nums[i] <= 1000
 -104 <= target <= 104
- */
 
+ */
 int threeSumClosest(List<int> nums, int target) {
   nums.sort();
   print(nums);
@@ -603,12 +611,13 @@ int threeSumClosest(List<int> nums, int target) {
 }
 
 /**
- 17.电话号码的字母组合
-力扣题目链接
-
-给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。
-
-给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
+ * 17. 电话号码的字母组合
+ * 给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。答案可以按任意顺序返回。
+ * 数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
+ * 
+ * 示例 1：
+ * 输入：digits = "23"
+ * 输出：["ad","ae","af","bd","be","bf","cd","ce","cf"]
  */
 List<String> letterCombinations(String digits) {
   if (digits.isEmpty) return [];
@@ -642,6 +651,18 @@ List<String> letterCombinations(String digits) {
   return result;
 }
 
+/**
+ * 18. 四数之和
+ * 给你一个由 n 个整数组成的数组 nums，和一个目标值 target。
+ * 请你找出并返回满足下述全部条件且不重复的四元组 [nums[a], nums[b], nums[c], nums[d]]：
+ * 0 <= a, b, c, d < n
+ * a、b、c 和 d 互不相同
+ * nums[a] + nums[b] + nums[c] + nums[d] == target
+ * 
+ * 示例 1：
+ * 输入：nums = [1,0,-1,0,-2,2], target = 0
+ * 输出：[[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
+ */
 List<List<int>> fourSum(List<int> nums, int target) {
   //思路同三数之和，只是需要加多一层for循环
   List<List<int>> result = [];
