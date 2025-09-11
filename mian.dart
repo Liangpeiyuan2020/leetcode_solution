@@ -3747,6 +3747,14 @@ List<int> preOrder2(TreeNode? root) {
   return result;
 }
 
+/**
+ * 145. 二叉树的后序遍历（迭代法）
+ * 给你一棵二叉树的根节点 root，返回其节点值的后序遍历。
+ * 
+ * 示例 1：
+ * 输入：root = [1,null,2,3]
+ * 输出：[3,2,1]
+ */
 List<int> postOrder2(TreeNode? root) {
   if (root == null) return [];
   List<int> result = [];
@@ -3770,6 +3778,14 @@ List<int> postOrder2(TreeNode? root) {
   return result;
 }
 
+/**
+ * 145. 二叉树的后序遍历（迭代法优化）
+ * 给你一棵二叉树的根节点 root，返回其节点值的后序遍历。
+ * 
+ * 示例 1：
+ * 输入：root = [1,null,2,3]
+ * 输出：[3,2,1]
+ */
 List<int> postOrder3(TreeNode? root) {
   if (root == null) return [];
   List<int> result = [];
@@ -3791,8 +3807,14 @@ List<int> postOrder3(TreeNode? root) {
 //1 2 4 5 3 6 7
 //4 5 2 6 7 3 1
 
-// [3,9,20,null,null,15,7]
-// [[3],[9,20],[15,7]]
+/**
+ * 102. 二叉树的层序遍历
+ * 给你二叉树的根节点 root，返回其节点值的层序遍历。（即逐层地，从左到右访问所有节点）。
+ * 
+ * 示例 1：
+ * 输入：root = [3,9,20,null,null,15,7]
+ * 输出：[[3],[9,20],[15,7]]
+ */
 List<List<int>> levelOrder(TreeNode? root) {
   if (root == null) return [];
   List<List<int>> result = [];
@@ -3822,7 +3844,14 @@ List<List<int>> levelOrder(TreeNode? root) {
   return result;
 }
 
-// 2 3
+/**
+ * 103. 二叉树的锯齿形层序遍历
+ * 给你二叉树的根节点 root，返回其节点值的锯齿形层序遍历。（即先从左往右，再从右往左进行下一层遍历，以此类推，层与层之间交替进行）。
+ * 
+ * 示例 1：
+ * 输入：root = [3,9,20,null,null,15,7]
+ * 输出：[[3],[20,9],[15,7]]
+ */
 List<List<int>> zigzagLevelOrder(TreeNode? root) {
   if (root == null) return []; // empty tree
   List<List<int>> result = [];
@@ -3863,8 +3892,12 @@ List<List<int>> zigzagLevelOrder(TreeNode? root) {
 }
 
 /**
- 96.不同的二叉搜索树
-给定一个整数 n，求以 1 ... n 为节点组成的二叉搜索树有多少种？
+ * 96. 不同的二叉搜索树
+ * 给你一个整数 n，求恰由 n 个节点组成且节点值从 1 到 n 互不相同的二叉搜索树有多少种？返回满足题意的二叉搜索树的种数。
+ * 
+ * 示例 1：
+ * 输入：n = 3
+ * 输出：5
  */
 int numTrees(int n) {
   List<int> dp = List.filled(n + 1, 0);
@@ -3881,6 +3914,14 @@ int numTrees(int n) {
   return dp[n];
 }
 
+/**
+ * 98. 验证二叉搜索树
+ * 给你一个二叉树的根节点 root，判断其是否是一个有效的二叉搜索树。
+ * 
+ * 示例 1：
+ * 输入：root = [2,1,3]
+ * 输出：true
+ */
 bool isValidBST(TreeNode? root) {
   // if (root == null) return true; // empty tree is a valid BST
   // List<TreeNode> stack = [];
@@ -3925,6 +3966,14 @@ bool isValidBST(TreeNode? root) {
 }
 
 // 1 6 3 4 5 2 7
+/**
+ * 99. 恢复二叉搜索树
+ * 给你二叉搜索树的根节点 root，该树中的恰好两个节点的值被错误地交换。请在不改变其结构的情况下，恢复这棵树。
+ * 
+ * 示例 1：
+ * 输入：root = [1,3,null,null,2]
+ * 输出：[3,1,null,null,2]
+ */
 void recoverTree(TreeNode? root) {
   List<TreeNode> stack = [];
   List<TreeNode> swappedNodes = [];
@@ -3948,13 +3997,15 @@ void recoverTree(TreeNode? root) {
   swappedNodes[0].val = swappedNodes[swappedNodes.length - 1].val;
   swappedNodes[swappedNodes.length - 1].val = temp; // swap the values
 }
+
 /**
- 572. 另一棵树的子树
-给你两棵二叉树 root 和 subRoot 。检验 root 中是否包含和 subRoot 具有相同结构和节点值的子树。如果存在，返回 true ；否则，返回 false 。
-
-二叉树 tree 的一棵子树包括 tree 的某个节点和这个节点的所有后代节点。tree 也可以看做它自身的一棵子树。
+ * 572. 另一棵树的子树
+ * 给你两棵二叉树 root 和 subRoot。检验 root 中是否包含和 subRoot 具有相同结构和节点值的子树。如果存在，返回 true；否则，返回 false。
+ * 
+ * 示例 1：
+ * 输入：root = [3,4,5,1,2], subRoot = [4,1,2]
+ * 输出：true
  */
-
 bool isSubtree(TreeNode? root, TreeNode? subRoot) {
   if (root == null && subRoot == null) return true;
   if (root == null) return false;
@@ -3964,6 +4015,14 @@ bool isSubtree(TreeNode? root, TreeNode? subRoot) {
   return isSubtree(root.left, subRoot) || isSubtree(root.right, subRoot);
 }
 
+/**
+ * 100. 相同的树
+ * 给你两棵二叉树的根节点 p 和 q，编写一个函数来检验这两棵树是否相同。
+ * 
+ * 示例 1：
+ * 输入：p = [1,2,3], q = [1,2,3]
+ * 输出：true
+ */
 bool isSameTree(TreeNode? p, TreeNode? q) {
   if (p == null && q == null) return true;
   if (p == null || q == null) return false; // one is null, the other is not
@@ -3972,6 +4031,14 @@ bool isSameTree(TreeNode? p, TreeNode? q) {
       isSameTree(p.right, q.right); // check left and right subtrees
 }
 
+/**
+ * 101. 对称二叉树
+ * 给你一个二叉树的根节点 root，检查它是否轴对称。
+ * 
+ * 示例 1：
+ * 输入：root = [1,2,2,3,4,4,3]
+ * 输出：true
+ */
 bool isSymmetric(TreeNode? root) {
   bool isSameValue(TreeNode? left, TreeNode? right) {
     if (left == null && right == null) return true; // both are null
@@ -3987,6 +4054,14 @@ bool isSymmetric(TreeNode? root) {
       root.left, root.right); // check if left and right subtrees are symmetric
 }
 
+/**
+ * 104. 二叉树的最大深度
+ * 给定一个二叉树 root，返回其最大深度。
+ * 
+ * 示例 1：
+ * 输入：root = [3,9,20,null,null,15,7]
+ * 输出：3
+ */
 int maxDepth(TreeNode? root) {
   if (root == null) return 0; // empty tree has depth 0
   int leftDepth = maxDepth(root.left); // depth of left subtree
@@ -3996,6 +4071,14 @@ int maxDepth(TreeNode? root) {
           rightDepth); // return max depth of both subtrees + 1 for the root
 }
 
+/**
+ * 110. 平衡二叉树
+ * 给定一个二叉树，判断它是否是高度平衡的二叉树。
+ * 
+ * 示例 1：
+ * 输入：root = [3,9,20,null,null,15,7]
+ * 输出：true
+ */
 bool isBalanced(TreeNode? root) {
   int height(TreeNode? root) {
     if (root == null) return 0; // empty tree has height 0
@@ -4009,7 +4092,6 @@ bool isBalanced(TreeNode? root) {
 
   if (root == null) return true; // empty tree is balanced
   return height(root) != -1; // check if the tree is balanced
-
 //不能直接计算最大深度和最小深度的差值，因为平衡二叉树的定义是每个节点的左右子树高度差不超过1，而不是整个树的最大深度和最小深度之差不超过1
 // [1,2,3,4,5,6,null,8]
   // int maxDepth(TreeNode? root) {
@@ -4036,6 +4118,14 @@ bool isBalanced(TreeNode? root) {
   // return (maxDep - minDep) <= 1; // check if the tree is
 }
 
+/**
+ * 111. 二叉树的最小深度
+ * 给定一个二叉树，找出其最小深度。
+ * 
+ * 示例 1：
+ * 输入：root = [3,9,20,null,null,15,7]
+ * 输出：2
+ */
 int minDepth(TreeNode? root) {
   if (root == null) return 0; // empty tree has depth 0
   int leftDepth = minDepth(root.left); // depth of left subtree
@@ -4050,7 +4140,15 @@ int minDepth(TreeNode? root) {
           rightDepth); // return min depth of both subtrees + 1 for the root
 }
 
-//二叉树：404.左叶子之和
+/**
+ * 404. 左叶子之和
+ * 给定二叉树的根节点 root，返回所有左叶子之和。
+ * 
+ * 示例 1：
+ * 输入：root = [3,9,20,null,null,15,7]
+ * 输出：24
+ * 解释：在这个二叉树中，有两个左叶子，分别是 9 和 15，所以返回 24
+ */
 int sumOfLeftLeaves(TreeNode? root) {
   int res = 0;
   void backTrack(TreeNode? node) {
@@ -4067,15 +4165,15 @@ int sumOfLeftLeaves(TreeNode? root) {
   backTrack(root);
   return res;
 }
+
 /**
- 257. 二叉树的所有路径
-给你一个二叉树的根节点 root ，按 任意顺序 ，返回所有从根节点到叶子节点的路径。
-
-叶子节点 是指没有子节点的节点。
-输入：root = [1,2,3,null,5]
-输出：["1->2->5","1->3"]
+ * 257. 二叉树的所有路径
+ * 给你一个二叉树的根节点 root，按任意顺序，返回所有从根节点到叶子节点的路径。
+ * 
+ * 示例 1：
+ * 输入：root = [1,2,3,null,5]
+ * 输出：["1->2->5","1->3"]
  */
-
 List<String> binaryTreePaths(TreeNode? root) {
   if (root == null) return [];
   List<String> res = [];
@@ -4103,6 +4201,14 @@ List<String> binaryTreePaths(TreeNode? root) {
 // 1/ 2 3/ 4 5 6 7
 // 1 2 4 5 3 6 7
 // 4 2 5  1  6 3 7
+/**
+ * 105. 从前序与中序遍历序列构造二叉树
+ * 给定两个整数数组 preorder 和 inorder，其中 preorder 是二叉树的先序遍历，inorder 是同一棵树的中序遍历，请构造二叉树并返回其根节点。
+ * 
+ * 示例 1：
+ * 输入：preorder = [3,9,20,15,7], inorder = [9,3,15,20,7]
+ * 输出：[3,9,20,null,null,15,7]
+ */
 TreeNode? buildTree(List<int> preorder, List<int> inorder) {
   if (preorder.isEmpty || inorder.isEmpty) return null; // empty tree
   TreeNode root = TreeNode(preorder[0]);
@@ -4117,6 +4223,14 @@ TreeNode? buildTree(List<int> preorder, List<int> inorder) {
 // 1/ 2 3/ 4 5 6 7
 // 4 2 5 1 6 3 7
 // 4 5 2 6 7 3 1
+/**
+ * 106. 从中序与后序遍历序列构造二叉树
+ * 给定两个整数数组 inorder 和 postorder，其中 inorder 是二叉树的中序遍历，postorder 是同一棵树的后序遍历，请你构造并返回这颗二叉树。
+ * 
+ * 示例 1：
+ * 输入：inorder = [9,3,15,20,7], postorder = [9,15,7,20,3]
+ * 输出：[3,9,20,null,null,15,7]
+ */
 TreeNode? buildTree2(List<int> inorder, List<int> postorder) {
   if (inorder.isEmpty || postorder.isEmpty) return null; // empty tree
   TreeNode root = TreeNode(postorder.last);
@@ -4127,15 +4241,16 @@ TreeNode? buildTree2(List<int> inorder, List<int> postorder) {
       postorder.sublist(rootIndex, postorder.length - 1));
   return root;
 }
+
 /**
- 700. 二叉搜索树中的搜索
-给定二叉搜索树（BST）的根节点 root 和一个整数值 val。
-
-你需要在 BST 中找到节点值等于 val 的节点。 返回以该节点为根的子树。 如果节点不存在，则返回 null 。
-输入：root = [4,2,7,1,3], val = 2
-输出：[2,1,3]
+ * 700. 二叉搜索树中的搜索
+ * 给定二叉搜索树（BST）的根节点 root 和一个整数值 val。
+ * 你需要在 BST 中找到节点值等于 val 的节点。返回以该节点为根的子树。如果节点不存在，则返回 null。
+ * 
+ * 示例 1：
+ * 输入：root = [4,2,7,1,3], val = 2
+ * 输出：[2,1,3]
  */
-
 TreeNode? searchBST(TreeNode? root, int val) {
   if (root == null) return null; // empty tree
   if (root.val == val) return root; // found the node
@@ -4146,6 +4261,14 @@ TreeNode? searchBST(TreeNode? root, int val) {
   }
 }
 
+/**
+ * 107. 二叉树的层序遍历 II
+ * 给你二叉树的根节点 root，返回其节点值自底向上的层序遍历。（即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历）
+ * 
+ * 示例 1：
+ * 输入：root = [3,9,20,null,null,15,7]
+ * 输出：[[15,7],[9,20],[3]]
+ */
 List<List<int>> levelOrderBottom(TreeNode? root) {
   // List<List<int>> result = [];
   // if (root == null) return result; // empty tree
@@ -4189,13 +4312,15 @@ List<List<int>> levelOrderBottom(TreeNode? root) {
   }
   return result.reversed.toList(); // reverse the result for bottom-up order
 }
-/**
- 199. 二叉树的右视图
-给定一个二叉树的 根节点 root，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
-输入：root = [1,2,3,null,5,null,4]
-输出：[1,3,4]
- */
 
+/**
+ * 199. 二叉树的右视图
+ * 给定一个二叉树的根节点 root，想象自己站在它的右侧，按照从顶部到底部的顺序，返回从右侧所能看到的节点值。
+ * 
+ * 示例 1：
+ * 输入：root = [1,2,3,null,5,null,4]
+ * 输出：[1,3,4]
+ */
 List<int> rightSideView(TreeNode? root) {
   List<int> result = [];
   if (root == null) return result; // empty tree
@@ -4216,11 +4341,12 @@ List<int> rightSideView(TreeNode? root) {
 }
 
 /**
- 给定一个非空二叉树的根节点 root , 以数组的形式返回每一层节点的平均值。与实际答案相差 10-5 以内的答案可以被接受。
-输入：root = [3,9,20,null,null,15,7]
-输出：[3.00000,14.50000,11.00000]
-解释：第 0 层的平均值为 3,第 1 层的平均值为 14.5,第 2 层的平均值为 11 。
-因此返回 [3, 14.5, 11] 。
+ * 637. 二叉树的层平均值
+ * 给定一个非空二叉树的根节点 root，以数组的形式返回每一层节点的平均值。与实际答案相差 10-5 以内的答案可以被接受。
+ * 
+ * 示例 1：
+ * 输入：root = [3,9,20,null,null,15,7]
+ * 输出：[3.00000,14.50000,11.00000]
  */
 List<double> averageOfLevels(TreeNode? root) {
   List<double> result = [];
@@ -4242,12 +4368,13 @@ List<double> averageOfLevels(TreeNode? root) {
 }
 
 /**
- 226. 翻转二叉树
-给你一棵二叉树的根节点 root ，翻转这棵二叉树，并返回其根节点。
-输入：root = [4,2,7,1,3,6,9]
-输出：[4,7,2,9,6,3,1]
+ * 226. 翻转二叉树
+ * 给你一棵二叉树的根节点 root，翻转这棵二叉树，并返回其根节点。
+ * 
+ * 示例 1：
+ * 输入：root = [4,2,7,1,3,6,9]
+ * 输出：[4,7,2,9,6,3,1]
  */
-
 TreeNode? invertTree(TreeNode? root) {
   if (root == null) return null;
   void swapChildren(TreeNode? node) {
@@ -4264,7 +4391,14 @@ TreeNode? invertTree(TreeNode? root) {
   return root;
 }
 
-// -10,-3,0,5,9 10
+/**
+ * 108. 将有序数组转换为二叉搜索树
+ * 给你一个整数数组 nums，其中元素已经按升序排列，请你将其转换为一棵高度平衡二叉搜索树。
+ * 
+ * 示例 1：
+ * 输入：nums = [-10,-3,0,5,9]
+ * 输出：[0,-3,9,-10,null,5]
+ */
 TreeNode? sortedArrayToBST(List<int> nums) {
   if (nums.isEmpty) return null; // empty array
   int mid = nums.length ~/ 2; // find the middle index
@@ -4274,6 +4408,14 @@ TreeNode? sortedArrayToBST(List<int> nums) {
   return root; // return the root of the BST
 }
 
+/**
+ * 112. 路径总和
+ * 给你二叉树的根节点 root 和一个表示目标和的整数 targetSum。判断该树中是否存在根节点到叶子节点的路径，这条路径上所有节点值相加等于目标和 targetSum。如果存在，返回 true；否则，返回 false。
+ * 
+ * 示例 1：
+ * 输入：root = [5,4,8,11,null,13,4,7,2,null,null,null,1], targetSum = 22
+ * 输出：true
+ */
 bool hasPathSum(TreeNode? root, int targetSum) {
   // if (root == null) return false; // empty tree, check if targetSum is 0
   // if (root.left == null && root.right == null) {
@@ -4322,6 +4464,14 @@ bool hasPathSum(TreeNode? root, int targetSum) {
   return backTrack(root);
 }
 
+/**
+ * 113. 路径总和 II
+ * 给你二叉树的根节点 root 和一个整数目标和 targetSum，找出所有从根节点到叶子节点路径总和等于给定目标和的路径。
+ * 
+ * 示例 1：
+ * 输入：root = [5,4,8,11,null,13,4,7,2,null,null,5,1], targetSum = 22
+ * 输出：[[5,4,11,2],[5,8,4,5]]
+ */
 List<List<int>> pathSum(TreeNode? root, int targetSum) {
   List<List<int>> result = [];
   List<int> currentPath = [];
@@ -4348,8 +4498,16 @@ List<List<int>> pathSum(TreeNode? root, int targetSum) {
   return result;
 }
 
-// 输入：root = [1,2,5,3,4,null,6]
-// 输出：[1,null,2,null,3,null,4,null,5,null,6]
+/**
+ * 114. 二叉树展开为链表
+ * 给你二叉树的根结点 root，请你将它展开为一个单链表：
+ * 1. 展开后的单链表应该同样使用 TreeNode，其中 right 子指针指向链表中下一个结点，而左子指针始终为 null。
+ * 2. 展开后的单链表应该与二叉树先序遍历顺序相同。
+ * 
+ * 示例 1：
+ * 输入：root = [1,2,5,3,4,null,6]
+ * 输出：[1,null,2,null,3,null,4,null,5,null,6]
+ */
 void flatten(TreeNode? root) {
   if (root == null) return; // empty tree, nothing to flatten
   List<TreeNode> stack = [];
@@ -4371,8 +4529,14 @@ void flatten(TreeNode? root) {
   }
 }
 
-// 输入: numRows = 5
-// 输出: [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
+/**
+ * 118. 杨辉三角
+ * 给定一个非负整数 numRows，生成「杨辉三角」的前 numRows 行。
+ * 
+ * 示例 1：
+ * 输入: numRows = 5
+ * 输出: [[1],[1,1],[1,2,1],[1,3,3,1],[1,4,6,4,1]]
+ */
 List<List<int>> generate(int numRows) {
   List<List<int>> result = [];
 
@@ -4390,6 +4554,14 @@ List<List<int>> generate(int numRows) {
   return result;
 }
 
+/**
+ * 119. 杨辉三角 II
+ * 给定一个非负索引 rowIndex，返回「杨辉三角」的第 rowIndex 行。
+ * 
+ * 示例 1：
+ * 输入: rowIndex = 3
+ * 输出: [1,3,3,1]
+ */
 List<int> getRow(int rowIndex) {
   List<int> lastRow = List.filled(rowIndex, 0);
   List<int> currentRow = List.filled(rowIndex + 1, 0);
@@ -4412,6 +4584,14 @@ List<int> getRow(int rowIndex) {
 //2  6 5 7
 //3 4 1 8 3
 
+/**
+ * 120. 三角形最小路径和
+ * 给定一个三角形 triangle，找出自顶向下的最小路径和。
+ * 
+ * 示例 1：
+ * 输入：triangle = [[2],[3,4],[6,5,7],[4,1,8,3]]
+ * 输出：11
+ */
 int minimumTotal(List<List<int>> triangle) {
   for (int i = 1; i < triangle.length; i++) {
     for (int j = 0; j <= i; j++) {
@@ -4435,15 +4615,13 @@ int minimumTotal(List<List<int>> triangle) {
 }
 
 /**
- 121. 买卖股票的最佳时机, 只交易一笔
-给定一个数组 prices ，它的第 i 个元素 prices[i] 表示一支给定股票第 i 天的价格。
-
-你只能选择 某一天 买入这只股票，并选择在 未来的某一个不同的日子 卖出该股票。设计一个算法来计算你所能获取的最大利润。
-
-返回你可以从这笔交易中获取的最大利润。如果你不能获取任何利润，返回 0 。
-输入：[7,1,5,3,6,4]
-输出：5
-【10，17， 2，10】
+ * 121. 买卖股票的最佳时机
+ * 给定一个数组 prices，它的第 i 个元素 prices[i] 表示一支给定股票第 i 天的价格。
+ * 你只能选择某一天买入这只股票，并选择在未来的某一个不同的日子卖出该股票。设计一个算法来计算你所能获取的最大利润。
+ * 
+ * 示例 1：
+ * 输入：[7,1,5,3,6,4]
+ * 输出：5
  */
 // [7,1,5,3,6,4]
 // [2,1,2,0,1]
@@ -4473,12 +4651,13 @@ int maxProfit(List<int> prices) {
 }
 
 /**
- 122. 买卖股票的最佳时机 II，可以多次交易
-给你一个整数数组 prices ，其中 prices[i] 表示某支股票第 i 天的价格。
-
-在每一天，你可以决定是否购买和/或出售股票。你在任何时候 最多 只能持有 一股 股票。你也可以先购买，然后在 同一天 出售。
-
-返回 你能获得的 最大 利润 。
+ * 122. 买卖股票的最佳时机 II
+ * 给你一个整数数组 prices，其中 prices[i] 表示某支股票第 i 天的价格。
+ * 在每一天，你可以决定是否购买和/或出售股票。你在任何时候最多只能持有一股股票。你也可以先购买，然后在同一天出售。
+ * 
+ * 示例 1：
+ * 输入：prices = [7,1,5,3,6,4]
+ * 输出：7
  */
 int maxProfit2(List<int> prices) {
   // int maxProfit = 0;
@@ -4488,7 +4667,6 @@ int maxProfit2(List<int> prices) {
   //   }
   // }
   // return maxProfit; // return the maximum profit
-
   List<List<int>> dp =
       List.generate(prices.length, (index) => List.filled(2, 0));
   dp[0][0] = -prices[0];
@@ -4502,13 +4680,13 @@ int maxProfit2(List<int> prices) {
 }
 
 /**
- 123. 买卖股票的最佳时机 III，最多可以完成两笔交易
-
-给定一个数组，它的第 i 个元素是一支给定的股票在第 i 天的价格。
-
-设计一个算法来计算你所能获取的最大利润。你最多可以完成 两笔 交易。
-
-注意：你不能同时参与多笔交易（你必须在再次购买前出售掉之前的股票）。
+ * 123. 买卖股票的最佳时机 III
+ * 给定一个数组，它的第 i 个元素是一支给定的股票在第 i 天的价格。
+ * 设计一个算法来计算你所能获取的最大利润。你最多可以完成两笔交易。
+ * 
+ * 示例 1：
+ * 输入：prices = [3,3,5,0,0,3,1,4]
+ * 输出：6
  */
 // prices = [1,2,3,4,5]
 // 输入：prices = [3,3,5,0,0,3,1,4]
@@ -4579,6 +4757,15 @@ int maxProfit3(List<int> prices) {
 
 // [1,-2,-3,1,3,-2,null,-1]
 // yu 3 shuchu 4
+/**
+ * 124. 二叉树中的最大路径和
+ * 路径被定义为一条从树中任意节点出发，沿父节点-子节点连接，达到任意节点的序列。同一个节点在一条路径序列中至多出现一次。该路径至少包含一个节点，且不一定经过根节点。
+ * 路径和是路径中各节点值的总和。
+ * 
+ * 示例 1：
+ * 输入：root = [1,2,3]
+ * 输出：6
+ */
 int maxPathSum(TreeNode? root) {
   int maxSum = -10001; // minimum value for int
 
@@ -4604,6 +4791,14 @@ int maxPathSum(TreeNode? root) {
   return maxSum;
 }
 
+/**
+ * 125. 验证回文串
+ * 给定一个字符串，验证它是否是回文串，只考虑字母和数字字符，可以忽略字母的大小写。
+ * 
+ * 示例 1：
+ * 输入: "A man, a plan, a canal: Panama"
+ * 输出: true
+ */
 bool isPalindrome2(String s) {
   int left = 0, right = s.length - 1;
   while (left <= right) {
@@ -4624,6 +4819,14 @@ bool isPalindrome2(String s) {
   return true;
 }
 
+/**
+ * 128. 最长连续序列
+ * 给定一个未排序的整数数组 nums，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。
+ * 
+ * 示例 1：
+ * 输入：nums = [100,4,200,1,3,2]
+ * 输出：4
+ */
 int longestConsecutive(List<int> nums) {
   if (nums.isEmpty) return 0;
 
@@ -4654,6 +4857,15 @@ int longestConsecutive(List<int> nums) {
 //  4
 // 9 0
 //5 1
+/**
+ * 129. 求根节点到叶节点数字之和
+ * 给你一个二叉树的根节点 root，树中每个节点都存放有一个 0 到 9 之间的数字。
+ * 每条从根节点到叶节点的路径都代表一个数字：例如，从根节点到叶节点的路径 1 -> 2 -> 3 表示数字 123。
+ * 
+ * 示例 1：
+ * 输入：root = [1,2,3]
+ * 输出：25
+ */
 int sumNumbers(TreeNode? root) {
   int backTrack(TreeNode? node, int sum) {
     if (node == null) return 0;
@@ -4667,6 +4879,14 @@ int sumNumbers(TreeNode? root) {
   return backTrack(root, 0);
 }
 
+/**
+ * 130. 被围绕的区域
+ * 给你一个 m x n 的矩阵 board，由若干字符 'X' 和 'O'，找到所有被 'X' 围绕的区域，并将这些区域里所有的 'O' 用 'X' 填充。
+ * 
+ * 示例 1：
+ * 输入：board = [["X","X","X","X"],["X","O","O","X"],["X","X","O","X"],["X","O","X","X"]]
+ * 输出：[["X","X","X","X"],["X","X","X","X"],["X","X","X","X"],["X","O","X","X"]]
+ */
 void solve(List<List<String>> board) {
   void backTrack(int i, int j) {
     // 从边界上找连起来的'O'，并将其标记为'A'
@@ -4701,6 +4921,15 @@ void solve(List<List<String>> board) {
   }
 }
 
+/**
+ * 132. 分割回文串 II
+ * 给你一个字符串 s，请你将 s 分割成一些子串，使每个子串都是回文串。
+ * 返回符合要求的最少分割次数。
+ * 
+ * 示例 1：
+ * 输入：s = "aab"
+ * 输出：1
+ */
 int minCut(String s) {
   int minCuts = s.length - 1; // maximum cuts possible
   List<String> current = [];
@@ -4735,25 +4964,15 @@ int minCut(String s) {
 }
 
 /**
- 134. 加油站
-在一条环路上有 N 个加油站，其中第 i 个加油站有汽油 gas[i] 升。
-
-你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。你从其中的一个加油站出发，开始时油箱为空。
-
-如果你可以绕环路行驶一周，则返回出发时加油站的编号，否则返回 -1。
-
-说明: 
-
-如果题目有解，该答案即为唯一答案。
-输入数组均为非空数组，且长度相同。
-输入数组中的元素均为非负数。
-示例 1: 输入:
-
-gas = [1,2,3,4,5]
-cost = [3,4,5,1,2]
+ * 134. 加油站
+ * 在一条环路上有 N 个加油站，其中第 i 个加油站有汽油 gas[i] 升。
+ * 你有一辆油箱容量无限的的汽车，从第 i 个加油站开往第 i+1 个加油站需要消耗汽油 cost[i] 升。你从其中的一个加油站出发，开始时油箱为空。
+ * 如果你可以绕环路行驶一周，则返回出发时加油站的编号，否则返回 -1。
+ * 
+ * 示例 1：
+ * 输入：gas = [1,2,3,4,5], cost = [3,4,5,1,2]
+ * 输出：3
  */
-// 输入: gas = [1,2,3,4,5], cost = [3,4,5,1,2]
-// 输出: 3
 int canCompleteCircuit(List<int> gas, List<int> cost) {
   int start = 0;
   int totalGas = 0, currentGas = 0;
@@ -4775,22 +4994,15 @@ int canCompleteCircuit(List<int> gas, List<int> cost) {
 // 1 2 1 2 1 1 1
 // 1 1 1 4 3 2 1
 /**
- 135. 分发糖果
-力扣题目链接
-
-老师想给孩子们分发糖果，有 N 个孩子站成了一条直线，老师会根据每个孩子的表现，预先给他们评分。
-
-你需要按照以下要求，帮助老师给这些孩子分发糖果：
-
-每个孩子至少分配到 1 个糖果。
-相邻的孩子中，评分高的孩子必须获得更多的糖果。
-那么这样下来，老师至少需要准备多少颗糖果呢？
-
-示例 1:
-
-输入: [1,0,2]
-输出: 5
-解释: 你可以分别给这三个孩子分发 2、1、2 颗糖果。
+ * 135. 分发糖果
+ * 老师想给孩子们分发糖果，有 N 个孩子站成了一条直线，老师会根据每个孩子的表现，预先给他们评分。
+ * 你需要按照以下要求，帮助老师给这些孩子分发糖果：
+ * 1. 每个孩子至少分配到 1 个糖果。
+ * 2. 相邻的孩子中，评分高的孩子必须获得更多的糖果。
+ * 
+ * 示例 1：
+ * 输入：[1,0,2]
+ * 输出：5
  */
 int candy(List<int> ratings) {
   List<int> candisLeft = List.filled(ratings.length, 1);
@@ -4814,24 +5026,16 @@ int candy(List<int> ratings) {
 }
 
 /**
- 860.柠檬水找零
-在柠檬水摊上，每一杯柠檬水的售价为 5 美元。
-
-顾客排队购买你的产品，（按账单 bills 支付的顺序）一次购买一杯。
-
-每位顾客只买一杯柠檬水，然后向你付 5 美元、10 美元或 20 美元。你必须给每个顾客正确找零，也就是说净交易是每位顾客向你支付 5 美元。
-
-注意，一开始你手头没有任何零钱。
-
-如果你能给每位顾客正确找零，返回 true ，否则返回 false 。
-
-示例 1：
-
-输入：[5,5,5,10,20]
-输出：true
-提示：
-bills[i] 不是 5 就是 10 或是 20 
+ * 860. 柠檬水找零
+ * 在柠檬水摊上，每一杯柠檬水的售价为 5 美元。
+ * 顾客排队购买你的产品，（按账单 bills 支付的顺序）一次购买一杯。
+ * 每位顾客只买一杯柠檬水，然后向你付 5 美元、10 美元或 20 美元。你必须给每个顾客正确找零，也就是说净交易是每位顾客向你支付 5 美元。
+ * 
+ * 示例 1：
+ * 输入：[5,5,5,10,20]
+ * 输出：true
  */
+//bills[i] 不是 5 就是 10 或是 20 
 bool lemonadeChange(List<int> bills) {
   int five = 0;
   int ten = 0;
@@ -4855,19 +5059,18 @@ bool lemonadeChange(List<int> bills) {
   }
   return true;
 }
+
 /**
- 406. 根据身高重建队列
-假设有打乱顺序的一群人站成一个队列，数组 people 表示队列中一些人的属性（不一定按顺序）。每个 people[i] = [hi, ki] 表示第 i 个人的身高为 hi ，
-前面 正好 有 ki 个身高大于或等于 hi 的人。
-
-请你重新构造并返回输入数组 people 所表示的队列。返回的队列应该格式化为数组 queue ，其中 queue[j] = [hj, kj] 是队列中第 j 个人的属性（queue[0] 是排在队列前面的人）。
-
-输入：people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]
-输出：[[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]
+ * 406. 根据身高重建队列
+ * 假设有打乱顺序的一群人站成一个队列，数组 people 表示队列中一些人的属性（不一定按顺序）。每个 people[i] = [hi, ki] 表示第 i 个人的身高为 hi，
+ * 前面正好有 ki 个身高大于或等于 hi 的人。
+ * 
+ * 示例 1：
+ * 输入：people = [[7,0],[4,4],[7,1],[5,0],[6,1],[5,2]]
+ * 输出：[[5,0],[7,0],[5,2],[6,1],[4,4],[7,1]]
  */
 // 70, 50, 71, 61, 52, 44,
 //50, 71, 61, 52, 44
-
 List<List<int>> reconstructQueue(List<List<int>> people) {
   people.sort((a, b) {
     if (a[0] != b[0]) {
@@ -4882,28 +5085,21 @@ List<List<int>> reconstructQueue(List<List<int>> people) {
   }
   return res; // return the reconstructed queue
 }
+
 /**
- 435. 无重叠区间
-给定一个区间的集合 intervals ，其中 intervals[i] = [starti, endi] 。返回 需要移除区间的最小数量，使剩余区间互不重叠 。
-
-注意 只在一点上接触的区间是 不重叠的。例如 [1, 2] 和 [2, 3] 是不重叠的。
-
- 
-
-示例 1:
-
-输入: intervals = [[1,2],[2,3],[3,4],[1,3]]
-输出: 1
-解释: 移除 [1,3] 后，剩下的区间没有重叠。
+ * 435. 无重叠区间
+ * 给定一个区间的集合 intervals，其中 intervals[i] = [starti, endi]。返回需要移除区间的最小数量，使剩余区间互不重叠。
+ * 
+ * 示例 1：
+ * 输入：intervals = [[1,2],[2,3],[3,4],[1,3]]
+ * 输出：1
  */
-
 int eraseOverlapIntervals(List<List<int>> intervals) {
   int res = 0;
   intervals.sort((a, b) {
     if (a[0] != b[0]) return a[0] - b[0];
     return a[1] - b[1];
   });
-  print(intervals);
   int end = intervals[0][1];
   for (int i = 1; i < intervals.length; i++) {
     if (intervals[i][0] < end) {
@@ -4915,6 +5111,14 @@ int eraseOverlapIntervals(List<List<int>> intervals) {
   return res;
 }
 
+/**
+ * 136. 只出现一次的数字
+ * 给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素。
+ * 
+ * 示例 1：
+ * 输入：[2,2,1]
+ * 输出：1
+ */
 int singleNumber(List<int> nums) {
   int result = 0;
   for (int num in nums) {
@@ -4923,6 +5127,14 @@ int singleNumber(List<int> nums) {
   return result; // return the single number
 }
 
+/**
+ * 137. 只出现一次的数字 II
+ * 给你一个整数数组 nums，除某个元素仅出现一次外，其余每个元素都恰出现三次。请你找出并返回那个只出现了一次的元素。
+ * 
+ * 示例 1：
+ * 输入：nums = [2,2,3,2]
+ * 输出：3
+ */
 int singleNumber2(List<int> nums) {
   Map<int, int> countMap = {};
   for (int num in nums) {
@@ -4939,20 +5151,15 @@ int singleNumber2(List<int> nums) {
   }
   return -1; // if no single number found, return -1
 }
-/* 
-给你一个字符串 s 和一个字符串列表 wordDict 作为字典。如果可以利用字典中出现的一个或多个单词拼接出 s 则返回 true。
 
-注意：不要求字典中出现的单词全部都使用，并且字典中的单词可以重复使用。
-输入: s = "leetcode", wordDict = ["leet", "code"]
-输出: true
-解释: 返回 true 因为 "leetcode" 可以由 "leet" 和 "code" 拼接成。
-
-输入: s = "applepenapple", wordDict = ["apple", "pen"]
-输出: true
-解释: 返回 true 因为 "applepenapple" 可以由 "apple" "pen" "apple" 拼接成。
-     注意，你可以重复使用字典中的单词。
+/**
+ * 139. 单词拆分
+ * 给你一个字符串 s 和一个字符串列表 wordDict 作为字典。如果可以利用字典中出现的一个或多个单词拼接出 s 则返回 true。
+ * 
+ * 示例 1：
+ * 输入：s = "leetcode", wordDict = ["leet", "code"]
+ * 输出：true
  */
-
 bool wordBreak(String s, List<String> wordDict) {
   List<bool> dp = List.filled(s.length + 1, false);
   dp[0] = true; // base case: empty string can be formed
@@ -4968,6 +5175,14 @@ bool wordBreak(String s, List<String> wordDict) {
   return dp[s.length]; // return true if the whole string can be formed
 }
 
+/**
+ * 140. 单词拆分 II
+ * 给定一个字符串 s 和一个字符串字典 wordDict，在字符串中增加空格来构建一个句子，使得句子中所有的单词都在词典中。以任意顺序返回所有这些可能的句子。
+ * 
+ * 示例 1：
+ * 输入：s = "catsanddog", wordDict = ["cat","cats","and","sand","dog"]
+ * 输出：["cats and dog","cat sand dog"]
+ */
 List<String> wordBreak2(String s, List<String> wordDict) {
   List<String> result = [];
   List<String> current = [];
