@@ -2329,13 +2329,14 @@ d. 从下到上遍历左边界：但前提是 left <= right（因为可能没有
   }
   return result;
 }
-
-/*
-给你一个正整数 n ，生成一个包含 1 到 n2 所有元素，且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix 。
-输入：n = 3
-输出：[[1,2,3],[8,9,4],[7,6,5]]
+/**
+ * 59. 螺旋矩阵 II
+ * 给你一个正整数 n，生成一个包含 1 到 n² 所有元素，且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix。
+ * 
+ * 示例 1：
+ * 输入：n = 3
+ * 输出：[[1,2,3],[8,9,4],[7,6,5]]
  */
-
 List<List<int>> generateMatrix(int n) {
   int left = 0, right = n - 1, top = 0, bottom = n - 1;
   List<List<int>> result = List.generate(n, (_) => List.filled(n, 0));
@@ -2359,11 +2360,12 @@ List<List<int>> generateMatrix(int n) {
 }
 
 /**
-给你一个链表的头节点 head 和一个整数 val ，请你删除链表中所有满足 Node.val == val 的节点，并返回 新的头节点 。
-
-输入：head = [1,2,6,3,4,5,6], val = 6
-输出：[1,2,3,4,5]
-
+ * 203. 移除链表元素
+ * 给你一个链表的头节点 head 和一个整数 val，请你删除链表中所有满足 Node.val == val 的节点，并返回新的头节点。
+ * 
+ * 示例 1：
+ * 输入：head = [1,2,6,3,4,5,6], val = 6
+ * 输出：[1,2,3,4,5]
  */
 ListNode? removeElements(ListNode? head, int val) {
   ListNode? dummy = ListNode(0, head);
@@ -2381,7 +2383,14 @@ ListNode? removeElements(ListNode? head, int val) {
   return dummy.next;
 }
 
-// 反转链表
+/**
+ * 206. 反转链表
+ * 给你单链表的头节点 head，请你反转链表，并返回反转后的链表。
+ * 
+ * 示例 1：
+ * 输入：head = [1,2,3,4,5]
+ * 输出：[5,4,3,2,1]
+ */
 ListNode? reverseList(ListNode? head) {
   ListNode? prev = null;
   ListNode? current = head;
@@ -2395,18 +2404,17 @@ ListNode? reverseList(ListNode? head) {
 }
 
 /**
- 45.跳跃游戏 II
-给定一个非负整数数组，你最初位于数组的第一个位置。
-
-数组中的每个元素代表你在该位置可以跳跃的最大长度。
-
-你的目标是使用最少的跳跃次数到达数组的最后一个位置。
-输入: [2,3,1,1,4]
-输出: 2
-解释: 跳到最后一个位置的最小跳跃数是 2。从下标为 0 跳到下标为 1 的位置，跳  1  步，然后跳  3  步到达数组的最后一个位置。
-说明: 假设你总是可以到达数组的最后一个位置。
+ * 45. 跳跃游戏 II
+ * 给定一个长度为 n 的非负整数数组 nums，你最初位于数组的第一个位置。
+ * 数组中的每个元素代表你在该位置可以跳跃的最大长度。
+ * 你的目标是使用最少的跳跃次数到达数组的最后一个位置。
+ * 假设你总是可以到达数组的最后一个位置。
+ * 
+ * 示例 1：
+ * 输入：nums = [2,3,1,1,4]
+ * 输出：2
+ * 解释：跳到最后一个位置的最小跳跃数是 2。从下标为 0 跳到下标为 1 的位置，跳 1 步，然后跳 3 步到达数组的最后一个位置。
  */
-
 int jump(List<int> nums) {
   if (nums.length <= 1) return 0;
   int result = 0;
@@ -2424,15 +2432,15 @@ int jump(List<int> nums) {
 }
 
 /**
- 55. 跳跃游戏
-给定一个非负整数数组，你最初位于数组的第一个位置。
-
-数组中的每个元素代表你在该位置可以跳跃的最大长度。
-
-判断你是否能够到达最后一个位置。
-输入: [2,3,1,1,4]
-输出: true
-解释: 我们可以先跳 1 步，从位置 0 到达 位置 1, 然后再从位置 1 跳 3 步到达最后一个位置。
+ * 55. 跳跃游戏
+ * 给定一个非负整数数组 nums，你最初位于数组的第一个下标。
+ * 数组中的每个元素代表你在该位置可以跳跃的最大长度。
+ * 判断你是否能够到达最后一个下标。
+ * 
+ * 示例 1：
+ * 输入：nums = [2,3,1,1,4]
+ * 输出：true
+ * 解释：可以先跳 1 步，从位置 0 到达位置 1，然后再从位置 1 跳 3 步到达最后一个位置。
  */
 bool canJump(List<int> nums) {
   if (nums.isEmpty) return true;
@@ -2450,12 +2458,14 @@ bool canJump(List<int> nums) {
 }
 
 /**
- 56. 合并区间
-以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi] 。请你合并所有重叠的区间，并返回 一个不重叠的区间数组，
-该数组需恰好覆盖输入中的所有区间 。
-输入：intervals = [[1,3],[2,6],[8,10],[15,18]]
-输出：[[1,6],[8,10],[15,18]]
-解释：区间 [1,3] 和 [2,6] 重叠, 将它们合并为 [1,6].
+ * 56. 合并区间
+ * 以数组 intervals 表示若干个区间的集合，其中单个区间为 intervals[i] = [starti, endi]。
+ * 请你合并所有重叠的区间，并返回一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间。
+ * 
+ * 示例 1：
+ * 输入：intervals = [[1,3],[2,6],[8,10],[15,18]]
+ * 输出：[[1,6],[8,10],[15,18]]
+ * 解释：区间 [1,3] 和 [2,6] 重叠，将它们合并为 [1,6]。
  */
 List<List<int>> merge(List<List<int>> intervals) {
   if (intervals.length <= 1) return intervals;
@@ -2479,21 +2489,17 @@ List<List<int>> merge(List<List<int>> intervals) {
 }
 
 /**
- 738.单调递增的数字
-力扣题目链接
-
-给定一个非负整数 N，找出小于或等于 N 的最大的整数，同时这个整数需要满足其各个位数上的数字是单调递增。
-
-（当且仅当每个相邻位数上的数字 x 和 y 满足 x <= y 时，我们称这个整数是单调递增的。）
-
-示例 1:
-
-输入: N = 10
-输出: 9
-示例 2:
-
-输入: N = 1234
-输出: 1234
+ * 738. 单调递增的数字
+ * 给定一个非负整数 N，找出小于或等于 N 的最大的整数，同时这个整数需要满足其各个位数上的数字是单调递增。
+ * （当且仅当每个相邻位数上的数字 x 和 y 满足 x <= y 时，我们称这个整数是单调递增的。）
+ * 
+ * 示例 1：
+ * 输入：N = 10
+ * 输出：9
+ * 
+ * 示例 2：
+ * 输入：N = 1234
+ * 输出：1234
  */
 int monotoneIncreasingDigits(int n) {
   List<int> list = n.toString().split('').map((e) => int.parse(e)).toList();
@@ -2510,22 +2516,22 @@ int monotoneIncreasingDigits(int n) {
   return res;
 }
 
-/*
-1005.K次取反后最大化的数组和
-给定一个整数数组 A，我们只能用以下方法修改该数组：我们选择某个索引 i 并将 A[i] 替换为 -A[i]，然后总共重复这个过程 K 次。（我们可以多次选择同一个索引 i。）
-
-以这种方式修改数组后，返回数组可能的最大和。
-
-示例 1：
-
-输入：A = [4,2,3], K = 1
-输出：5
-解释：选择索引 (1) ，然后 A 变为 [4,-2,3]。
-
-输入：A = [2,-3,-1,5,-4], K = 2
--1 2 -3 4 5
-输出：13
-*/
+/**
+ * 1005. K 次取反后最大化的数组和
+ * 给定一个整数数组 A，我们只能用以下方法修改该数组：我们选择某个索引 i 并将 A[i] 替换为 -A[i]，然后总共重复这个过程 K 次。
+ * 以这种方式修改数组后，返回数组可能的最大和。
+ * 
+ * 示例 1：
+ * 输入：A = [4,2,3], K = 1
+ * 输出：5
+ * 解释：选择索引 (1)，然后 A 变为 [4,-2,3]。
+ * 
+ * 示例 2：
+ * 输入：A = [2,-3,-1,5,-4], K = 2
+ * 输出：13
+ * 解释：选择索引 (1, 4)，然后 A 变为 [2,3,-1,5,4]。
+ * -1 2 -3 4 5
+ */
 int largestSumAfterKNegations(List<int> nums, int k) {
   nums.sort((a, b) => a.abs().compareTo(b.abs()));
   for (int i = nums.length - 1; i >= 0; i--) {
@@ -2542,6 +2548,20 @@ int largestSumAfterKNegations(List<int> nums, int k) {
   return res;
 }
 
+/**
+ * 57. 插入区间
+ * 给你一个无重叠的、按照区间起始端点排序的区间列表。
+ * 在列表中插入一个新的区间，你需要确保列表中的区间仍然有序且不重叠（如果有必要的话，可以合并区间）。
+ * 
+ * 示例 1：
+ * 输入：intervals = [[1,3],[6,9]], newInterval = [2,5]
+ * 输出：[[1,5],[6,9]]
+ * 
+ * 示例 2：
+ * 输入：intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]
+ * 输出：[[1,2],[3,10],[12,16]]
+ * 解释：这是因为新的区间 [4,8] 与 [3,5],[6,7],[8,10] 重叠。
+ */
 List<List<int>> insert(List<List<int>> intervals, List<int> newInterval) {
   intervals.add(newInterval);
   intervals.sort((a, b) => a[0].compareTo(b[0]));
@@ -2564,6 +2584,19 @@ List<List<int>> insert(List<List<int>> intervals, List<int> newInterval) {
   return intervals.sublist(0, slow + 1);
 }
 
+/**
+ * 58. 最后一个单词的长度
+ * 给你一个字符串 s，由若干单词组成，单词前后用一些空格字符隔开。返回字符串中最后一个单词的长度。
+ * 单词是指仅由字母组成、不包含任何空格字符的最大子字符串。
+ * 
+ * 示例 1：
+ * 输入：s = "Hello World"
+ * 输出：5
+ * 
+ * 示例 2：
+ * 输入：s = "   fly me   to   the moon  "
+ * 输出：4
+ */
 int lengthOfLastWord(String s) {
   int slow = s.length - 1;
   int fast = s.length - 1;
@@ -2579,6 +2612,18 @@ int lengthOfLastWord(String s) {
   return slow - fast;
 }
 
+/**
+ * 61. 旋转链表
+ * 给你一个链表的头节点 head，旋转链表，将链表每个节点向右移动 k 个位置。
+ * 
+ * 示例 1：
+ * 输入：head = [1,2,3,4,5], k = 2
+ * 输出：[4,5,1,2,3]
+ * 
+ * 示例 2：
+ * 输入：head = [0,1,2], k = 4
+ * 输出：[2,0,1]
+ */
 ListNode? rotateRight(ListNode? head, int k) {
   int nodeCount = 0;
   ListNode? current = head;
@@ -2605,15 +2650,14 @@ ListNode? rotateRight(ListNode? head, int k) {
 }
 
 /**
- 62. 不同路径
-一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。
-
-机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。
-
-问总共有多少条不同的路径？
-
-输入：m = 3, n = 7
-输出：28
+ * 62. 不同路径
+ * 一个机器人位于一个 m x n 网格的左上角（起始点在下图中标记为 "Start"）。
+ * 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 "Finish"）。
+ * 问总共有多少条不同的路径？
+ * 
+ * 示例 1：
+ * 输入：m = 3, n = 7
+ * 输出：28
  */
 int uniquePaths(int m, int n) {
   if (m <= 0 || n <= 0) return 0; // handle edge cases
@@ -2633,17 +2677,15 @@ int uniquePaths(int m, int n) {
 }
 
 /**
- 63. 不同路径 II
-一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为“Start” ）。
-
-机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为“Finish”）。
-
-现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？
-
-网格中的障碍物和空位置分别用 1 和 0 来表示。
-
-输入：obstacleGrid = [[0,0,0],[0,1,0],[0,0,0]]
-输出：2
+ * 63. 不同路径 II
+ * 一个机器人位于一个 m x n 网格的左上角（起始点在下图中标记为 "Start"）。
+ * 机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 "Finish"）。
+ * 现在考虑网格中有障碍物。那么从左上角到右下角将会有多少条不同的路径？
+ * 
+ * 示例 1：
+ * 输入：obstacleGrid = [[0,0,0],[0,1,0],[0,0,0]]
+ * 输出：2
+ * 解释：3x3 网格的正中间有一个障碍物。
  */
 int uniquePathsWithObstacles(List<List<int>> obstacleGrid) {
   List<List<int>> dp = List.generate(
@@ -2671,6 +2713,16 @@ int uniquePathsWithObstacles(List<List<int>> obstacleGrid) {
   return dp[obstacleGrid.length - 1][obstacleGrid[0].length - 1];
 }
 
+/**
+ * 64. 最小路径和
+ * 给定一个包含非负整数的 m x n 网格 grid，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。
+ * 说明：每次只能向下或者向右移动一步。
+ * 
+ * 示例 1：
+ * 输入：grid = [[1,3,1],[1,5,1],[4,2,1]]
+ * 输出：7
+ * 解释：因为路径 1→3→1→1→1 的总和最小。
+ */
 int minPathSum(List<List<int>> grid) {
   int m = grid.length;
   int n = grid[0].length;
@@ -2691,6 +2743,20 @@ int minPathSum(List<List<int>> grid) {
   return dp[m - 1][n - 1]; // return the bottom-right corner value
 }
 
+/**
+ * 66. 加一
+ * 给定一个由整数组成的非空数组所表示的非负整数，在该数的基础上加一。
+ * 最高位数字存放在数组的首位，数组中每个元素只存储单个数字。
+ * 你可以假设除了整数 0 之外，这个整数不会以零开头。
+ * 
+ * 示例 1：
+ * 输入：digits = [1,2,3]
+ * 输出：[1,2,4]
+ * 
+ * 示例 2：
+ * 输入：digits = [4,3,2,1]
+ * 输出：[4,3,2,2]
+ */
 List<int> plusOne(List<int> digits) {
   if (digits.isEmpty) return [1];
   int len = digits.length - 1;
@@ -2707,6 +2773,19 @@ List<int> plusOne(List<int> digits) {
   return digits;
 }
 
+/**
+ * 67. 二进制求和
+ * 给你两个二进制字符串，返回它们的和（用二进制表示）。
+ * 输入为非空字符串且只包含数字 1 和 0。
+ * 
+ * 示例 1：
+ * 输入：a = "11", b = "1"
+ * 输出："100"
+ * 
+ * 示例 2：
+ * 输入：a = "1010", b = "1011"
+ * 输出："10101"
+ */
 String addBinary(String a, String b) {
   if (a.isEmpty) return b;
   if (b.isEmpty) return a;
@@ -2734,6 +2813,20 @@ String addBinary(String a, String b) {
   return result;
 }
 
+/**
+ * 69. x 的平方根
+ * 给你一个非负整数 x，计算并返回 x 的算术平方根。
+ * 由于返回类型是整数，结果只保留整数部分，小数部分将被舍去。
+ * 
+ * 示例 1：
+ * 输入：x = 4
+ * 输出：2
+ * 
+ * 示例 2：
+ * 输入：x = 8
+ * 输出：2
+ * 解释：8 的算术平方根是 2.82842...，由于返回类型是整数，小数部分将被舍去。
+ */
 int mySqrt(int x) {
   int left = 0;
   int right = x;
@@ -2751,16 +2844,16 @@ int mySqrt(int x) {
 }
 
 /**
- 70. 爬楼梯
-假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
-
-每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
-输入：n = 2
-输出：2
-解释：有两种方法可以爬到楼顶。
-1. 1 阶 + 1 阶
-2. 2 阶
-
+ * 70. 爬楼梯
+ * 假设你正在爬楼梯。需要 n 阶你才能到达楼顶。
+ * 每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？
+ * 
+ * 示例 1：
+ * 输入：n = 2
+ * 输出：2
+ * 解释：有两种方法可以爬到楼顶。
+ * 1. 1 阶 + 1 阶
+ * 2. 2 阶
  */
 int climbStairs(int n) {
   if (n <= 1) return n; // only one way to climb one step
@@ -2774,14 +2867,16 @@ int climbStairs(int n) {
 }
 
 /**
- 746. 使用最小花费爬楼梯
-给你一个整数数组 cost ，其中 cost[i] 是从楼梯第 i 个台阶向上爬需要支付的费用。一旦你支付此费用，即可选择向上爬一个或者两个台阶。
-
-你可以选择从下标为 0 或下标为 1 的台阶开始爬楼梯。
-
-请你计算并返回达到楼梯顶部的最低花费。
-输入：cost = [10,15,20]
-输出：15
+ * 746. 使用最小花费爬楼梯
+ * 给你一个整数数组 cost，其中 cost[i] 是从楼梯第 i 个台阶向上爬需要支付的费用。
+ * 一旦你支付此费用，即可选择向上爬一个或者两个台阶。
+ * 你可以选择从下标为 0 或下标为 1 的台阶开始爬楼梯。
+ * 请你计算并返回达到楼梯顶部的最低花费。
+ * 
+ * 示例 1：
+ * 输入：cost = [10,15,20]
+ * 输出：15
+ * 解释：你将从下标为 1 的台阶开始，支付 15，向上爬两个台阶到达楼梯顶部。
  */
 int minCostClimbingStairs(List<int> cost) {
   List<int> dp = List.filled(cost.length + 1, 0);
@@ -2793,6 +2888,24 @@ int minCostClimbingStairs(List<int> cost) {
   return dp[cost.length];
 }
 
+/**
+ * 71. 简化路径
+ * 给你一个字符串 path，表示指向某一文件或目录的 Unix 风格绝对路径（以 '/' 开头），请你将其转化为更加简洁的规范路径。
+ * 在 Unix 风格的文件系统中，一个点（.）表示当前目录本身；两个点（..）表示将目录切换到上一级（指向父目录）。
+ * 规范路径需满足：
+ * 1. 始终以斜杠 '/' 开头。
+ * 2. 两个目录名之间必须只有一个斜杠 '/'。
+ * 3. 最后一个目录名（如果存在）不能以 '/' 结尾。
+ * 4. 路径仅包含从根目录到目标文件或目录的路径上的目录（即不含 '.' 或 '..'）。
+ * 
+ * 示例 1：
+ * 输入：path = "/home/"
+ * 输出："/home"
+ * 
+ * 示例 2：
+ * 输入：path = "/../"
+ * 输出："/"
+ */
 String simplifyPath(String path) {
   List<String> stack = path.split('/');
   List<String> result = [];
@@ -2807,6 +2920,14 @@ String simplifyPath(String path) {
   return '/' + result.join('/'); // join the result with '/' and return
 }
 
+/**
+ * 73. 矩阵置零
+ * 给定一个 m x n 的矩阵，如果一个元素为 0，则将其所在行和列的所有元素都设为 0。请使用原地算法。
+ * 
+ * 示例 1：
+ * 输入：matrix = [[1,1,1],[1,0,1],[1,1,1]]
+ * 输出：[[1,0,1],[0,0,0],[1,0,1]]
+ */
 void setZeroes(List<List<int>> matrix) {
   bool rowZero = false;
   bool colZero = false;
@@ -2849,6 +2970,17 @@ void setZeroes(List<List<int>> matrix) {
   }
 }
 
+/**
+ * 74. 搜索二维矩阵
+ * 编写一个高效的算法来判断 m x n 矩阵中，是否存在一个目标值。
+ * 该矩阵具有如下特性：
+ * 1. 每行中的整数从左到右按升序排列。
+ * 2. 每行的第一个整数大于前一行的最后一个整数。
+ * 
+ * 示例 1：
+ * 输入：matrix = [[1,3,5,7],[10,11,16,20],[23,30,34,60]], target = 3
+ * 输出：true
+ */
 bool searchMatrix(List<List<int>> matrix, int target) {
   if (matrix.isEmpty || matrix[0].isEmpty) return false;
   int left = 0;
@@ -2868,6 +3000,15 @@ bool searchMatrix(List<List<int>> matrix, int target) {
   return false; // target not found
 }
 
+/**
+ * 75. 颜色分类
+ * 给定一个包含红色、白色和蓝色、共 n 个元素的数组 nums，原地对它们进行排序，使得相同颜色的元素相邻，并按照红色、白色、蓝色顺序排列。
+ * 我们使用整数 0、1 和 2 分别表示红色、白色和蓝色。
+ * 
+ * 示例 1：
+ * 输入：nums = [2,0,2,1,1,0]
+ * 输出：[0,0,1,1,2,2]
+ */
 void sortColors(List<int> nums) {
   if (nums.length <= 1) return; // no need to sort if length is 0 or 1
   int zeroIndex = 0;
@@ -2891,6 +3032,14 @@ void sortColors(List<int> nums) {
   }
 }
 
+/**
+ * 76. 最小覆盖子串
+ * 给你一个字符串 s、一个字符串 t。返回 s 中涵盖 t 所有字符的最小子串。如果 s 中不存在涵盖 t 所有字符的子串，则返回空字符串 ""。
+ * 
+ * 示例 1：
+ * 输入：s = "ADOBECODEBANC", t = "ABC"
+ * 输出："BANC"
+ */
 String minWindow(String s, String t) {
   int left = 0;
   int right = 0;
@@ -2927,20 +3076,13 @@ String minWindow(String s, String t) {
 }
 
 /**
- 77. 组合
-给定两个整数 n 和 k，返回范围 [1, n] 中所有可能的 k 个数的组合。
-
-你可以按 任何顺序 返回答案。
-输入：n = 4, k = 2
-输出：
-[
-  [2,4],
-  [3,4],
-  [2,3],
-  [1,2],
-  [1,3],
-  [1,4],
-]
+ * 77. 组合
+ * 给定两个整数 n 和 k，返回范围 [1, n] 中所有可能的 k 个数的组合。
+ * 你可以按任何顺序返回答案。
+ * 
+ * 示例 1：
+ * 输入：n = 4, k = 2
+ * 输出：[[2,4],[3,4],[2,3],[1,2],[1,3],[1,4]]
  */
 List<List<int>> combine(int n, int k) {
   List<List<int>> result = [];
@@ -2964,12 +3106,16 @@ List<List<int>> combine(int n, int k) {
 }
 
 /**
- 216.组合总和III
-找出所有相加之和为 n 的 k 个数的组合。组合中只允许含有 1 - 9 的正整数，并且每种组合中不存在重复的数字。
-所有数字都是正整数。
-解集不能包含重复的组合。
-示例 1: 输入: k = 3, n = 7 输出: [[1,2,4]]
-示例 2: 输入: k = 3, n = 9 输出: [[1,2,6], [1,3,5], [2,3,4]]
+ * 216. 组合总和 III
+ * 找出所有相加之和为 n 的 k 个数的组合。组合中只允许含有 1 - 9 的正整数，并且每种组合中不存在重复的数字。
+ * 
+ * 示例 1：
+ * 输入：k = 3, n = 7
+ * 输出：[[1,2,4]]
+ * 
+ * 示例 2：
+ * 输入：k = 3, n = 9
+ * 输出：[[1,2,6], [1,3,5], [2,3,4]]
  */
 // k=9, n=45
 List<List<int>> combinationSum3(int k, int n) {
@@ -2997,12 +3143,13 @@ List<List<int>> combinationSum3(int k, int n) {
 }
 
 /**
- 78.子集
-给定一组不含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。
-
-说明：解集不能包含重复的子集。
-
-示例: 输入: nums = [1,2,3] 输出: [ [3],   [1],   [2],   [1,2,3],   [1,3],   [2,3],   [1,2],   [] ]
+ * 78. 子集
+ * 给你一个整数数组 nums，数组中的元素互不相同。返回该数组所有可能的子集（幂集）。
+ * 解集不能包含重复的子集。你可以按任意顺序返回解集。
+ * 
+ * 示例 1：
+ * 输入：nums = [1,2,3]
+ * 输出：[[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
  */
 List<List<int>> subsets(List<int> nums) {
   List<List<int>> result = [];
@@ -3022,6 +3169,15 @@ List<List<int>> subsets(List<int> nums) {
 }
 
 // 删除元素，最多保留两个相同的元素
+/**
+ * 80. 删除有序数组中的重复项 II
+ * 给你一个有序数组 nums，请你原地删除重复出现的元素，使得出现次数超过两次的元素只出现两次，返回删除后数组的新长度。
+ * 不要使用额外的数组空间，你必须在原地修改输入数组并在使用 O(1) 额外空间的条件下完成。
+ * 
+ * 示例 1：
+ * 输入：nums = [1,1,1,2,2,3]
+ * 输出：5, nums = [1,1,2,2,3]
+ */
 int removeDuplicates2(List<int> nums) {
   if (nums.length <= 2) return nums.length; // no duplicates to remove
   int slow = 0, fast = 2;
@@ -3035,6 +3191,16 @@ int removeDuplicates2(List<int> nums) {
   // [1,1,1,1,1,1,2,3,3]
 }
 
+/**
+ * 81. 搜索旋转排序数组 II
+ * 已知存在一个按非降序排列的整数数组 nums，数组中的值不必互不相同。
+ * 在传递给函数之前，nums 在预先未知的某个下标 k（0 <= k < nums.length）上进行了旋转。
+ * 给你旋转后的数组 nums 和一个整数 target，请你编写一个函数来判断给定的目标值是否存在于数组中。
+ * 
+ * 示例 1：
+ * 输入：nums = [2,5,6,0,0,1,2], target = 0
+ * 输出：true
+ */
 bool search2(List<int> nums, int target) {
   nums.sort();
   int left = 0, right = nums.length - 1;
@@ -3050,6 +3216,14 @@ bool search2(List<int> nums, int target) {
   return false;
 }
 
+/**
+ * 82. 删除排序链表中的重复元素 II
+ * 给定一个已排序的链表的头 head，删除原始链表中所有重复数字的节点，只留下不同的数字。返回已排序的链表。
+ * 
+ * 示例 1：
+ * 输入：head = [1,2,3,3,4,4,5]
+ * 输出：[1,2,5]
+ */
 ListNode? deleteDuplicates(ListNode? head) {
   if (head == null || head.next == null) return head; // no duplicates
   ListNode? dummy = ListNode(0, head);
@@ -3079,6 +3253,14 @@ ListNode? deleteDuplicates(ListNode? head) {
   return dummy.next;
 }
 
+/**
+ * 83. 删除排序链表中的重复元素
+ * 给定一个已排序的链表的头 head，删除所有重复的元素，使每个元素只出现一次。返回已排序的链表。
+ * 
+ * 示例 1：
+ * 输入：head = [1,1,2]
+ * 输出：[1,2]
+ */
 ListNode? deleteDuplicates2(ListNode? head) {
   if (head == null || head.next == null) return head; // no duplicates
   ListNode? dummy = ListNode(0, head);
@@ -3099,14 +3281,13 @@ ListNode? deleteDuplicates2(ListNode? head) {
 }
 
 /**
- 84. 柱状图中最大的矩形
-给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1 。
-
-求在该柱状图中，能够勾勒出来的矩形的最大面积。
-
-输入：heights = [2,1,5,6,2,3]
-输出：10
-解释：最大的矩形为图中红色区域，面积为 10
+ * 84. 柱状图中最大的矩形
+ * 给定 n 个非负整数，用来表示柱状图中各个柱子的高度。每个柱子彼此相邻，且宽度为 1。
+ * 求在该柱状图中，能够勾勒出来的矩形的最大面积。
+ * 
+ * 示例 1：
+ * 输入：heights = [2,1,5,6,2,3]
+ * 输出：10
  */
 int largestRectangleArea(List<int> heights) {
   // 使用单调栈，栈内存储单调递增的数据，也就是栈头是最大值
@@ -3134,10 +3315,13 @@ int largestRectangleArea(List<int> heights) {
 }
 
 /**
- 86. 分隔链表
-给你一个链表的头节点 head 和一个特定值 x ，请你对链表进行分隔，使得所有 小于 x 的节点都出现在 大于或等于 x 的节点之前。
-
-你应当 保留 两个分区中每个节点的初始相对位置。
+ * 86. 分隔链表
+ * 给你一个链表的头节点 head 和一个特定值 x，请你对链表进行分隔，使得所有小于 x 的节点都出现在大于或等于 x 的节点之前。
+ * 你应当保留两个分区中每个节点的初始相对位置。
+ * 
+ * 示例 1：
+ * 输入：head = [1,4,3,2,5,2], x = 3
+ * 输出：[1,2,2,4,3,5]
  */
 ListNode? partition(ListNode? head, int x) {
   ListNode? lessHead = ListNode(0);
@@ -3161,12 +3345,12 @@ ListNode? partition(ListNode? head, int x) {
 }
 
 /**
- 131.分割回文串
-给定一个字符串 s，将 s 分割成一些子串，使每个子串都是回文串。
-
-返回 s 所有可能的分割方案。
-
-示例: 输入: "aab" 输出: [ ["aa","b"], ["a","a","b"] ]
+ * 131. 分割回文串
+ * 给你一个字符串 s，请你将 s 分割成一些子串，使每个子串都是回文串。返回 s 所有可能的分割方案。
+ * 
+ * 示例 1：
+ * 输入：s = "aab"
+ * 输出：[["a","a","b"],["aa","b"]]
  */
 List<List<String>> partition2(String s) {
   List<List<String>> result = [];
@@ -3200,6 +3384,15 @@ List<List<String>> partition2(String s) {
   return result;
 }
 
+/**
+ * 88. 合并两个有序数组
+ * 给你两个按非递减顺序排列的整数数组 nums1 和 nums2，另有两个整数 m 和 n，分别表示 nums1 和 nums2 中的元素数目。
+ * 请你合并 nums2 到 nums1 中，使合并后的数组同样按非递减顺序排列。
+ * 
+ * 示例 1：
+ * 输入：nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+ * 输出：[1,2,2,3,5,6]
+ */
 void merge2(List<int> nums1, int m, List<int> nums2, int n) {
   for (int i = nums1.length - 1; i >= 0; i--) {
     if (n - 1 < 0 || m - 1 >= 0 && nums1[m - 1] > nums2[n - 1]) {
@@ -3212,6 +3405,20 @@ void merge2(List<int> nums1, int m, List<int> nums2, int n) {
   }
 }
 
+/**
+ * 89. 格雷编码
+ * 格雷编码是一个二进制数字系统，在该系统中，两个连续的数值仅有一个位数的差异。
+ * 给定一个代表编码总位数的非负整数 n，打印其格雷编码序列。即使有多个不同答案，你也只需要返回其中一种。
+ * 
+ * 示例 1：
+ * 输入：n = 2
+ * 输出：[0,1,3,2]
+ * 解释：
+ * 00 - 0
+ * 01 - 1
+ * 11 - 3
+ * 10 - 2
+ */
 List<int> grayCode(int n) {
   List<int> ret = [];
   for (int i = 0; i < 1 << n; i++) {
@@ -3221,18 +3428,14 @@ List<int> grayCode(int n) {
 }
 
 /**
- 90.子集II
-给定一个可能包含重复元素的整数数组 nums，返回该数组所有可能的子集（幂集）。
-
-说明：解集不能包含重复的子集。
-
-示例:
-
-输入: [1,2,2]
-输出: [ [2], [1], [1,2,2], [2,2], [1,2], [] ]
+ * 90. 子集 II
+ * 给你一个整数数组 nums，其中可能包含重复元素，请你返回该数组所有可能的子集（幂集）。
+ * 解集不能包含重复的子集。返回的解集中，子集可以按任意顺序排列。
+ * 
+ * 示例 1：
+ * 输入：nums = [1,2,2]
+ * 输出：[[],[1],[1,2],[1,2,2],[2],[2,2]]
  */
-//  输入：nums = [1,2,2]
-// 输出：[[],[1],[1,2],[1,2,2],[2],[2,2]]
 List<List<int>> subsetsWithDup(List<int> nums) {
   List<List<int>> result = [];
   List<int> current = [];
@@ -3257,23 +3460,13 @@ List<List<int>> subsetsWithDup(List<int> nums) {
 }
 
 /**
- 491.递增子序列
-给定一个整型数组, 你的任务是找到所有该数组的递增子序列，递增子序列的长度至少是2。
-
-
-4, 7, 6, 7
-示例:
-
-输入: [4, 6, 7, 7]
-输出: [[4, 6], [4, 7], [4, 6, 7], [4, 6, 7, 7], [6, 7], [6, 7, 7], [7,7], [4,7,7]]
-说明:
-
-给定数组的长度不会超过15。
-数组中的整数范围是 [-100,100]。
-给定数组中可能包含重复数字，相等的数字应该被视为递增的一种情况。
+ * 491. 递增子序列
+ * 给你一个整数数组 nums，找出并返回所有该数组中不同的递增子序列，递增子序列中至少有两个元素。
+ * 
+ * 示例 1：
+ * 输入：nums = [4,6,7,7]
+ * 输出：[[4,6],[4,6,7],[4,6,7,7],[4,7],[4,7,7],[6,7],[6,7,7],[7,7]]
  */
-// [[4,6,7,7],[4,7,7],[6,7,7],[7,7]]
-// [[4,6],[4,6,7],[4,6,7,7],[4,7],[4,7,7],[6,7],[6,7,7],[7,7]]
 List<List<int>> findSubsequences(List<int> nums) {
   List<List<int>> result = [];
   List<int> current = [];
@@ -3306,6 +3499,20 @@ List<List<int>> findSubsequences(List<int> nums) {
 // 1 1 / 1 11
 // 1 1 2 / 11 2 / 1 12
 // 1 1 2 3 / 11 2 3 / 1 12 3 / 1 1 23 / 11 23
+/**
+ * 91. 解码方法
+ * 一条包含字母 A-Z 的消息通过以下映射进行了编码：
+ * 'A' -> "1"
+ * 'B' -> "2"
+ * ...
+ * 'Z' -> "26"
+ * 给你一个只含数字的非空字符串 s，请计算并返回解码方法的总数。
+ * 
+ * 示例 1：
+ * 输入：s = "12"
+ * 输出：2
+ * 解释：它可以解码为 "AB"（1 2）或者 "L"（12）。
+ */
 int numDecodings(String s) {
   int n = s.length;
   List<int> f = List.filled(n + 1, 0);
@@ -3326,6 +3533,15 @@ int numDecodings(String s) {
 
 // 1 2 3 4 5
 // 1 4 3 2 5
+/**
+ * 92. 反转链表 II
+ * 给你单链表的头指针 head 和两个整数 left 和 right，其中 left <= right。
+ * 请你反转从位置 left 到位置 right 的链表节点，返回反转后的链表。
+ * 
+ * 示例 1：
+ * 输入：head = [1,2,3,4,5], left = 2, right = 4
+ * 输出：[1,4,3,2,5]
+ */
 ListNode? reverseBetween(ListNode? head, int left, int right) {
   if (head == null || head.next == null)
     return head; // no need to reverse if list is empty or has one node
@@ -3348,35 +3564,13 @@ ListNode? reverseBetween(ListNode? head, int left, int right) {
 }
 
 /**
- 93.复原IP地址
-给定一个只包含数字的字符串，复原它并返回所有可能的 IP 地址格式。
-有效的 IP 地址 正好由四个整数（每个整数位于 0 到 255 之间组成，且不能含有前导 0），整数之间用 '.' 分隔。
-例如："0.1.2.201" 和 "192.168.1.1" 是 有效的 IP 地址，但是 "0.011.255.245"、"192.168.1.312" 和 "192.168@1.1" 是 无效的 IP 地址。
-
-示例 1：
-
-输入：s = "25525511135"
-输出：["255.255.11.135","255.255.111.35"]
-示例 2：
-
-输入：s = "0000"
-输出：["0.0.0.0"]
-示例 3：
-
-输入：s = "1111"
-输出：["1.1.1.1"]
-示例 4：
-
-输入：s = "010010"
-输出：["0.10.0.10","0.100.1.0"]
-示例 5：
-
-输入：s = "101023"
-输出：["1.0.10.23","1.0.102.3","10.1.0.23","10.10.2.3","101.0.2.3"]
-提示：
-
-0 <= s.length <= 3000
-s 仅由数字组成
+ * 93. 复原 IP 地址
+ * 给定一个只包含数字的字符串 s，用以表示一个 IP 地址，返回所有可能的有效 IP 地址。
+ * 有效 IP 地址正好由四个整数（每个整数位于 0 到 255 之间组成，且不能含有前导 0），整数之间用 '.' 分隔。
+ * 
+ * 示例 1：
+ * 输入：s = "25525511135"
+ * 输出：["255.255.11.135","255.255.111.35"]
  */
 // 255.255.11.135
 // "25525511135"
@@ -3437,6 +3631,14 @@ List<String> restoreIpAddresses(String s) {
   return result;
 }
 
+/**
+ * 144. 二叉树的前序遍历
+ * 给你二叉树的根节点 root，返回它节点值的前序遍历。
+ * 
+ * 示例 1：
+ * 输入：root = [1,null,2,3]
+ * 输出：[1,2,3]
+ */
 List<int> preOrder(TreeNode? root) {
   List<int> result = [];
   void backTrack(TreeNode? node) {
@@ -3450,6 +3652,14 @@ List<int> preOrder(TreeNode? root) {
   return result;
 }
 
+/**
+ * 94. 二叉树的中序遍历
+ * 给定一个二叉树的根节点 root，返回它的中序遍历。
+ * 
+ * 示例 1：
+ * 输入：root = [1,null,2,3]
+ * 输出：[1,3,2]
+ */
 List<int> inOrder(TreeNode? root) {
   List<int> reset = [];
   void backTrack(TreeNode? node) {
@@ -3463,6 +3673,14 @@ List<int> inOrder(TreeNode? root) {
   return reset;
 }
 
+/**
+ * 94. 二叉树的中序遍历（迭代法）
+ * 给定一个二叉树的根节点 root，返回它的中序遍历。
+ * 
+ * 示例 1：
+ * 输入：root = [1,null,2,3]
+ * 输出：[1,3,2]
+ */
 List<int> inOrder2(TreeNode? root) {
   List<int> result = [];
   List<TreeNode> stack = [];
@@ -3480,6 +3698,14 @@ List<int> inOrder2(TreeNode? root) {
   return result;
 }
 
+/**
+ * 145. 二叉树的后序遍历
+ * 给定一个二叉树的根节点 root，返回它的后序遍历。
+ * 
+ * 示例 1：
+ * 输入：root = [1,null,2,3]
+ * 输出：[3,2,1]
+ */
 List<int> postOrder(TreeNode? root) {
   List<int> result = [];
   void backTrack(TreeNode? node) {
@@ -3495,6 +3721,14 @@ List<int> postOrder(TreeNode? root) {
 
 // 123 - 2 3 1
 // 1 3 2
+/**
+ * 144. 二叉树的前序遍历（迭代法）
+ * 给你二叉树的根节点 root，返回它节点值的前序遍历。
+ * 
+ * 示例 1：
+ * 输入：root = [1,null,2,3]
+ * 输出：[1,2,3]
+ */
 List<int> preOrder2(TreeNode? root) {
   if (root == null) return [];
   List<int> result = [];
