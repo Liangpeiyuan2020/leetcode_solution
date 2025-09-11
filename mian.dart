@@ -5264,146 +5264,131 @@ class Solution {
 }
 
  */
-//  1 2 3 4
-// 输入：head = [1,2,3,4, 5]
-// 输出：[1,5,2,4,3]
-// 输入：head = [1,2,3,4,5,6]
-// 输出：[1,6,2,5,3,4]
-// 1 2 3  6 5 4
-void reorderList(ListNode? head) {
-  if (head == null || head.next == null) return; // empty or single node list
-  ListNode? dummy = ListNode(0, head);
 
+/**
+ * 143. 重排链表
+ * 给定一个单链表 L 的头节点 head，单链表 L 表示为：
+ * L0 → L1 → … → Ln - 1 → Ln
+ * 请将其重新排列后变为：
+ * L0 → Ln → L1 → Ln-1 → L2 → Ln-2 → …
+ * 
+ * 示例 1：
+ * 输入：head = [1,2,3,4]
+ * 输出：[1,4,2,3]
+ * 
+ * 示例 2：
+ * 输入：head = [1,2,3,4,5]
+ * 输出：[1,5,2,4,3]
+ */
+void reorderList(ListNode? head) {
+  if (head == null || head.next == null) return; // 空链表或只有一个节点，直接返回
+
+  // 找到链表中点
   ListNode getMid(ListNode head) {
     ListNode? slow = head;
     ListNode? fast = head;
     while (fast != null && fast.next != null) {
-      slow = slow!.next; // slow moves one step
-      fast = fast.next!.next; // fast moves two steps
+      slow = slow!.next; // 慢指针每次前进一步
+      fast = fast.next!.next; // 快指针每次前进两步
     }
-    return slow!; // return the middle node
+    return slow!; // 返回中点节点
   }
 
+  // 反转链表
   ListNode? reverseNode(ListNode? head) {
     ListNode? prev = null, cur = head;
     while (cur != null) {
-      ListNode? next = cur.next; // save the next node
-      cur.next = prev; // reverse the link
-      prev = cur; // move prev to current node
-      cur = next; // move to the next node
+      ListNode? next = cur.next; // 保存下一个节点
+      cur.next = prev; // 反转指针
+      prev = cur; // 前移prev
+      cur = next; // 前移cur
     }
-    return prev; // return the new head of the reversed list
+    return prev; // 返回反转后的头节点
   }
 
+  // 合并两个链表
   void mergeNode(ListNode? l1, ListNode? l2) {
     while (l1 != null && l2 != null) {
-      ListNode? next1 = l1.next; // save the next node of l1
-      ListNode? next2 = l2.next; // save the next node of l2
-      l1.next = l2; // link l1 to l2
-      l2.next = next1; // link l2 to the next node of l1
-      l1 = next1; // move l1 to the next node
-      l2 = next2; // move l2 to the next node
+      ListNode? next1 = l1.next; // 保存l1的下一个节点
+      ListNode? next2 = l2.next; // 保存l2的下一个节点
+      l1.next = l2; // l1指向l2
+      l2.next = next1; // l2指向原l1的下一个节点
+      l1 = next1; // l1后移
+      l2 = next2; // l2后移
     }
   }
 
-  ListNode mid = getMid(head); // find the middle node
-
-  ListNode? l2 = mid.next; // second half starts from mid.next
-  mid.next = null; // split the list into two halves
-  l2 = reverseNode(l2); // reverse the second half of the list
-  mergeNode(dummy.next, l2);
+  ListNode mid = getMid(head); // 获取链表中点
+  ListNode? l2 = mid.next; // 第二段链表头
+  mid.next = null; // 切断第一段和第二段
+  l2 = reverseNode(l2); // 反转第二段链表
+  mergeNode(head, l2); // 合并两段链表
 }
 
-//  1 2 3
-// 1 2 3
-// 1 3 2
+/**
+ * 144. 二叉树的前序遍历（迭代法）
+ * 给你二叉树的根节点 root，返回它节点值的前序遍历。
+ * 
+ * 示例 1：
+ * 输入：root = [1,null,2,3]
+ * 输出：[1,2,3]
+ */
 List<int> preorderTraversal3(TreeNode? root) {
   List<int> result = [];
   List<TreeNode?> stackIn = [];
   List<TreeNode?> stackOut = [];
-  if (root == null) return result; // empty tree, return empty result
-  stackIn.add(root); // start with the root node
+  if (root == null) return result; // 空树返回空列表
+  stackIn.add(root); // 根节点入栈
   while (stackIn.length > 0) {
-    TreeNode? node = stackIn.removeLast(); // get the last node from the stack
+    TreeNode? node = stackIn.removeLast(); // 弹出栈顶节点
     if (node != null) {
-      stackOut.add(node); // visit the root
-
+      stackOut.add(node); // 将节点加入输出栈
+      // 注意：前序遍历是根左右，但入栈顺序是右左，这样出栈顺序才是左右
       if (node.left != null) {
-        stackIn.add(node.left); // add left child to stack
+        stackIn.add(node.left); // 左子节点入栈
       }
       if (node.right != null) {
-        stackIn.add(node.right); // add right child to stack
+        stackIn.add(node.right); // 右子节点入栈
       }
     }
   }
   while (stackOut.length > 0) {
-    TreeNode? node =
-        stackOut.removeLast(); // get the last node from the output stack
+    TreeNode? node = stackOut.removeLast(); // 从输出栈弹出节点
     if (node != null) {
-      result.add(node.val); // add the node value to the result
+      result.add(node.val); // 将节点值加入结果列表
     }
   }
   return result;
 }
+
 /**
- 请你设计并实现一个满足  LRU (最近最少使用) 缓存 约束的数据结构。
-实现 LRUCache 类：
-LRUCache(int capacity) 以 正整数 作为容量 capacity 初始化 LRU 缓存
-int get(int key) 如果关键字 key 存在于缓存中，则返回关键字的值，否则返回 -1 。
-void put(int key, int value) 如果关键字 key 已经存在，则变更其数据值 value ；如果不存在，则向缓存中插入该组 key-value 。如果插入操作导致关键字数量超过 capacity ，
-则应该 逐出 最久未使用的关键字。
-函数 get 和 put 必须以 O(1) 的平均时间复杂度运行。
-
- 
-
-示例：
-
-输入
-["LRUCache", "put", "put", "get", "put", "get", "put", "get", "get", "get"]
-[[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]]
-输出
-[null, null, null, 1, null, -1, null, -1, 3, 4]
-
-解释
-LRUCache lRUCache = new LRUCache(2);
-lRUCache.put(1, 1); // 缓存是 {1=1}
-lRUCache.put(2, 2); // 缓存是 {1=1, 2=2}
-lRUCache.get(1);    // 返回 1
-lRUCache.put(3, 3); // 该操作会使得关键字 2 作废，缓存是 {1=1, 3=3}
-lRUCache.get(2);    // 返回 -1 (未找到)
-lRUCache.put(4, 4); // 该操作会使得关键字 1 作废，缓存是 {4=4, 3=3}
-lRUCache.get(1);    // 返回 -1 (未找到)
-lRUCache.get(3);    // 返回 3
-lRUCache.get(4);    // 返回 4
-
-
-LRU 缓存机制可以通过哈希表辅以双向链表实现，我们用一个哈希表和一个双向链表维护所有在缓存中的键值对。
-
-双向链表按照被使用的顺序存储了这些键值对，靠近头部的键值对是最近使用的，而靠近尾部的键值对是最久未使用的。
-
-哈希表即为普通的哈希映射（HashMap），通过缓存数据的键映射到其在双向链表中的位置。
-
-这样以来，我们首先使用哈希表进行定位，找出缓存项在双向链表中的位置，随后将其移动到双向链表的头部，即可在 O(1) 的时间内完成 get 或者 put 操作。具体的方法如下：
-
-对于 get 操作，首先判断 key 是否存在：
-
-如果 key 不存在，则返回 −1；
-
-如果 key 存在，则 key 对应的节点是最近被使用的节点。通过哈希表定位到该节点在双向链表中的位置，并将其移动到双向链表的头部，最后返回该节点的值。
-
-对于 put 操作，首先判断 key 是否存在：
-
-如果 key 不存在，使用 key 和 value 创建一个新的节点，在双向链表的头部添加该节点，并将 key 和该节点添加进哈希表中。
-然后判断双向链表的节点数是否超出容量，如果超出容量，则删除双向链表的尾部节点，并删除哈希表中对应的项；
-
-如果 key 存在，则与 get 操作类似，先通过哈希表定位，再将对应的节点的值更新为 value，并将该节点移到双向链表的头部。
-
-上述各项操作中，访问哈希表的时间复杂度为 O(1)，在双向链表的头部添加节点、在双向链表的尾部删除节点的复杂度也为 O(1)。
-而将一个节点移到双向链表的头部，可以分成「删除该节点」和「在双向链表的头部添加节点」两步操作，都可以在 O(1) 时间内完成。
-
-
+ * 146. LRU 缓存
+ * 请你设计并实现一个满足 LRU (最近最少使用) 缓存约束的数据结构。
+ * 实现 LRUCache 类：
+ *   - LRUCache(int capacity) 以正整数作为容量 capacity 初始化 LRU 缓存
+ *   - int get(int key) 如果关键字 key 存在于缓存中，则返回关键字的值，否则返回 -1 。
+ *   - void put(int key, int value) 如果关键字 key 已经存在，则变更其数据值 value；如果不存在，则向缓存中插入该组 key-value。
+ *     如果插入操作导致关键字数量超过 capacity，则应该逐出最久未使用的关键字。
+ * 函数 get 和 put 必须以 O(1) 的平均时间复杂度运行。
+ * 
+ * 示例：
+ * 输入
+ * ["LRUCache", "put", "put", "get", "put", "get", "put", "get", "get", "get"]
+ * [[2], [1, 1], [2, 2], [1], [3, 3], [2], [4, 4], [1], [3], [4]]
+ * 输出
+ * [null, null, null, 1, null, -1, null, -1, 3, 4]
+ * 解释
+ * LRUCache lRUCache = new LRUCache(2);
+ * lRUCache.put(1, 1); // 缓存是 {1=1}
+ * lRUCache.put(2, 2); // 缓存是 {1=1, 2=2}
+ * lRUCache.get(1);    // 返回 1
+ * lRUCache.put(3, 3); // 该操作会使得关键字 2 作废，缓存是 {1=1, 3=3}
+ * lRUCache.get(2);    // 返回 -1 (未找到)
+ * lRUCache.put(4, 4); // 该操作会使得关键字 1 作废，缓存是 {4=4, 3=3}
+ * lRUCache.get(1);    // 返回 -1 (未找到)
+ * lRUCache.get(3);    // 返回 3
+ * lRUCache.get(4);    // 返回 4
  */
-
 class TowListNode {
   int key;
   int value;
@@ -5416,28 +5401,27 @@ class LRUCache {
   int size = 0;
   Map<int, TowListNode> cache = {};
   int capacity = 0;
-  TowListNode? head; // create a dummy head node
-  TowListNode? tail; // create a dummy tail node
+  TowListNode? head; // 虚拟头节点
+  TowListNode? tail; // 虚拟尾节点
 
   LRUCache(int capacity) {
     size = 0;
-    this.capacity = capacity; // initialize the cache with given capacity
-
-    // 方便向头部添加，和尾部删除
-    head = TowListNode(0, 0); // create a dummy head node
-    tail = TowListNode(0, 0); // create a dummy tail node
-    head?.next = tail; // link head to tail
-    tail?.prev = head; // link tail to head
-    cache = {}; // initialize the cache as an empty map
+    this.capacity = capacity;
+        // 方便向头部添加，和尾部删除
+    head = TowListNode(0, 0);
+    tail = TowListNode(0, 0);
+    head?.next = tail;
+    tail?.prev = head;
+    cache = {};
   }
 
   int get(int key) {
     TowListNode? node = cache[key];
     if (node == null) {
-      return -1; // key does not exist, return -1
+      return -1; // key不存在
     } else {
-      moveToHead(node);
-      return node.value; // return the value of the node
+      moveToHead(node); // 移动到头部表示最近使用
+      return node.value;
     }
   }
 
@@ -5445,104 +5429,97 @@ class LRUCache {
     TowListNode? node = cache[key];
     if (node == null) {
       TowListNode newNode = TowListNode(key, value);
-      cache[key] = newNode; // add the new node to the cache
-      addToHead(newNode);
-      size++; // increment the size of the cache
+      cache[key] = newNode; // 加入缓存
+      addToHead(newNode); // 添加到链表头部
+      size++;
       if (size > capacity) {
-        TowListNode tailPre = removeTail();
-        cache.remove(tailPre.key); // remove the least recently used node
-        size--; // decrement the size of the cache
-      } else {
-        cache[key] = newNode; // add the new node to the cache
+        TowListNode tailPre = removeTail(); // 移除尾部节点（最久未使用）
+        cache.remove(tailPre.key); // 从缓存中移除
+        size--;
       }
     } else {
-      // key exists, update the value and move to front
+      // key存在，更新值并移动到头部
       node.value = value;
-      // move node to front logic here
       moveToHead(node);
     }
   }
 
   void removeNode(TowListNode node) {
     node.next?.prev = node.prev;
-    node.prev?.next = node.next; // unlink the node from the list
+    node.prev?.next = node.next; // 从链表中移除节点
   }
 
   void addToHead(TowListNode node) {
-    TowListNode? headNext = head?.next; // get the current first node
+    TowListNode? headNext = head?.next; // 当前头节点的下一个节点
     node.prev = head;
-    node.next = headNext; // link the new node to the tail
+    node.next = headNext;
     head?.next = node;
-    headNext?.prev = node; // link the current first node to the new node
+    headNext?.prev = node; // 将节点插入到虚拟头节点之后
   }
 
   TowListNode removeTail() {
-    TowListNode? deleteNode = tail?.prev; // get the last node
-    removeNode(deleteNode!);
+    TowListNode? deleteNode = tail?.prev; // 尾部节点的前一个节点（实际存储的节点）
+    removeNode(deleteNode!); // 从链表中移除
     return deleteNode;
   }
 
   void moveToHead(TowListNode node) {
-    removeNode(node); // remove the node from its current position
-    addToHead(node); // add the node to the head of the list
+    removeNode(node); // 先移除
+    addToHead(node); // 再添加到头部
   }
 }
 
 /**
- 给定单个链表的头 head ，使用 插入排序 对链表进行排序，并返回 排序后链表的头 。
-
-插入排序 算法的步骤:
-
-插入排序是迭代的，每次只移动一个元素，直到所有元素可以形成一个有序的输出列表。
-每次迭代中，插入排序只从输入数据中移除一个待排序的元素，找到它在序列中适当的位置，并将其插入。
-重复直到所有输入数据插入完为止。
-下面是插入排序算法的一个图形示例。部分排序的列表(黑色)最初只包含列表中的第一个元素。每次迭代时，从输入数据中删除一个元素(红色)，并就地插入已排序的列表中。
-
-对链表进行插入排序。
+ * 147. 对链表进行插入排序
+ * 给定单个链表的头 head，使用插入排序对链表进行排序，并返回排序后链表的头。
+ * 
+ * 插入排序算法：
+ *   - 插入排序是迭代的，每次只移动一个元素，直到所有元素可以形成一个有序的输出列表。
+ *   - 每次迭代中，插入排序只从输入数据中移除一个待排序的元素，找到它在序列中适当的位置，并将其插入。
+ *   - 重复直到所有输入数据插入完为止。
+ * 
+ * 示例 1：
+ * 输入：head = [4,2,1,3]
+ * 输出：[1,2,3,4]
  */
-
 // 4
 // 1 3 5 4
 // 1 2 3 4 10 5 6 7 8
 ListNode? insertionSortList(ListNode? head) {
   if (head == null || head.next == null) {
-    return head; // empty or single node list, return as is
+    return head; // 空链表或只有一个节点，直接返回
   }
-  ListNode dummy = ListNode(-5001, head); // create a dummy head node
+  ListNode dummy = ListNode(-5001, head); // 创建虚拟头节点，值设为最小
 
-  ListNode? deleteNode(ListNode node) {
-    if (node.next == null) return null;
-    node.next = node.next!.next; // unlink the next node
-    return node.next!; // return the next node to delete
-  }
-
-  ListNode? current = head; // start with the first node
-  ListNode? pre = dummy;
-  while (current != null && pre != null) {
-    if (current.val >= pre.val) {
-      current =
-          current.next; // move to the next node if current is greater than pre
-      pre = pre.next; // move pre to the next node
+  ListNode? current = head.next; // 从第二个节点开始
+  ListNode? lastSorted = head; // 已排序部分的最后一个节点
+  while (current != null) {
+    if (lastSorted!.val <= current.val) {
+      lastSorted = current; // 如果当前节点大于等于已排序的最后一个节点，则直接后移
     } else {
-      ListNode? nextCurrent = current.next; // save the next node
-      ListNode? insertPre = dummy; // start from the dummy head
-      while (insertPre != pre && insertPre != null && insertPre.next != null) {
-        if (insertPre.next!.val > current.val) {
-          current.next = insertPre.next; // insert current after insertPre
-          insertPre.next = current;
-          break;
-        } else {
-          insertPre = insertPre.next; // move to the next node
-        }
+      ListNode? prev = dummy; // 从头开始寻找插入位置
+      while (prev!.next!.val <= current.val) {
+        prev = prev.next; // 找到第一个大于当前节点的节点的前一个节点
       }
-      pre.next = nextCurrent;
-      current = nextCurrent; // move to the next node
+      lastSorted.next = current.next; // 将当前节点从原位置移除
+      current.next = prev.next; // 将当前节点插入到prev之后
+      prev.next = current;
     }
+    current = lastSorted.next; // 处理下一个节点
   }
-  return dummy.next; // return the sorted list starting from the dummy head
+  return dummy.next; // 返回排序后的链表
 }
 
+/**
+ * 148. 排序链表
+ * 给你链表的头结点 head，请将其按升序排列并返回排序后的链表。
+ * 
+ * 示例 1：
+ * 输入：head = [4,2,1,3]
+ * 输出：[1,2,3,4]
+ */
 ListNode? sortList(ListNode? head) {
+  // 合并两个有序链表
   ListNode merge(ListNode? l1, ListNode? l2) {
     ListNode dummy = ListNode(0);
     ListNode current = dummy;
@@ -5556,124 +5533,125 @@ ListNode? sortList(ListNode? head) {
       }
       current = current.next!;
     }
-    current.next = l1 ?? l2; // append the remaining nodes
-    return dummy.next!; // return the merged list
+    current.next = l1 ?? l2; // 将剩余部分链接
+    return dummy.next!; // 返回合并后的链表头
   }
 
-  // 0 1 2 3 4 5
+  // 归并排序递归函数
   ListNode? sortNodeList(ListNode? head) {
     if (head == null || head.next == null) {
       return head;
     }
-    ListNode dummy = ListNode(0, head);
-    ListNode? slow = dummy;
-    ListNode? fast = dummy;
+    // 使用快慢指针找到链表中点
+    ListNode? slow = head;
+    ListNode? fast = head.next; // 注意这里fast从head.next开始，这样slow会落在前半部分的最后一个节点
     while (fast != null && fast.next != null) {
-      slow = slow!.next; // slow moves one step
-      fast = fast.next!.next; // fast moves two steps
+      slow = slow!.next;
+      fast = fast.next!.next;
     }
-    ListNode? mid = slow!.next; // mid is the next node of slow
-    slow.next = null; // split the list into two halves
-    ListNode? left = sortNodeList(dummy.next); // sort the left half
-    ListNode? right = sortNodeList(mid); // sort the right half
-    return merge(left, right); // merge the two sorted halves
+    ListNode? mid = slow!.next; // 中点的下一个节点为后半部分的头
+    slow.next = null; // 切断链表
+    ListNode? left = sortNodeList(head); // 递归排序前半部分
+    ListNode? right = sortNodeList(mid); // 递归排序后半部分
+    return merge(left, right); // 合并两个有序链表
   }
 
-  return sortNodeList(head); // start sorting from the head
+  return sortNodeList(head); // 调用归并排序
 }
 
 /**
- 给你一个数组 points ，其中 points[i] = [xi, yi] 表示 X-Y 平面上的一个点。求最多有多少个点在同一条直线上。
-
- 
-
-示例 1：
-
-
-输入：points = [[1,1],[2,2],[3,3]]
-输出：3
+ * 149. 直线上最多的点数
+ * 给你一个数组 points，其中 points[i] = [xi, yi] 表示 X-Y 平面上的一个点。求最多有多少个点在同一条直线上。
+ * 
+ * 示例 1：
+ * 输入：points = [[1,1],[2,2],[3,3]]
+ * 输出：3
  */
 int maxPoints(List<List<int>> points) {
-  if (points.length <= 2)
-    return points.length; // if there are 2 or fewer points, return the count
+  if (points.length <= 2) return points.length; // 点数小于等于2，直接返回
 
   int maxCount = 0;
-
   for (int i = 0; i < points.length; i++) {
-    Map<double, int> slopeCount = {};
+    Map<String, int> slopeCount = {}; // 用字符串表示斜率，避免浮点数精度问题
+    int duplicate = 1; // 记录与当前点重合的点数（包括自己）
     for (int j = i + 1; j < points.length; j++) {
-      int x = points[j][0] - points[i][0];
-      int y = points[j][1] - points[i][1];
-      double slop = 0;
-      if (x == 0)
-        slop = double.infinity;
-      else if (y == 0)
-        slop = 0;
-      else
-        slop = y / x; // calculate the slope
-      if (slopeCount.containsKey(slop)) {
-        slopeCount[slop] = slopeCount[slop]! + 1;
-      } else {
-        slopeCount[slop] = 1; // initialize the count for this slope
+      int x1 = points[i][0], y1 = points[i][1];
+      int x2 = points[j][0], y2 = points[j][1];
+      if (x1 == x2 && y1 == y2) {
+        duplicate++; // 重合点
+        continue;
       }
-      maxCount = max(maxCount, slopeCount[slop]!); // update max count
+      int dx = x2 - x1;
+      int dy = y2 - y1;
+      int gcdValue = gcd(dx, dy); // 求最大公约数，用于约分
+      String slope = '${dx ~/ gcdValue}/${dy ~/ gcdValue}'; // 用字符串表示约分后的斜率
+      slopeCount[slope] = (slopeCount[slope] ?? 0) + 1;
     }
+    maxCount = max(maxCount, duplicate); // 先更新为重合点数
+    // 遍历斜率计数，更新最大值
+    slopeCount.forEach((slope, count) {
+      maxCount = max(maxCount, count + duplicate);
+    });
   }
-  return maxCount + 1; // return the maximum number of points on a line
+  return maxCount;
 }
-/*
-150. 逆波兰表达式求值
-给你一个字符串数组 tokens ，表示一个根据 逆波兰表示法 表示的算术表达式。
 
-请你计算该表达式。返回一个表示表达式值的整数。
+// 求最大公约数（辗转相除法）
+int gcd(int a, int b) {
+  return b == 0 ? a : gcd(b, a % b);
+}
 
-注意：
-
-有效的算符为 '+'、'-'、'*' 和 '/' 。
-每个操作数（运算对象）都可以是一个整数或者另一个表达式。
-两个整数之间的除法总是 向零截断 。
-示例 1：
-
-输入：tokens = ["2","1","+","3","*"]
-输出：9
-解释：该算式转化为常见的中缀算术表达式为：((2 + 1) * 3) = 9
+/**
+ * 150. 逆波兰表达式求值
+ * 给你一个字符串数组 tokens，表示一个根据逆波兰表示法表示的算术表达式。
+ * 请你计算该表达式。返回一个表示表达式值的整数。
+ * 
+ * 注意：
+ *   - 有效的算符为 '+'、'-'、'*' 和 '/' 。
+ *   - 每个操作数（运算对象）都可以是一个整数或者另一个表达式。
+ *   - 两个整数之间的除法总是向零截断。
+ * 
+ * 示例 1：
+ * 输入：tokens = ["2","1","+","3","*"]
+ * 输出：9
+ * 解释：该算式转化为常见的中缀算术表达式为：((2 + 1) * 3) = 9
  */
-
 int evalRPN(List<String> tokens) {
   List<int> stack = [];
-  for (int i = 0; i < tokens.length; i++) {
-    if (tokens[i] == '*') {
-      int b = stack.removeLast(); // pop the last two operands
-      int a = stack.removeLast();
-      stack.add(a * b); // push the result of multiplication
-    } else if (tokens[i] == '/') {
-      int b = stack.removeLast(); // pop the last two operands
-      int a = stack.removeLast();
-      stack.add(a ~/ b); // push the result of division, truncating towards zero
-    } else if (tokens[i] == '+') {
-      int b = stack.removeLast(); // pop the last two operands
-      int a = stack.removeLast();
-      stack.add(a + b); // push the result of addition
-    } else if (tokens[i] == '-') {
-      int b = stack.removeLast(); // pop the last two operands
-      int a = stack.removeLast();
-      stack.add(a - b); // push the result of subtraction
+  for (String token in tokens) {
+    if (token == '+' || token == '-' || token == '*' || token == '/') {
+      int b = stack.removeLast(); // 弹出栈顶元素作为右操作数
+      int a = stack.removeLast(); // 弹出栈顶元素作为左操作数
+      switch (token) {
+        case '+':
+          stack.add(a + b);
+          break;
+        case '-':
+          stack.add(a - b);
+          break;
+        case '*':
+          stack.add(a * b);
+          break;
+        case '/':
+          stack.add(a ~/ b); // 整数除法，向零截断
+          break;
+      }
     } else {
-      stack.add(int.parse(tokens[i])); // push the operand to the stack
+      stack.add(int.parse(token)); // 操作数入栈
     }
   }
-  return stack.last; // return the last element in the stack as the result
+  return stack.last; // 栈中最后一个元素即为结果
 }
+
 /**
- 239. 滑动窗口最大值
-给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。
-
-返回 滑动窗口中的最大值 。
-
-输入：nums = [1,3,-1,-3,5,3,6,7], k = 3
-输出：[3,3,5,5,6,7]
+ * 239. 滑动窗口最大值
+ * 给你一个整数数组 nums，有一个大小为 k 的滑动窗口从数组的最左侧移动到数组的最右侧。你只可以看到在滑动窗口内的 k 个数字。滑动窗口每次只向右移动一位。
+ * 返回滑动窗口中的最大值。
+ * 
+ * 示例 1：
+ * 输入：nums = [1,3,-1,-3,5,3,6,7], k = 3
+ * 输出：[3,3,5,5,6,7]
  */
-
 List<int> maxSlidingWindow(List<int> nums, int k) {
   /**
    思路：对于窗口里的元素{2, 3, 5, 1 ,4}，单调队列里只维护（出）{5, 4}（进） 就够了，保持单调队列里单调递减，此时队列出口元素就是窗口里最大元素。
@@ -5684,30 +5662,24 @@ push(value)：如果push的元素value大于入口元素的数值，那么就将
   // 1,3,-1,-3,5,3,6,7
   if (k > nums.length) return [];
   List<int> result = [];
-  // List<int> deque = []; // will store indices of array elements
-  DoubleLinkedQueue<int> deque = DoubleLinkedQueue<int>(); // 存储索引
-  for (int i = 0; i < k; i++) {
-    while (deque.isNotEmpty && deque.last < nums[i]) {
-      deque.removeLast();
-    }
-    deque.addLast(nums[i]);
-  }
-  result.add(deque.first);
-  for (int i = k; i < nums.length; i++) {
-    if (nums[i - k] == deque.first) {
+  DoubleLinkedQueue<int> deque = DoubleLinkedQueue<int>(); // 双端队列，存储索引
+  for (int i = 0; i < nums.length; i++) {
+    // 移除超出窗口范围的索引
+    if (deque.isNotEmpty && deque.first < i - k + 1) {
       deque.removeFirst();
     }
-
-    while (deque.isNotEmpty && deque.last < nums[i]) {
+    // 从队列尾部开始，移除所有小于当前元素的索引
+    while (deque.isNotEmpty && nums[deque.last] < nums[i]) {
       deque.removeLast();
     }
-    deque.addLast(nums[i]);
-
-    result.add(deque.first);
+    deque.addLast(i); // 将当前元素索引加入队列
+    // 当窗口大小达到k时，记录当前窗口最大值
+    if (i >= k - 1) {
+      result.add(nums[deque.first]);
+    }
   }
   return result;
 }
-
 // 数组 / 字符串
 // 合并两个有序数组
 // 题解
