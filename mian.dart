@@ -516,7 +516,35 @@ nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0 。
 输出：[]
 解释：唯一可能的三元组和不为 0 。
  */
-
+int threeSum(List<int> nums, int target) {
+  //思路：先排序，然后固定一个数，双指针夹逼
+  nums.sort();
+  int minDiff = 100001; // Initialize to a large value
+  int left = 0;
+  int right = nums.length - 1;
+  for (int i = 0; i < nums.length; i++) {
+    left = i + 1;
+    right = nums.length - 1;
+    if (i > 1 && nums[i] == nums[i - 1]) {
+      continue; // skip duplicates
+    }
+    while (left < right) {
+      int sum = nums[i] + nums[left] + nums[right];
+      int diff = sum - target;
+      if (diff.abs() < minDiff.abs()) {
+        minDiff = diff;
+      }
+      if (sum == target) {
+        return target;
+      } else if (sum < target) {
+        left++;
+      } else {
+        right--;
+      }
+    }
+  }
+  return minDiff + target;
+}
 /**
  16. 最接近的三数之和
 给你一个长度为 n 的整数数组 nums 和 一个目标值 target。请你从 nums 中选出三个整数，使它们的和与 target 最接近。
@@ -543,10 +571,11 @@ nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0 。
 -1000 <= nums[i] <= 1000
 -104 <= target <= 104
  */
-int threeSum(List<int> nums, int target) {
-  //思路：先排序，然后固定一个数，双指针夹逼
+
+int threeSumClosest(List<int> nums, int target) {
   nums.sort();
-  int minDiff = 100001; // Initialize to a large value
+  print(nums);
+  int minDiff = 100001;
   int left = 0;
   int right = nums.length - 1;
   for (int i = 0; i < nums.length; i++) {
