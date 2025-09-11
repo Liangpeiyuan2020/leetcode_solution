@@ -697,28 +697,25 @@ List<List<int>> fourSum(List<int> nums, int target) {
   }
   return result;
 }
-
 /**
- 454. 四数相加 II
-给定四个包含整数的数组列表 A , B , C , D ,计算有多少个元组 (i, j, k, l) ，使得 A[i] + B[j] + C[k] + D[l] = 0。
-
-为了使问题简单化，所有的 A, B, C, D 具有相同的长度 N，且 0 ≤ N ≤ 500 。所有整数的范围在 -2^28 到 2^28 - 1 之间，最终结果不会超过 2^31 - 1 。
-输入:
-
-A = [ 1, 2]
-B = [-2,-1]
-C = [-1, 2]
-D = [ 0, 2]
-输出:
-
-2
-
-解释:
-
-两个元组如下:
-
-(0, 0, 0, 1) -> A[0] + B[0] + C[0] + D[1] = 1 + (-2) + (-1) + 2 = 0
-(1, 1, 0, 0) -> A[1] + B[1] + C[0] + D[0] = 2 + (-1) + (-1) + 0 = 0
+ * 454. 四数相加 II
+ * 给定四个包含整数的数组列表 A、B、C、D，计算有多少个元组 (i, j, k, l) 使得 A[i] + B[j] + C[k] + D[l] = 0。
+ * 为了使问题简单化，所有的 A, B, C, D 具有相同的长度 N，且 0 ≤ N ≤ 500。
+ * 所有整数的范围在 -2^28 到 2^28 - 1 之间，最终结果不会超过 2^31 - 1。
+ * 
+ * 示例：
+ * 输入:
+ * A = [1, 2]
+ * B = [-2, -1]
+ * C = [-1, 2]
+ * D = [0, 2]
+ * 
+ * 输出: 2
+ * 
+ * 解释:
+ * 两个元组如下:
+ * 1. (0, 0, 0, 1) -> 1 + (-2) + (-1) + 2 = 0
+ * 2. (1, 1, 0, 0) -> 2 + (-1) + (-1) + 0 = 0
  */
 int fourSumCount(
     List<int> nums1, List<int> nums2, List<int> nums3, List<int> nums4) {
@@ -744,17 +741,17 @@ int fourSumCount(
 }
 
 /**
- 344. 反转字符串
-编写一个函数，其作用是将输入的字符串反转过来。输入字符串以字符数组 s 的形式给出。
-
-不要给另外的数组分配额外的空间，你必须原地修改输入数组、使用 O(1) 的额外空间解决这一问题。
-
-输入：s = ["h","e","l","l","o"]
-输出：["o","l","l","e","h"]
-示例 2：
-
-输入：s = ["H","a","n","n","a","h"]
-输出：["h","a","n","n","a","H"]
+ * 344. 反转字符串
+ * 编写一个函数，其作用是将输入的字符串反转过来。输入字符串以字符数组 s 的形式给出。
+ * 不要给另外的数组分配额外的空间，你必须原地修改输入数组、使用 O(1) 的额外空间解决这一问题。
+ * 
+ * 示例 1：
+ * 输入：s = ["h","e","l","l","o"]
+ * 输出：["o","l","l","e","h"]
+ * 
+ * 示例 2：
+ * 输入：s = ["H","a","n","n","a","h"]
+ * 输出：["h","a","n","n","a","H"]
  */
 void reverseString(List<String> s) {
   int left = 0;
@@ -768,28 +765,27 @@ void reverseString(List<String> s) {
   }
 }
 
-/*
-151. 反转字符串中的单词
-给你一个字符串 s ，请你反转字符串中 单词 的顺序。
-
-单词 是由非空格字符组成的字符串。s 中使用至少一个空格将字符串中的 单词 分隔开。
-
-返回 单词 顺序颠倒且 单词 之间用单个空格连接的结果字符串。
-
-注意：输入字符串 s中可能会存在前导空格、尾随空格或者单词间的多个空格。返回的结果字符串中，单词间应当仅用单个空格分隔，且不包含任何额外的空格。
-输入：s = "the sky is blue"
-输出："blue is sky the"
-示例 2：
-
-输入：s = "  hello world  "
-输出："world hello"
-解释：反转后的字符串中不能存在前导空格和尾随空格。
-示例 3：
-
-输入：s = "a good   example"
-输出："example good a"
-解释：如果两个单词间有多余的空格，反转后的字符串需要将单词间的空格减少到仅有一个。
-  */
+/**
+ * 151. 反转字符串中的单词
+ * 给你一个字符串 s ，请你反转字符串中单词的顺序。
+ * 单词是由非空格字符组成的字符串。s 中使用至少一个空格将字符串中的单词分隔开。
+ * 返回单词顺序颠倒且单词之间用单个空格连接的结果字符串。
+ * 
+ * 注意：输入字符串 s 中可能会存在前导空格、尾随空格或者单词间的多个空格。
+ * 返回的结果字符串中，单词间应当仅用单个空格分隔，且不包含任何额外的空格。
+ * 
+ * 示例 1：
+ * 输入：s = "the sky is blue"
+ * 输出："blue is sky the"
+ * 
+ * 示例 2：
+ * 输入：s = "  hello world  "
+ * 输出："world hello"
+ * 
+ * 示例 3：
+ * 输入：s = "a good   example"
+ * 输出："example good a"
+ */
 String reverseWords(String s) {
   String newS = s.trim();
   List<String> words = newS.split(RegExp(r'\s+'));
@@ -830,7 +826,22 @@ class TreeNode {
   TreeNode([this.val = 0, this.left, this.right]);
 }
 
-// 删除链表中倒数第 n 个节点
+/**
+ * 19. 删除链表的倒数第 N 个结点
+ * 给你一个链表，删除链表的倒数第 n 个结点，并且返回链表的头结点。
+ * 
+ * 示例 1：
+ * 输入：head = [1,2,3,4,5], n = 2
+ * 输出：[1,2,3,5]
+ * 
+ * 示例 2：
+ * 输入：head = [1], n = 1
+ * 输出：[]
+ * 
+ * 示例 3：
+ * 输入：head = [1,2], n = 1
+ * 输出：[1]
+ */
 ListNode? removeNthFromEnd(ListNode? head, int n) {
   if (head == null || n <= 0) return head;
   ListNode? dummy = ListNode(0, head);
@@ -851,10 +862,11 @@ ListNode? removeNthFromEnd(ListNode? head, int n) {
 }
 
 /**
-
-给你两个单链表的头节点 headA 和 headB ，请你找出并返回两个单链表相交的起始节点。如果两个链表没有交点，返回 null 。
-
-图示两个链表在节点 c1 开始相交：
+ * 160. 相交链表
+ * 给你两个单链表的头节点 headA 和 headB，请你找出并返回两个单链表相交的起始节点。
+ * 如果两个链表没有交点，返回 null。
+ * 
+ * 图示两个链表在节点 c1 开始相交：
  */
 ListNode? getIntersectionNode(ListNode? headA, ListNode? headB) {
   if (headA == null || headB == null) return null;
@@ -891,7 +903,12 @@ ListNode? getIntersectionNode(ListNode? headA, ListNode? headB) {
   return a;
 }
 
-// 找到链表环的起始节点
+/**
+ * 142. 环形链表 II
+ * 给定一个链表，返回链表开始入环的第一个节点。如果链表无环，则返回 null。
+ * 
+ * 思路：先找到相遇点，然后从头节点和相遇点同时出发，每次走一步，相遇点即为环的起始节点
+ */
 ListNode? detectCycle(ListNode? head) {
   // 思路：先找到相遇点，然后从头节点和相遇点同时出发，每次走一步，相遇点即为环的起始节点
   ListNode? slow = head;
@@ -913,13 +930,17 @@ ListNode? detectCycle(ListNode? head) {
 }
 
 /**
- 给定两个字符串 s 和 t ，编写一个函数来判断 t 是否是 s 的字母异位词。
-
-示例 1: 输入: s = "anagram", t = "nagaram" 输出: true
-
-示例 2: 输入: s = "rat", t = "car" 输出: false
-
-说明: 你可以假设字符串只包含小写字母。
+ * 242. 有效的字母异位词
+ * 给定两个字符串 s 和 t，编写一个函数来判断 t 是否是 s 的字母异位词。
+ * 注意：若 s 和 t 中每个字符出现的次数都相同，则称 s 和 t 互为字母异位词。
+ * 
+ * 示例 1:
+ * 输入: s = "anagram", t = "nagaram"
+ * 输出: true
+ * 
+ * 示例 2:
+ * 输入: s = "rat", t = "car"
+ * 输出: false
  */
 bool isAnagram(String s, String t) {
   if (s.length != t.length) return false;
@@ -935,14 +956,24 @@ bool isAnagram(String s, String t) {
 }
 
 /**
- 383. 赎金信
-给定一个赎金信 (ransom) 字符串和一个杂志(magazine)字符串，判断第一个字符串 ransom 能不能由第二个字符串 magazines 里面的字符构成。如果可以构成，返回 true ；否则返回 false。
-(题目说明：为了不暴露赎金信字迹，要从杂志上搜索各个需要的字母，组成单词来表达意思。杂志字符串中的每个字符只能在赎金信字符串中使用一次。)
-注意：
-
-你可以假设两个字符串均只含有小写字母。
+ * 383. 赎金信
+ * 给定一个赎金信 (ransom) 字符串和一个杂志(magazine)字符串，
+ * 判断第一个字符串 ransom 能不能由第二个字符串 magazines 里面的字符构成。
+ * 如果可以构成，返回 true；否则返回 false。
+ * 
+ * 注意：杂志字符串中的每个字符只能在赎金信字符串中使用一次。
+ * 你可以假设两个字符串均只含有小写字母。
+ * 
+ * 示例：
+ * 输入：ransomNote = "a", magazine = "b"
+ * 输出：false
+ * 
+ * 输入：ransomNote = "aa", magazine = "ab"
+ * 输出：false
+ * 
+ * 输入：ransomNote = "aa", magazine = "aab"
+ * 输出：true
  */
-
 bool canConstruct(String ransomNote, String magazine) {
   List<int> count = List.filled(26, 0);
   for (int i = 0; i < ransomNote.length; i++) {
@@ -957,22 +988,27 @@ bool canConstruct(String ransomNote, String magazine) {
   return true;
 }
 
-/*
-20. 有效的括号
-给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
-
-有效字符串需满足：
-
-左括号必须用相同类型的右括号闭合。
-左括号必须以正确的顺序闭合。
-每个右括号都有一个对应的相同类型的左括号。
-输入：s = "()"
-
-输出：true
-输入：s = "()[]{}"
-
-输出：true
-*/
+/**
+ * 20. 有效的括号
+ * 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s，判断字符串是否有效。
+ * 
+ * 有效字符串需满足：
+ * 1. 左括号必须用相同类型的右括号闭合。
+ * 2. 左括号必须以正确的顺序闭合。
+ * 3. 每个右括号都有一个对应的相同类型的左括号。
+ * 
+ * 示例 1：
+ * 输入：s = "()"
+ * 输出：true
+ * 
+ * 示例 2：
+ * 输入：s = "()[]{}"
+ * 输出：true
+ * 
+ * 示例 3：
+ * 输入：s = "(]"
+ * 输出：false
+ */
 bool isValid(String s) {
   List<String> stack = [];
   for (int i = 0; i < s.length; i++) {
@@ -1003,17 +1039,17 @@ bool isValid(String s) {
 }
 
 /**
- 1047. 删除字符串中的所有相邻重复项
-给出由小写字母组成的字符串 S，重复项删除操作会选择两个相邻且相同的字母，并删除它们。
-
-在 S 上反复执行重复项删除操作，直到无法继续删除。
-
-在完成所有重复项删除操作后返回最终的字符串。答案保证唯一。
-
-输入："abbaca"
-输出："ca"
+ * 1047. 删除字符串中的所有相邻重复项
+ * 给出由小写字母组成的字符串 S，重复项删除操作会选择两个相邻且相同的字母，并删除它们。
+ * 在 S 上反复执行重复项删除操作，直到无法继续删除。
+ * 在完成所有重复项删除操作后返回最终的字符串。答案保证唯一。
+ * 
+ * 示例：
+ * 输入："abbaca"
+ * 输出："ca"
+ * 解释：在 "abbaca" 中，我们可以删除 "bb" 由于两字母相邻且相同，这是此时唯一可以执行删除操作的重复项。
+ * 之后我们得到字符串 "aaca"，其中又只有 "aa" 可以执行重复项删除操作，所以最后的字符串为 "ca"。
  */
-
 String removeDuplicates1047(String s) {
   List<String> stack = [];
   String result = '';
@@ -1034,6 +1070,15 @@ String removeDuplicates1047(String s) {
   return result;
 }
 
+/**
+ * 21. 合并两个有序链表
+ * 将两个升序链表合并为一个新的升序链表并返回。
+ * 新链表是通过拼接给定的两个链表的所有节点组成的。
+ * 
+ * 示例：
+ * 输入：l1 = [1,2,4], l2 = [1,3,4]
+ * 输出：[1,1,2,3,4,4]
+ */
 ListNode? mergeTwoLists(ListNode? list1, ListNode? list2) {
   if (list1 == null) return list2;
   if (list2 == null) return list1;
@@ -1053,6 +1098,18 @@ ListNode? mergeTwoLists(ListNode? list1, ListNode? list2) {
   return dummy.next;
 }
 
+/**
+ * 22. 括号生成
+ * 数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且有效的括号组合。
+ * 
+ * 示例 1：
+ * 输入：n = 3
+ * 输出：["((()))","(()())","(())()","()(())","()()()"]
+ * 
+ * 示例 2：
+ * 输入：n = 1
+ * 输出：["()"]
+ */
 List<String> generateParenthesis(int n) {
   int left = 0;
   int right = 0;
@@ -1085,6 +1142,23 @@ List<String> generateParenthesis(int n) {
   return result;
 }
 
+/**
+ * 23. 合并 K 个升序链表
+ * 给你一个链表数组，每个链表都已经按升序排列。
+ * 请你将所有链表合并到一个升序链表中，返回合并后的链表。
+ * 
+ * 示例 1：
+ * 输入：lists = [[1,4,5],[1,3,4],[2,6]]
+ * 输出：[1,1,2,3,4,4,5,6]
+ * 
+ * 示例 2：
+ * 输入：lists = []
+ * 输出：[]
+ * 
+ * 示例 3：
+ * 输入：lists = [[]]
+ * 输出：[]
+ */
 ListNode? mergeKLists(List<ListNode?> lists) {
   List<ListNode> mergedLists = [];
   for (ListNode? list in lists) {
@@ -1102,6 +1176,23 @@ ListNode? mergeKLists(List<ListNode?> lists) {
   return dummy.next;
 }
 
+/**
+ * 24. 两两交换链表中的节点
+ * 给你一个链表，两两交换其中相邻的节点，并返回交换后链表的头节点。
+ * 你必须在不修改节点内部的值的情况下完成本题（即只能进行节点交换）。
+ * 
+ * 示例 1：
+ * 输入：head = [1,2,3,4]
+ * 输出：[2,1,4,3]
+ * 
+ * 示例 2：
+ * 输入：head = []
+ * 输出：[]
+ * 
+ * 示例 3：
+ * 输入：head = [1]
+ * 输出：[1]
+ */
 ListNode? swapPairs(ListNode? head) {
   if (head == null || head.next == null) return head;
   ListNode dummy = ListNode(0, head);
@@ -1131,6 +1222,19 @@ ListNode? swapPairs(ListNode? head) {
   return dummy.next;
 }
 
+/**
+ * 26. 删除有序数组中的重复项
+ * 给你一个升序排列的数组 nums，请你原地删除重复出现的元素，使每个元素只出现一次，
+ * 返回删除后数组的新长度。元素的相对顺序应该保持一致。
+ * 
+ * 示例 1：
+ * 输入：nums = [1,1,2]
+ * 输出：2, nums = [1,2,_]
+ * 
+ * 示例 2：
+ * 输入：nums = [0,0,1,1,1,2,2,3,3,4]
+ * 输出：5, nums = [0,1,2,3,4]
+ */
 int removeDuplicates(List<int> nums) {
   if (nums.length <= 1) return nums.length;
   int slow = 1;
@@ -1143,6 +1247,19 @@ int removeDuplicates(List<int> nums) {
   return slow;
 }
 
+/**
+ * 27. 移除元素
+ * 给你一个数组 nums 和一个值 val，你需要原地移除所有数值等于 val 的元素，
+ * 并返回移除后数组的新长度。
+ * 
+ * 示例 1：
+ * 输入：nums = [3,2,2,3], val = 3
+ * 输出：2, nums = [2,2]
+ * 
+ * 示例 2：
+ * 输入：nums = [0,1,2,2,3,0,4,2], val = 2
+ * 输出：5, nums = [0,1,3,0,4]
+ */
 int removeElement(List<int> nums, int val) {
   int slow = 0;
   for (int fast = 0; fast < nums.length; fast++) {
@@ -1154,8 +1271,14 @@ int removeElement(List<int> nums, int val) {
   return slow + 1;
 }
 
-// 注意：假设我们的环境只能存储 32 位 有符号整数，其数值范围是 [−231,  231 − 1] 。本题中，
-// 如果商 严格大于 231 − 1 ，则返回 231 − 1 ；如果商 严格小于 -231 ，则返回 -231 。
+/**
+ * 29. 两数相除
+ * 给定两个整数，被除数 dividend 和除数 divisor。将两数相除，要求不使用乘法、除法和 mod 运算符。
+ * 返回被除数 dividend 除以除数 divisor 得到的商。
+ * 
+ * 注意：假设我们的环境只能存储 32 位有符号整数，其数值范围是 [−2^31,  2^31 − 1]。
+ * 本题中，如果商严格大于 2^31 - 1，则返回 2^31 - 1；如果商严格小于 -2^31，则返回 -2^31。
+ */
 int divide(int dividend, int divisor) {
   if (divisor == 0) return 0;
   if (divisor == 1) return dividend;
@@ -1184,6 +1307,28 @@ int divide(int dividend, int divisor) {
   return flag > 0 ? result : -result;
 }
 
+/**
+ * 31. 下一个排列
+ * 整数数组的一个排列就是将其所有成员以序列或线性顺序排列。
+ * 例如，arr = [1,2,3] 的排列有：[1,2,3]、[1,3,2]、[2,1,3]、[2,3,1]、[3,1,2]、[3,2,1]。
+ * 
+ * 整数数组的下一个排列是指其整数的下一个字典序更大的排列。
+ * 如果不存在下一个更大的排列，那么这个数组必须重排为最小的排列（即升序排列）。
+ * 
+ * 必须原地修改，只允许使用额外常数空间。
+ * 
+ * 示例 1：
+ * 输入：nums = [1,2,3]
+ * 输出：[1,3,2]
+ * 
+ * 示例 2：
+ * 输入：nums = [3,2,1]
+ * 输出：[1,2,3]
+ * 
+ * 示例 3：
+ * 输入：nums = [1,1,5]
+ * 输出：[1,5,1]
+ */
 void nextPermutation(List<int> nums) {
   if (nums.length <= 1) return;
   int i, k;
@@ -1215,6 +1360,22 @@ void nextPermutation(List<int> nums) {
   }
 }
 
+/**
+ * 32. 最长有效括号
+ * 给你一个只包含 '(' 和 ')' 的字符串，找出最长有效（格式正确且连续）括号子串的长度。
+ * 
+ * 示例 1：
+ * 输入：s = "(()"
+ * 输出：2
+ * 
+ * 示例 2：
+ * 输入：s = ")()())"
+ * 输出：4
+ * 
+ * 示例 3：
+ * 输入：s = ""
+ * 输出：0
+ */
 int longestValidParentheses(String s) {
   List<int> dp = List.filled(s.length, 0);
   int maxLength = 0;
@@ -1237,6 +1398,25 @@ int longestValidParentheses(String s) {
 }
 
 // 4,5,6,7,0,1,2,3
+/**
+ * 33. 搜索旋转排序数组
+ * 整数数组 nums 按升序排列，数组中的值互不相同。
+ * 在传递给函数之前，nums 在预先未知的某个下标 k（0 <= k < nums.length）上进行了旋转，
+ * 使数组变为 [nums[k], nums[k+1], ..., nums[n-1], nums[0], nums[1], ..., nums[k-1]]。
+ * 给你旋转后的数组 nums 和一个整数 target，如果 nums 中存在这个目标值 target，则返回它的下标，否则返回 -1。
+ * 
+ * 示例 1：
+ * 输入：nums = [4,5,6,7,0,1,2], target = 0
+ * 输出：4
+ * 
+ * 示例 2：
+ * 输入：nums = [4,5,6,7,0,1,2], target = 3
+ * 输出：-1
+ * 
+ * 示例 3：
+ * 输入：nums = [1], target = 0
+ * 输出：-1
+ */
 int search(List<int> nums, int target) {
   int midIndex = nums.length ~/ 2;
   int left = 0;
@@ -1266,6 +1446,24 @@ int search(List<int> nums, int target) {
 }
 
 // 0,1,2,3,4,5,6,7
+/**
+ * 34. 在排序数组中查找元素的第一个和最后一个位置
+ * 给定一个按照升序排列的整数数组 nums，和一个目标值 target。
+ * 找出给定目标值在数组中的开始位置和结束位置。
+ * 如果数组中不存在目标值 target，返回 [-1, -1]。
+ * 
+ * 示例 1：
+ * 输入：nums = [5,7,7,8,8,10], target = 8
+ * 输出：[3,4]
+ * 
+ * 示例 2：
+ * 输入：nums = [5,7,7,8,8,10], target = 6
+ * 输出：[-1,-1]
+ * 
+ * 示例 3：
+ * 输入：nums = [], target = 0
+ * 输出：[-1,-1]
+ */
 List<int> searchRange(List<int> nums, int target) {
   List<int> search(List<int> nums, double target) {
     int left = 0;
@@ -1292,6 +1490,23 @@ List<int> searchRange(List<int> nums, int target) {
   }
 }
 
+/**
+ * 35. 搜索插入位置
+ * 给定一个排序数组和一个目标值，在数组中找到目标值，并返回其索引。
+ * 如果目标值不存在于数组中，返回它将会被按顺序插入的位置。
+ * 
+ * 示例 1:
+ * 输入: nums = [1,3,5,6], target = 5
+ * 输出: 2
+ * 
+ * 示例 2:
+ * 输入: nums = [1,3,5,6], target = 2
+ * 输出: 1
+ * 
+ * 示例 3:
+ * 输入: nums = [1,3,5,6], target = 7
+ * 输出: 4
+ */
 int searchInsert(List<int> nums, int target) {
   if (nums.isEmpty) return 0;
   int left = 0;
@@ -1309,6 +1524,17 @@ int searchInsert(List<int> nums, int target) {
   return left;
 }
 
+/**
+ * 36. 有效的数独
+ * 请你判断一个 9x9 的数独是否有效。只需要根据以下规则，验证已经填入的数字是否有效即可：
+ * 1. 数字 1-9 在每一行只能出现一次。
+ * 2. 数字 1-9 在每一列只能出现一次。
+ * 3. 数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。
+ * 
+ * 注意：
+ * - 一个有效的数独（部分已被填充）不一定是可解的。
+ * - 只需要根据以上规则，验证已经填入的数字是否有效即可。
+ */
 bool isValidSudoku(List<List<String>> board) {
   List<List<int>> rows = List.generate(9, (_) => List.filled(9, 0));
   List<List<int>> cols = List.generate(9, (_) => List.filled(9, 0));
@@ -1333,10 +1559,14 @@ bool isValidSudoku(List<List<String>> board) {
 }
 
 /**
- 37. 解数独
-编写一个程序，通过填充空格来解决数独问题。
-
-一个数独的解法需遵循如下规则： 数字 1-9 在每一行只能出现一次。 数字 1-9 在每一列只能出现一次。 数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。 空白格用 '.' 表示。
+ * 37. 解数独
+ * 编写一个程序，通过填充空格来解决数独问题。
+ * 
+ * 一个数独的解法需遵循如下规则：
+ * 1. 数字 1-9 在每一行只能出现一次。
+ * 2. 数字 1-9 在每一列只能出现一次。
+ * 3. 数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。
+ * 空白格用 '.' 表示。
  */
 void solveSudoku(List<List<String>> board) {
   List<List<int>> rows = List.generate(9, (_) => List.filled(9, 0));
@@ -1401,7 +1631,7 @@ n 皇后问题 研究的是如何将 n 个皇后放置在 n×n 的棋盘上，�
 给你一个整数 n ，返回所有不同的 n 皇后问题 的解决方案。
 
 每一种解法包含一个不同的 n 皇后问题 的棋子放置方案，该方案中 'Q' 和 '.' 分别代表了皇后和空位。
- */
+*/
 List<List<String>> solveNQueens(int n) {
   List<List<String>> result = [];
   List<List<String>> current = List.generate(n, (_) => List.filled(n, '.'));
@@ -1448,6 +1678,24 @@ List<List<String>> solveNQueens(int n) {
   backTrack(0);
   return result;
 }
+/** 
+ * 38. 外观数列
+ * 给定一个正整数 n，输出外观数列的第 n 项。
+ * 外观数列是一个整数序列，从数字 1 开始，序列中的每一项都是对前一项的描述。
+ * 
+ * 1.     1
+ * 2.     11
+ * 3.     21
+ * 4.     1211
+ * 5.     111221
+ * 
+ * 第一项是数字 1
+ * 描述前一项：这个数是 1 即 “一个 1”，记作 11
+ * 描述前一项：这个数是 11 即 “二个 1”，记作 21
+ * 描述前一项：这个数是 21 即 “一个 2 一个 1”，记作 1211
+ * 描述前一项：这个数是 1211 即 “一个 1 一个 2 二个 1”，记作 111221
+ */
+
 
 // 123445
 String countAndSay(int n) {
@@ -1471,21 +1719,22 @@ String countAndSay(int n) {
 }
 
 /**
-  39. 组合总和
-给定一个无重复元素的数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
-
-candidates 中的数字可以无限制重复被选取。
-说明：
-所有数字（包括 target）都是正整数。
-解集不能包含重复的组合。
-示例 1：
-
-输入：candidates = [2,3,6,7], target = 7,
-所求解集为： [ [7], [2,2,3] ]
-示例 2：
-
-输入：candidates = [2,3,5], target = 8,
-所求解集为： [ [2,2,2,2], [2,3,3], [3,5] ]
+ * 39. 组合总和
+ * 给定一个无重复元素的数组 candidates 和一个目标数 target，
+ * 找出 candidates 中所有可以使数字和为 target 的组合。
+ * candidates 中的数字可以无限制重复被选取。
+ * 
+ * 说明：
+ * 所有数字（包括 target）都是正整数。
+ * 解集不能包含重复的组合。
+ * 
+ * 示例 1：
+ * 输入：candidates = [2,3,6,7], target = 7
+ * 输出：[[7], [2,2,3]]
+ * 
+ * 示例 2：
+ * 输入：candidates = [2,3,5], target = 8
+ * 输出：[[2,2,2,2], [2,3,3], [3,5]]
  */
 List<List<int>> combinationSum(List<int> candidates, int target) {
   List<List<int>> result = [];
@@ -1514,29 +1763,22 @@ List<List<int>> combinationSum(List<int> candidates, int target) {
 }
 
 /**
- 40.组合总和II
-给定一个数组 candidates 和一个目标数 target ，找出 candidates 中所有可以使数字和为 target 的组合。
-
-candidates 中的每个数字在每个组合中只能使用一次。
-
-说明： 所有数字（包括目标数）都是正整数。解集不能包含重复的组合。 
-
-示例 1:
-输入: candidates = [10,1,2,7,6,1,5], target = 8,
-所求解集为:
-[
-  [1, 7],
-  [1, 2, 5],
-  [2, 6],
-  [1, 1, 6]
-]
-示例 2:
-输入: candidates = [2,5,2,1,2], target = 5,
-所求解集为:
-[
-  [1,2,2],
-  [5]
-]
+ * 40. 组合总和 II
+ * 给定一个数组 candidates 和一个目标数 target，
+ * 找出 candidates 中所有可以使数字和为 target 的组合。
+ * candidates 中的每个数字在每个组合中只能使用一次。
+ * 
+ * 说明：
+ * 所有数字（包括目标数）都是正整数。
+ * 解集不能包含重复的组合。
+ * 
+ * 示例 1:
+ * 输入: candidates = [10,1,2,7,6,1,5], target = 8
+ * 输出: [[1,7], [1,2,5], [2,6], [1,1,6]]
+ * 
+ * 示例 2:
+ * 输入: candidates = [2,5,2,1,2], target = 5
+ * 输出: [[1,2,2], [5]]
  */
 // 1 2 2 2 ， 5
 List<List<int>> combinationSum2(List<int> candidates, int target) {
@@ -1574,6 +1816,22 @@ List<List<int>> combinationSum2(List<int> candidates, int target) {
   return result;
 }
 
+/**
+ * 41. 缺失的第一个正数
+ * 给你一个未排序的整数数组 nums，请你找出其中没有出现的最小的正整数。
+ * 
+ * 示例 1：
+ * 输入：nums = [1,2,0]
+ * 输出：3
+ * 
+ * 示例 2：
+ * 输入：nums = [3,4,-1,1]
+ * 输出：2
+ * 
+ * 示例 3：
+ * 输入：nums = [7,8,9,11,12]
+ * 输出：1
+ */
 int firstMissingPositive(List<int> nums) {
   int n = nums.length;
   for (int i = 0; i < n; i++) {
@@ -1592,14 +1850,17 @@ int firstMissingPositive(List<int> nums) {
 }
 
 /**
- 42. 接雨水
-给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
-输入：height = [0,1,0,2,1,0,1,3,2,1,2,1]
-输出：6
-解释：上面是由数组 [0,1,0,2,1,0,1,3,2,1,2,1] 表示的高度图，在这种情况下，可以接 6 个单位的雨水（蓝色部分表示雨水）。 
-
-输入：height = [4,2,0,3,2,5]
-输出：9
+ * 42. 接雨水
+ * 给定 n 个非负整数表示每个宽度为 1 的柱子的高度图，计算按此排列的柱子，下雨之后能接多少雨水。
+ * 
+ * 示例 1：
+ * 输入：height = [0,1,0,2,1,0,1,3,2,1,2,1]
+ * 输出：6
+ * 解释：上面是由数组 [0,1,0,2,1,0,1,3,2,1,2,1] 表示的高度图，在这种情况下，可以接 6 个单位的雨水（蓝色部分表示雨水）。 
+ * 
+ * 示例 2：
+ * 输入：height = [4,2,0,3,2,5]
+ * 输出：9
  */
 // [0,1,0,2,1,0,1,3,2,1,2,1]
 int trap(List<int> height) {
@@ -1650,41 +1911,57 @@ int trap(List<int> height) {
 }
 
 /**
- 46.全排列
-力扣题目链接
-
-给定一个 没有重复 数字的序列，返回其所有可能的全排列。
-
-示例:
-
-输入: [1,2,3]
-输出: [ [1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1] ]
+ * 46. 全排列
+ * 给定一个不含重复数字的数组 nums，返回其所有可能的全排列。你可以按任意顺序返回答案。
+ * 
+ * 示例 1：
+ * 输入：nums = [1,2,3]
+ * 输出：[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+ * 
+ * 示例 2：
+ * 输入：nums = [0,1]
+ * 输出：[[0,1],[1,0]]
+ * 
+ * 示例 3：
+ * 输入：nums = [1]
+ * 输出：[[1]]
  */
-
 List<List<int>> permute(List<int> nums) {
   if (nums.isEmpty) return [];
   List<List<int>> result = [];
   List<int> current = [];
   List<bool> isUsed = List.filled(nums.length, false);
   void backTrack() {
-    if (current.length == nums.length) {
-      result.add(List.from(current));
-      return;
-    }
-    for (int i = 0; i < nums.length; i++) {
-      if (isUsed[i]) continue;
-      isUsed[i] = true;
-      current.add(nums[i]);
-      backTrack();
-      current.removeLast(); // backtrack
-      isUsed[i] = false; // mark as unused
-    }
+  if (current.length == nums.length) {
+    result.add(List.from(current));
+    return;
   }
+  for (int i = 0; i < nums.length; i++) {
+    if (isUsed[i]) continue;
+    isUsed[i] = true;
+    current.add(nums[i]);
+    backTrack();
+    current.removeLast(); // backtrack
+    isUsed[i] = false; // mark as unused
+  }
+}
 
   backTrack();
   return result;
 }
 
+/**
+ * 47. 全排列 II
+ * 给定一个可包含重复数字的序列 nums，按任意顺序返回所有不重复的全排列。
+ * 
+ * 示例 1：
+ * 输入：nums = [1,1,2]
+ * 输出：[[1,1,2],[1,2,1],[2,1,1]]
+ * 
+ * 示例 2：
+ * 输入：nums = [1,2,3]
+ * 输出：[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+ */
 List<List<int>> permuteUnique(List<int> nums) {
   nums.sort(); // Sort to handle duplicates
   if (nums.isEmpty) return [];
@@ -1711,6 +1988,19 @@ List<List<int>> permuteUnique(List<int> nums) {
   return result;
 }
 
+/**
+ * 48. 旋转图像
+ * 给定一个 n × n 的二维矩阵 matrix 表示一个图像。请你将图像顺时针旋转 90 度。
+ * 你必须在原地旋转图像，这意味着你需要直接修改输入的二维矩阵。请不要使用另一个矩阵来旋转图像。
+ * 
+ * 示例 1：
+ * 输入：matrix = [[1,2,3],[4,5,6],[7,8,9]]
+ * 输出：[[7,4,1],[8,5,2],[9,6,3]]
+ * 
+ * 示例 2：
+ * 输入：matrix = [[5,1,9,11],[2,4,8,10],[13,3,6,7],[15,14,12,16]]
+ * 输出：[[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]
+ */
 void rotate(List<List<int>> matrix) {
   int top = 0;
   int bottom = matrix.length - 1;
@@ -1734,10 +2024,13 @@ void rotate(List<List<int>> matrix) {
 
 /**
  * 49. 字母异位词分组
-给你一个字符串数组，请你将 字母异位词 组合在一起。可以按任意顺序返回结果列表。
+ * 给你一个字符串数组，请你将字母异位词组合在一起。可以按任意顺序返回结果列表。
+ * 字母异位词是由重新排列源单词的字母得到的一个新单词，所有源单词中的字母通常恰好只用一次。
+ * 
+ * 示例 1:
+ * 输入: strs = ["eat", "tea", "tan", "ate", "nat", "bat"]
+ * 输出: [["bat"],["nat","tan"],["ate","eat","tea"]]
  */
-// 输入: strs = ["eat", "tea", "tan", "ate", "nat", "bat"]
-// 输出: [["bat"],["nat","tan"],["ate","eat","tea"]]
 List<List<String>> groupAnagrams(List<String> strs) {
   Map<String, List<String>> map = {};
   for (int i = 0; i < strs.length; i++) {
@@ -1754,26 +2047,23 @@ List<List<String>> groupAnagrams(List<String> strs) {
 }
 
 /**
- 438. 找到字符串中所有字母异位词
-给定两个字符串 s 和 p，找到 s 中所有 p 的 异位词 的子串，返回这些子串的起始索引。不考虑答案输出的顺序。
-
- 
-
-示例 1:
-
-输入: s = "cbaebabacd", p = "abc"
-输出: [0,6]
-解释:
-起始索引等于 0 的子串是 "cba", 它是 "abc" 的异位词。
-起始索引等于 6 的子串是 "bac", 它是 "abc" 的异位词。
- 示例 2:
-
-输入: s = "abab", p = "ab"
-输出: [0,1,2]
-解释:
-起始索引等于 0 的子串是 "ab", 它是 "ab" 的异位词。
-起始索引等于 1 的子串是 "ba", 它是 "ab" 的异位词。
-起始索引等于 2 的子串是 "ab", 它是 "ab" 的异位词。
+ * 438. 找到字符串中所有字母异位词
+ * 给定两个字符串 s 和 p，找到 s 中所有 p 的异位词的子串，返回这些子串的起始索引。不考虑答案输出的顺序。
+ * 
+ * 示例 1:
+ * 输入: s = "cbaebabacd", p = "abc"
+ * 输出: [0,6]
+ * 解释:
+ * 起始索引等于 0 的子串是 "cba", 它是 "abc" 的异位词。
+ * 起始索引等于 6 的子串是 "bac", 它是 "abc" 的异位词。
+ * 
+ * 示例 2:
+ * 输入: s = "abab", p = "ab"
+ * 输出: [0,1,2]
+ * 解释:
+ * 起始索引等于 0 的子串是 "ab", 它是 "ab" 的异位词。
+ * 起始索引等于 1 的子串是 "ba", 它是 "ab" 的异位词。
+ * 起始索引等于 2 的子串是 "ab", 它是 "ab" 的异位词。
  */
 List<int> findAnagrams(String s, String p) {
   // 思路：维持sCount的大小为p的长度（左边移除，右边加入），然后比较两个count数组是否相等
@@ -1797,14 +2087,20 @@ List<int> findAnagrams(String s, String p) {
   }
   return result;
 }
+
 /**
  * 1002. 查找共用字符
- 给你一个字符串数组 words ，请你找出所有在 words 的每个字符串中都出现的共用字符（ 包括重复字符），并以数组形式返回。你可以按 任意顺序 返回答案。
-输入：words = ["bella","label","roller"] 输出：["e","l","l"]
-输入：words = ["cool","lock","cook"] 输出：["c","o"]
-1 <= words.length <= 100 1 <= words[i].length <= 100 words[i] 由小写英文字母组成
+ * 给你一个字符串数组 words，请你找出所有在 words 的每个字符串中都出现的共用字符（包括重复字符），并以数组形式返回。你可以按任意顺序返回答案。
+ * 
+ * 示例 1：
+ * 输入：words = ["bella","label","roller"]
+ * 输出：["e","l","l"]
+ * 
+ * 示例 2：
+ * 输入：words = ["cool","lock","cook"]
+ * 输出：["c","o"]
+ * 1 <= words.length <= 100 1 <= words[i].length <= 100 words[i] 由小写英文字母组成
  */
-
 List<String> commonChars(List<String> words) {
   //思路： 先统计words【0】的字符频次，然后统计words【i】的字符频次，然后取最小值（如果为0则表示该字符没有即在words[0]中出现，又在words[i]中出现），后续同理比较words剩余的字符串
   List<int> pCount = List.filled(26, 0);
@@ -1831,18 +2127,20 @@ List<String> commonChars(List<String> words) {
   }
   return result;
 }
-/*
-349. 两个数组的交集
-给定两个数组 nums1 和 nums2 ，返回 它们的 交集 。输出结果中的每个元素一定是 唯一 的。我们可以 不考虑输出结果的顺序 。
-示例 1：
-输入：nums1 = [1,2,2,1], nums2 = [2,2]
-输出：[2]
-示例 2：
-输入：nums1 = [4,9,5], nums2 = [9,4,9,8,4]
-输出：[9,4]
-解释：[4,9] 也是可通过的
-*/
 
+/**
+ * 349. 两个数组的交集
+ * 给定两个数组 nums1 和 nums2，返回它们的交集。输出结果中的每个元素一定是唯一的。我们可以不考虑输出结果的顺序。
+ * 
+ * 示例 1：
+ * 输入：nums1 = [1,2,2,1], nums2 = [2,2]
+ * 输出：[2]
+ * 
+ * 示例 2：
+ * 输入：nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+ * 输出：[9,4]
+ * 解释：[4,9] 也是可通过的
+ */
 List<int> intersection(List<int> nums1, List<int> nums2) {
   // 思路：使用两个set分别存储两个数组的元素，然后遍历其中一个set，判断另一个set是否包含该元素，如果包含则加入结果集
   Set<int> set1 = {};
@@ -1862,19 +2160,20 @@ List<int> intersection(List<int> nums1, List<int> nums2) {
   return result;
 }
 
-/*
-350. 两个数组的交集 II
-给你两个整数数组 nums1 和 nums2 ，请你以数组形式返回两数组的交集。返回结果中每个元素出现的次数，
-应与元素在两个数组中都出现的次数一致（如果出现次数不一致，则考虑取较小值）。可以不考虑输出结果的顺序。
-输入：nums1 = [1,2,2,1], nums2 = [2,2]
-输出：[2,2]
-示例 2:
-
-输入：nums1 = [4,9,5], nums2 = [9,4,9,8,4]
-输出：[4,9]
-1 <= nums1.length, nums2.length <= 1000
-0 <= nums1[i], nums2[i] <= 1000
-*/
+/**
+ * 350. 两个数组的交集 II
+ * 给你两个整数数组 nums1 和 nums2，请你以数组形式返回两数组的交集。
+ * 返回结果中每个元素出现的次数，应与元素在两个数组中都出现的次数一致（如果出现次数不一致，则考虑取较小值）。
+ * 可以不考虑输出结果的顺序。
+ * 
+ * 示例 1：
+ * 输入：nums1 = [1,2,2,1], nums2 = [2,2]
+ * 输出：[2,2]
+ * 
+ * 示例 2:
+ * 输入：nums1 = [4,9,5], nums2 = [9,4,9,8,4]
+ * 输出：[4,9]
+ */
 List<int> intersect(List<int> nums1, List<int> nums2) {
   // 和1002. 查找共用字符思路一样
   List<int> result = [];
@@ -1896,7 +2195,30 @@ List<int> intersect(List<int> nums1, List<int> nums2) {
   return result;
 }
 
-//-1 -1 -1 2 2
+/**
+ * 202. 快乐数
+ * 编写一个算法来判断一个数 n 是不是快乐数。
+ * 
+ * 快乐数定义为：
+ * 1. 对于一个正整数，每一次将该数替换为它每个位置上的数字的平方和。
+ * 2. 然后重复这个过程直到这个数变为 1，也可能是无限循环但始终变不到 1。
+ * 3. 如果可以变为 1，那么这个数就是快乐数。
+ * 
+ * 如果 n 是快乐数就返回 true；不是，则返回 false。
+ * 
+ * 示例 1：
+ * 输入：n = 19
+ * 输出：true
+ * 解释：
+ * 1^2 + 9^2 = 82
+ * 8^2 + 2^2 = 68
+ * 6^2 + 8^2 = 100
+ * 1^2 + 0^2 + 0^2 = 1
+ * 
+ * 示例 2：
+ * 输入：n = 2
+ * 输出：false
+ */
 bool isHappy(int n) {
   //思路：n==1则是快乐数，否则计算各位数字的平方和，如果出现循环则不是快乐数
   Set<int> seen = {};
@@ -1914,11 +2236,21 @@ bool isHappy(int n) {
 }
 
 /**
-53. 最大子序和
-给定一个整数数组 nums ，找到一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
-输入: [-2,1,1,1,-4,4,-1,2,1,-5,4]
-输出: 6
-解释:  连续子数组  [4,-1,2,1] 的和最大，为  6。
+ * 53. 最大子数组和
+ * 给你一个整数数组 nums，请你找出一个具有最大和的连续子数组（子数组最少包含一个元素），返回其最大和。
+ * 
+ * 示例 1：
+ * 输入：nums = [-2,1,-3,4,-1,2,1,-5,4]
+ * 输出：6
+ * 解释：连续子数组 [4,-1,2,1] 的和最大，为 6。
+ * 
+ * 示例 2：
+ * 输入：nums = [1]
+ * 输出：1
+ * 
+ * 示例 3：
+ * 输入：nums = [5,4,-1,7,8]
+ * 输出：23
  */
 int maxSubArray(List<int> nums) {
   List<int> dp = List.filled(nums.length, 0);
@@ -1951,12 +2283,18 @@ int maxSubArray(List<int> nums) {
   // return maxSum;
 }
 
-/*
-54. 螺旋矩阵
-给你一个 m 行 n 列的矩阵 matrix ，请按照 顺时针螺旋顺序 ，返回矩阵中的所有元素。
-输入：matrix = [[1,2,3],[4,5,6],[7,8,9]]
-输出：[1,2,3,6,9,8,7,4,5]
-*/
+/**
+ * 54. 螺旋矩阵
+ * 给你一个 m 行 n 列的矩阵 matrix，请按照顺时针螺旋顺序，返回矩阵中的所有元素。
+ * 
+ * 示例 1：
+ * 输入：matrix = [[1,2,3],[4,5,6],[7,8,9]]
+ * 输出：[1,2,3,6,9,8,7,4,5]
+ * 
+ * 示例 2：
+ * 输入：matrix = [[1,2,3,4],[5,6,7,8],[9,10,11,12]]
+ * 输出：[1,2,3,4,8,12,11,10,9,5,6,7]
+ */
 List<int> spiralOrder(List<List<int>> matrix) {
   //思路是维护四个边界，left,right,top,bottom
   /*
