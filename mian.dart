@@ -293,6 +293,7 @@ double findMedianSortedArrays(List<int> nums1, List<int> nums2) {
  * 解释："aba" 同样是符合题意的答案。
  */
 String longestPalindrome(String s) {
+  //指针扩散
   String longest = s.substring(0, 1);
   int maxLen = 1;
 
@@ -340,13 +341,14 @@ String longestPalindrome(String s) {
  * 输入：s = "PAYPALISHIRING", numRows = 3
  * 输出："PAHNAPLSIIGYIR"
  * 解释：
- * P   A   H   N
- * A P L S I I G
- * Y   I   R
+ * result【0】 = P   A   H   N
+ * result【1】 = A P L S I I G
+ * result【2】 = Y   I   R
  */
 // "PAYPALISHIRING"
 
 String convert(String s, int numRows) {
+  //思路： 按行存储，然后拼接。模拟Z字形
   if (numRows <= 1) return s; // if only one row, return the string as is
   List<String> result = List.filled(numRows, '');
   bool goDown = false; // flag to indicate direction
@@ -363,7 +365,7 @@ String convert(String s, int numRows) {
     }
   }
 
-  return result.join(''); // return the final string
+  return result.join('');
 }
 
 /**
@@ -377,7 +379,7 @@ String convert(String s, int numRows) {
  * 输出：321
  */
 int reverse(int x) {
-  // −231,  231 − 1
+  // 注意一点：绝无可能result == MAX ~/ 10
   int result = 0;
   int flag = x < 0 ? -1 : 1;
   x = x.abs();
@@ -385,10 +387,13 @@ int reverse(int x) {
   int MIN = -2147483648;
 
   while (x != 0) {
-    if (flag == -1 && result == MAX ~/ 10 && x % 10 == 8) {
-      return MIN; // special case for -2147483648
-    }
-    if (result > MAX ~/ 10 || result == MAX ~/ 10 && x % 10 > 7) {
+    // if (flag == -1 && result == MAX ~/ 10 && x % 10 == 8) {
+    //   return MIN; // special case for -2147483648
+    // }
+    // if (result > MAX ~/ 10 || result == MAX ~/ 10 && x % 10 > 7) {
+    //   return 0; // overflow
+    // }
+    if (result > MAX ~/ 10) {
       return 0; // overflow
     }
     result = result * 10 + x % 10;
@@ -469,8 +474,7 @@ bool isPalindrome(int x) {
  * 解释：图中垂直线代表输入数组 [1,8,6,2,5,4,8,3,7]。在此情况下，容器能够容纳水的最大值为 49。
  */
 int maxArea(List<int> height) {
-// [1,8,6,2,5,4,8,3,7]
-// 输出：49
+// 思路：用贪心算法，双指针从两端夹逼，每次移动较短的那一边
   int left = 0;
   int right = height.length - 1;
   int sum = 0;
@@ -530,34 +534,32 @@ String longestCommonPrefix(List<String> strs) {
  * nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0。
  * 不同的三元组是 [-1,0,1] 和 [-1,-1,2]。
  */
-int threeSum(List<int> nums, int target) {
-  //思路：先排序，然后固定一个数，双指针夹逼
+List<List<int>> threeSum(List<int> nums) {
+  // 思路：先排序，然后固定一个数，双指针夹逼
   nums.sort();
-  int minDiff = 100001; // Initialize to a large value
   int left = 0;
   int right = nums.length - 1;
+  List<List<int>> result = [];
   for (int i = 0; i < nums.length; i++) {
+    if (i > 0 && nums[i] == nums[i - 1]) continue; // Skip duplicates
     left = i + 1;
     right = nums.length - 1;
-    if (i > 1 && nums[i] == nums[i - 1]) {
-      continue; // skip duplicates
-    }
     while (left < right) {
-      int sum = nums[i] + nums[left] + nums[right];
-      int diff = sum - target;
-      if (diff.abs() < minDiff.abs()) {
-        minDiff = diff;
-      }
-      if (sum == target) {
-        return target;
-      } else if (sum < target) {
+      if (nums[left] + nums[right] + nums[i] == 0) {
+        result.add([nums[i], nums[left], nums[right]]);
+
+        while (left < right && nums[left] == nums[left + 1]) left++;
+        while (left < right && nums[right] == nums[right - 1]) right--;
+        left++;
+        right--;
+      } else if (nums[left] + nums[right] + nums[i] < 0) {
         left++;
       } else {
         right--;
       }
     }
   }
-  return minDiff + target;
+  return result;
 }
 
 /**
@@ -620,6 +622,7 @@ int threeSumClosest(List<int> nums, int target) {
  * 输出：["ad","ae","af","bd","be","bf","cd","ce","cf"]
  */
 List<String> letterCombinations(String digits) {
+  //思路：回溯法：注意是backTrack(index + 1)不是backTrack(i + 1);
   if (digits.isEmpty) return [];
   List<String> result = [];
   List<String> mapping = [
@@ -697,6 +700,7 @@ List<List<int>> fourSum(List<int> nums, int target) {
   }
   return result;
 }
+
 /**
  * 454. 四数相加 II
  * 给定四个包含整数的数组列表 A、B、C、D，计算有多少个元组 (i, j, k, l) 使得 A[i] + B[j] + C[k] + D[l] = 0。
@@ -754,6 +758,7 @@ int fourSumCount(
  * 输出：["h","a","n","n","a","H"]
  */
 void reverseString(List<String> s) {
+  // 双指针交换
   int left = 0;
   int right = s.length - 1;
   while (left < right) {
@@ -843,6 +848,7 @@ class TreeNode {
  * 输出：[1]
  */
 ListNode? removeNthFromEnd(ListNode? head, int n) {
+  //思路：双指针，快指针先走n步，然后快慢指针一起走，直到快指针到达末尾
   if (head == null || n <= 0) return head;
   ListNode? dummy = ListNode(0, head);
   ListNode? slow = dummy;
@@ -869,6 +875,7 @@ ListNode? removeNthFromEnd(ListNode? head, int n) {
  * 图示两个链表在节点 c1 开始相交：
  */
 ListNode? getIntersectionNode(ListNode? headA, ListNode? headB) {
+  // 思路：先计算两个链表的长度，然后让长的链表先走差值步，然后两个链表一起走，直到相遇
   if (headA == null || headB == null) return null;
   ListNode? a = headA;
   ListNode? b = headB;
@@ -893,6 +900,7 @@ ListNode? getIntersectionNode(ListNode? headA, ListNode? headB) {
       b = b?.next;
     }
   }
+  // 然后一起走，直到相遇，或者走到null，走到null说明没有相交
   while (a != null && b != null) {
     if (a == b) {
       return a;
@@ -900,7 +908,8 @@ ListNode? getIntersectionNode(ListNode? headA, ListNode? headB) {
     a = a.next;
     b = b.next;
   }
-  return a;
+  // return a;
+  return null;
 }
 
 /**
@@ -943,6 +952,7 @@ ListNode? detectCycle(ListNode? head) {
  * 输出: false
  */
 bool isAnagram(String s, String t) {
+  //思路：用一个长度为26的数组来记录每个字母出现的次数，一个加一个减，结果为0则为异位词
   if (s.length != t.length) return false;
   List<int> count = List.filled(26, 0);
   for (int i = 0; i < t.length; i++) {
@@ -1010,6 +1020,7 @@ bool canConstruct(String ransomNote, String magazine) {
  * 输出：false
  */
 bool isValid(String s) {
+  // 思路：用栈，遇到左括号入栈，遇到右括号出栈并匹配
   List<String> stack = [];
   for (int i = 0; i < s.length; i++) {
     String current = s[i];
@@ -1051,6 +1062,7 @@ bool isValid(String s) {
  * 之后我们得到字符串 "aaca"，其中又只有 "aa" 可以执行重复项删除操作，所以最后的字符串为 "ca"。
  */
 String removeDuplicates1047(String s) {
+  // 思路：用栈，比较当前和栈顶元素，相同就出栈
   List<String> stack = [];
   String result = '';
   for (int i = 0; i < s.length; i++) {
@@ -1123,18 +1135,31 @@ List<String> generateParenthesis(int n) {
       result.add(current);
       return;
     }
-    for (int i = index; i < 2 * n; i++) {
-      current += '(';
-      left++;
-      backTrack(i + 1, current);
-      current = current.substring(0, current.length - 1); // backtrack
-      left--;
+    // current += '(';
+    // left++;
+    // backTrack(index + 1, current);
+    // current = current.substring(0, current.length - 1); // backtrack
+    // left--;
 
-      current += ')';
-      right++;
-      backTrack(i + 1, current);
-      current = current.substring(0, current.length - 1); // backtrack
-      right--;
+    // current += ')';
+    // right++;
+    // backTrack(index + 1, current);
+    // current = current.substring(0, current.length - 1); // backtrack
+    // right--;
+    for (int i = 0; i < 2; i++) {
+      if (i == 0) {
+        current += '(';
+        left++;
+        backTrack(index + 1, current);
+        current = current.substring(0, current.length - 1); // backtrack
+        left--;
+      } else {
+        current += ')';
+        right++;
+        backTrack(index + 1, current);
+        current = current.substring(0, current.length - 1); // backtrack
+        right--;
+      }
     }
   }
 
@@ -1193,6 +1218,8 @@ ListNode? mergeKLists(List<ListNode?> lists) {
  * 输入：head = [1]
  * 输出：[1]
  */
+// 0 1 2 3
+// 0 2 1 3
 ListNode? swapPairs(ListNode? head) {
   if (head == null || head.next == null) return head;
   ListNode dummy = ListNode(0, head);
@@ -1236,6 +1263,7 @@ ListNode? swapPairs(ListNode? head) {
  * 输出：5, nums = [0,1,2,3,4]
  */
 int removeDuplicates(List<int> nums) {
+  //思路：先塞一个元素，然后比较fast和已经塞进去的元素是否相同，不同就把当前元素也塞进去，同就跳过
   if (nums.length <= 1) return nums.length;
   int slow = 1;
   for (int fast = 1; fast < nums.length; fast++) {
@@ -1280,6 +1308,10 @@ int removeElement(List<int> nums, int val) {
  * 本题中，如果商严格大于 2^31 - 1，则返回 2^31 - 1；如果商严格小于 -2^31，则返回 -2^31。
  */
 int divide(int dividend, int divisor) {
+/*  while (dividend < addDivisor && dividend >= divisor) {
+      addDivisor = divisor;
+      sumDivisor = 1;
+    }*/
   if (divisor == 0) return 0;
   if (divisor == 1) return dividend;
   if (divisor == -1) return dividend == -2147483648 ? 2147483647 : -dividend;
@@ -1329,7 +1361,12 @@ int divide(int dividend, int divisor) {
  * 输入：nums = [1,1,5]
  * 输出：[1,5,1]
  */
+//[4,5,2,6,3,1]
+// 当我们完成交换后排列变为 [4,5,3,6,2,1]，此时我们可以重排「较小数」右边的序列，序列变为 [4,5,3,1,2,6]。
 void nextPermutation(List<int> nums) {
+  // 思路：从后往前找到第一个降序的数，
+  // 然后再从后往前找到第一个比它大的数，交换，
+  // 然后把它后面的数排序，方法是反转，因为它们一定是降序的
   if (nums.length <= 1) return;
   int i, k;
   for (i = nums.length - 2; i >= 0; i--) {
@@ -1369,8 +1406,8 @@ void nextPermutation(List<int> nums) {
  * 输出：2
  * 
  * 示例 2：
- * 输入：s = ")()())"
- * 输出：4
+ * 输入：s = "( ) ( ( ) ( ) )"
+ * 输出：4.   0 1 2 3 4 5 6 7
  * 
  * 示例 3：
  * 输入：s = ""
@@ -1379,20 +1416,29 @@ void nextPermutation(List<int> nums) {
 int longestValidParentheses(String s) {
   List<int> dp = List.filled(s.length, 0);
   int maxLength = 0;
-  for (int i = 0; i < s.length; i++) {
+  for (int i = 1; i < s.length; i++) {
     if (s[i] == ')') {
-      if (i > 0 && s[i - 1] == '(') {
+      if (s[i - 1] == '(') {
         if (i - 2 >= 0) {
           dp[i] = dp[i - 2] + 2;
         } else {
           dp[i] = 2;
         }
-      } else if (i > 0 && s[i - 1] == ')') {
-        dp[i] =
-            dp[i - 1] + ((i - dp[i - 1]) >= 2 ? dp[i - dp[i - 1] - 2] : 0) + 2;
+      } else if (s[i - 1] == ')') {
+//  * 输入：s = "( ) ( ( ) ( ) )"
+//  * 输出：4.   0 1 2 3 4 5 6 7
+        if (i - 1 - dp[i - 1] >= 0 && s[i - 1 - dp[i - 1]] == '(') {
+          //判断是否匹配
+          dp[i] = dp[i - 1] + 2; // 加上匹配的括号
+
+          // 再加上前面匹配的括号长度
+          if (i - 2 - dp[i - 1] >= 0) {
+            dp[i] += dp[i - 2 - dp[i - 1]];
+          }
+        }
       }
+      maxLength = max(maxLength, dp[i]);
     }
-    maxLength = max(maxLength, dp[i]);
   }
   return maxLength;
 }
@@ -1418,6 +1464,8 @@ int longestValidParentheses(String s) {
  * 输出：-1
  */
 int search(List<int> nums, int target) {
+  // 思路：二分法，nums[0] <= nums[midIndex]则【0-left-middle】是有序的，因为这个范围是有序的，所以可以判断target是否在这个范围内，不在必定在右边
+  // 反之【middle-right-end】是有序的，因为这个范围是有序的，所以可以判断target是否在这个范围内，不在必定在左边
   int midIndex = nums.length ~/ 2;
   int left = 0;
   int right = nums.length - 1;
@@ -1476,13 +1524,13 @@ List<int> searchRange(List<int> nums, int target) {
         left = mid + 1;
       }
     }
-    return [left, right];
+    return [right, left];
   }
 
   double targetLeft = target - 0.5;
   double targetRight = target + 0.5;
-  int resultLeft = search(nums, targetLeft)[0];
-  int resultRight = search(nums, targetRight)[1];
+  int resultLeft = search(nums, targetLeft)[1];
+  int resultRight = search(nums, targetRight)[0];
   if (resultLeft > resultRight) {
     return [-1, -1];
   } else {
@@ -1696,7 +1744,6 @@ List<List<String>> solveNQueens(int n) {
  * 描述前一项：这个数是 1211 即 “一个 1 一个 2 二个 1”，记作 111221
  */
 
-
 // 123445
 String countAndSay(int n) {
   String result = '1';
@@ -1785,7 +1832,7 @@ List<List<int>> combinationSum2(List<int> candidates, int target) {
   List<List<int>> result = [];
   List<int> current = [];
   int sum = 0;
-  List<bool> isUsed = List.filled(candidates.length, false);
+  // List<bool> isUsed = List.filled(candidates.length, false);
   candidates.sort();
   void backTrack(int index) {
     if (sum == target) {
@@ -1832,10 +1879,13 @@ List<List<int>> combinationSum2(List<int> candidates, int target) {
  * 输入：nums = [7,8,9,11,12]
  * 输出：1
  */
+// [3,4,2,1]
 int firstMissingPositive(List<int> nums) {
+  //思路：把数字放到对应的位置上，比如1放到下标0的位置上，2放到下标1的位置上，3放到下标2的位置上
   int n = nums.length;
   for (int i = 0; i < n; i++) {
-    while (nums[i] > 0 && nums[i] <= n && nums[nums[i] - 1] != nums[i]) {
+    while (nums[i] > 0 && nums[i] <= n && nums[i] != i + 1) {
+      if (nums[i] == nums[nums[i] - 1]) break; // avoid infinite loop
       int temp = nums[nums[i] - 1];
       nums[nums[i] - 1] = nums[i];
       nums[i] = temp;
@@ -1932,19 +1982,19 @@ List<List<int>> permute(List<int> nums) {
   List<int> current = [];
   List<bool> isUsed = List.filled(nums.length, false);
   void backTrack() {
-  if (current.length == nums.length) {
-    result.add(List.from(current));
-    return;
+    if (current.length == nums.length) {
+      result.add(List.from(current));
+      return;
+    }
+    for (int i = 0; i < nums.length; i++) {
+      if (isUsed[i]) continue;
+      isUsed[i] = true;
+      current.add(nums[i]);
+      backTrack();
+      current.removeLast(); // backtrack
+      isUsed[i] = false; // mark as unused
+    }
   }
-  for (int i = 0; i < nums.length; i++) {
-    if (isUsed[i]) continue;
-    isUsed[i] = true;
-    current.add(nums[i]);
-    backTrack();
-    current.removeLast(); // backtrack
-    isUsed[i] = false; // mark as unused
-  }
-}
 
   backTrack();
   return result;
@@ -2002,6 +2052,7 @@ List<List<int>> permuteUnique(List<int> nums) {
  * 输出：[[15,13,2,5],[14,3,4,1],[12,6,8,9],[16,7,10,11]]
  */
 void rotate(List<List<int>> matrix) {
+  // 先上下翻转，再对角线翻转
   int top = 0;
   int bottom = matrix.length - 1;
   while (top < bottom) {
@@ -2013,8 +2064,9 @@ void rotate(List<List<int>> matrix) {
     top++;
     bottom--;
   }
+  // 只遍历左下三角形
   for (int i = 0; i < matrix.length; i++) {
-    for (int j = i + 1; j < matrix[0].length; j++) {
+    for (int j = 0; j < i; j++) {
       int temp = matrix[i][j];
       matrix[i][j] = matrix[j][i];
       matrix[j][i] = temp;
@@ -2032,6 +2084,7 @@ void rotate(List<List<int>> matrix) {
  * 输出: [["bat"],["nat","tan"],["ate","eat","tea"]]
  */
 List<List<String>> groupAnagrams(List<String> strs) {
+  //思路：把每个字符串排序后作为key，存入map中，value是一个   list    ，最后返回map的values
   Map<String, List<String>> map = {};
   for (int i = 0; i < strs.length; i++) {
     List<String> temp = strs[i].split('');
@@ -2329,6 +2382,7 @@ d. 从下到上遍历左边界：但前提是 left <= right（因为可能没有
   }
   return result;
 }
+
 /**
  * 59. 螺旋矩阵 II
  * 给你一个正整数 n，生成一个包含 1 到 n² 所有元素，且元素按顺时针顺序螺旋排列的 n x n 正方形矩阵 matrix。
@@ -2416,16 +2470,30 @@ ListNode? reverseList(ListNode? head) {
  * 解释：跳到最后一个位置的最小跳跃数是 2。从下标为 0 跳到下标为 1 的位置，跳 1 步，然后跳 3 步到达数组的最后一个位置。
  */
 int jump(List<int> nums) {
+  // if (nums.length <= 1) return 0;
+  // int result = 0;
+  // int currentDistance = 0;
+  // int nextDistance = 0;
+  // for (int i = 0; i < nums.length; i++) {
+  //   nextDistance = max(nextDistance, i + nums[i]);
+  //   if (i == currentDistance) {
+  //     result++;
+  //     currentDistance = nextDistance;
+  //     if (currentDistance == nums.length - 1) return result;
+  //   }
+  // }
+  // return result;
+
   if (nums.length <= 1) return 0;
+
   int result = 0;
-  int currentDistance = 0;
-  int nextDistance = 0;
-  for (int i = 0; i < nums.length; i++) {
-    nextDistance = max(nextDistance, i + nums[i]);
-    if (i == currentDistance) {
+  int currentCover = 0;
+  int cover = 0;
+  for (int i = 0; i < nums.length - 1; i++) {
+    cover = max(cover, i + nums[i]);
+    if (i == currentCover) {
       result++;
-      currentDistance = nextDistance;
-      if (currentDistance == nums.length - 1) return result;
+      currentCover = cover;
     }
   }
   return result;
@@ -2443,16 +2511,24 @@ int jump(List<int> nums) {
  * 解释：可以先跳 1 步，从位置 0 到达位置 1，然后再从位置 1 跳 3 步到达最后一个位置。
  */
 bool canJump(List<int> nums) {
+  // if (nums.isEmpty) return true;
+  // int currentDistance = 0;
+  // int nextDistance = 0;
+  // for (int i = 0; i < nums.length; i++) {
+  //   nextDistance = max(nextDistance, i + nums[i]);
+  //   if (i == currentDistance) {
+  //     currentDistance = nextDistance;
+  //   } else if (i > currentDistance) {
+  //     return false; // cannot reach this index
+  //   }
+  // }
+  // return true;
+
   if (nums.isEmpty) return true;
-  int currentDistance = 0;
-  int nextDistance = 0;
-  for (int i = 0; i < nums.length; i++) {
-    nextDistance = max(nextDistance, i + nums[i]);
-    if (i == currentDistance) {
-      currentDistance = nextDistance;
-    } else if (i > currentDistance) {
-      return false; // cannot reach this index
-    }
+  int cover = 0;
+  for (int i = 0; i < nums.length - 1; i++) {
+    cover = max(cover, i + nums[i]);
+    if (i >= cover) return false; // cannot reach this index
   }
   return true;
 }
@@ -2468,6 +2544,7 @@ bool canJump(List<int> nums) {
  * 解释：区间 [1,3] 和 [2,6] 重叠，将它们合并为 [1,6]。
  */
 List<List<int>> merge(List<List<int>> intervals) {
+  // 思路：先排序，然后slow和fast指针，
   if (intervals.length <= 1) return intervals;
   intervals.sort((a, b) => a[0].compareTo(b[0]));
   int slow = 0;
@@ -2501,7 +2578,9 @@ List<List<int>> merge(List<List<int>> intervals) {
  * 输入：N = 1234
  * 输出：1234
  */
+// 323 -> 299
 int monotoneIncreasingDigits(int n) {
+  //思路：从后往前遍历，要求递增，否则前一位减1，后续位全部变为9
   List<int> list = n.toString().split('').map((e) => int.parse(e)).toList();
 
   for (int i = list.length - 1; i > 0; i--) {
@@ -2533,6 +2612,7 @@ int monotoneIncreasingDigits(int n) {
  * -1 2 -3 4 5
  */
 int largestSumAfterKNegations(List<int> nums, int k) {
+  // 思路：先排序绝对值，然后从后往前遍历，如果是负数且k>0则取反，k--，最后如果k>0则对nums[0]反复取反
   nums.sort((a, b) => a.abs().compareTo(b.abs()));
   for (int i = nums.length - 1; i >= 0; i--) {
     if (nums[i] < 0 && k > 0) {
@@ -2563,6 +2643,7 @@ int largestSumAfterKNegations(List<int> nums, int k) {
  * 解释：这是因为新的区间 [4,8] 与 [3,5],[6,7],[8,10] 重叠。
  */
 List<List<int>> insert(List<List<int>> intervals, List<int> newInterval) {
+  //思路：先把newInterval加入intervals，然后排序，之后和56. 合并区间思路一样
   intervals.add(newInterval);
   intervals.sort((a, b) => a[0].compareTo(b[0]));
   if (intervals.length + 1 <= 1) return intervals;
@@ -2625,6 +2706,7 @@ int lengthOfLastWord(String s) {
  * 输出：[2,0,1]
  */
 ListNode? rotateRight(ListNode? head, int k) {
+  //思路：先计算链表长度，之后使用双指针，fast先走k对长度取模 步，然后slow和fast一起走，直到fast走到末尾，slow的下一个节点就是新的头节点
   int nodeCount = 0;
   ListNode? current = head;
   while (current != null) {
@@ -2828,6 +2910,7 @@ String addBinary(String a, String b) {
  * 解释：8 的算术平方根是 2.82842...，由于返回类型是整数，小数部分将被舍去。
  */
 int mySqrt(int x) {
+  //思路：二分查找
   int left = 0;
   int right = x;
   while (left <= right) {
@@ -2856,6 +2939,7 @@ int mySqrt(int x) {
  * 2. 2 阶
  */
 int climbStairs(int n) {
+  //思路：动态规划，dp[i]表示到达第i阶的方法数，dp[i]=dp[i-1]+dp[i-2]
   if (n <= 1) return n; // only one way to climb one step
   List<int> dp = List.filled(n, 0);
   dp[0] = 1;
@@ -2879,6 +2963,7 @@ int climbStairs(int n) {
  * 解释：你将从下标为 1 的台阶开始，支付 15，向上爬两个台阶到达楼梯顶部。
  */
 int minCostClimbingStairs(List<int> cost) {
+  //思路：动态规划，dp[i]表示到达第i阶的最小花费，dp[i]=min(dp[i-1]+cost[i-1],dp[i-2]+cost[i-2])
   List<int> dp = List.filled(cost.length + 1, 0);
   dp[0] = 0;
   dp[1] = 0;
@@ -2907,17 +2992,19 @@ int minCostClimbingStairs(List<int> cost) {
  * 输出："/"
  */
 String simplifyPath(String path) {
-  List<String> stack = path.split('/');
-  List<String> result = [];
-  for (String dir in stack) {
+  //思路：使用栈，按“/”分割path，遇到..则出栈，遇到.或空则跳过，其他则入栈
+  //最后'/' + stack.join('/')
+  List<String> pathList = path.split('/');
+  List<String> stack = [];
+  for (String dir in pathList) {
     if (dir == '' || dir == '.') continue; // skip empty or current directory
     if (dir == '..') {
-      if (result.isNotEmpty) result.removeLast(); // go up one directory
+      if (stack.isNotEmpty) stack.removeLast(); // go up one directory
     } else {
-      result.add(dir); // add valid directory to the stack
+      stack.add(dir); // add valid directory to the stack
     }
   }
-  return '/' + result.join('/'); // join the result with '/' and return
+  return '/' + stack.join('/'); // join the result with '/' and return
 }
 
 /**
@@ -2929,6 +3016,8 @@ String simplifyPath(String path) {
  * 输出：[[1,0,1],[0,0,0],[1,0,1]]
  */
 void setZeroes(List<List<int>> matrix) {
+  //思路：使用第一行和第一列作为标记，标记该行或该列是否需要置零
+  // 另外使用两个变量标记第一行和第一列本来是否有零
   bool rowZero = false;
   bool colZero = false;
   for (int i = 0; i < matrix.length; i++) {
@@ -2982,6 +3071,7 @@ void setZeroes(List<List<int>> matrix) {
  * 输出：true
  */
 bool searchMatrix(List<List<int>> matrix, int target) {
+  //思路：使用二分查找，left=0， right = 二维矩阵的元素个数-1， mid = (left+right)/2，i和j可以通过mid计算得到
   if (matrix.isEmpty || matrix[0].isEmpty) return false;
   int left = 0;
   int right = matrix.length * matrix[0].length - 1;
@@ -3010,6 +3100,7 @@ bool searchMatrix(List<List<int>> matrix, int target) {
  * 输出：[0,0,1,1,2,2]
  */
 void sortColors(List<int> nums) {
+  //思路：两次遍历，第一次把0放到前面，第二次把1放到0后面
   if (nums.length <= 1) return; // no need to sort if length is 0 or 1
   int zeroIndex = 0;
   int oneIndex = 0;
@@ -3041,6 +3132,9 @@ void sortColors(List<int> nums) {
  * 输出："BANC"
  */
 String minWindow(String s, String t) {
+  //思路：使用滑动窗口，right指针不断向右移动，直到窗口包含t的所有字符，然后left指针向右移动，直到窗口不再包含t的所有字符
+  // 过程中记录最小窗口
+  //  tCount.values.every((count) => count <= 0) 用于检查当前窗口是否包含t的所有字符
   int left = 0;
   int right = 0;
   String result = '';
@@ -3180,9 +3274,9 @@ List<List<int>> subsets(List<int> nums) {
  */
 int removeDuplicates2(List<int> nums) {
   if (nums.length <= 2) return nums.length; // no duplicates to remove
-  int slow = 0, fast = 2;
-  for (int fast = slow; fast < nums.length; fast++) {
-    if (nums[fast] != nums[slow]) {
+  int slow = 2;
+  for (int fast = 2; fast < nums.length; fast++) {
+    if (nums[fast] != nums[slow - 2]) {
       nums[slow] = nums[fast];
       slow++;
     }
@@ -3225,31 +3319,56 @@ bool search2(List<int> nums, int target) {
  * 输出：[1,2,5]
  */
 ListNode? deleteDuplicates(ListNode? head) {
+  //思路：使用三个指针，pre指向当前不重复的节点，cur指向当前节点，last指向下一个节点
+  // if (head == null || head.next == null) return head; // no duplicates
+  // ListNode? dummy = ListNode(0, head);
+  // ListNode? pre = dummy, cur = head, last = head.next;
+  // bool needDelete = false;
+  // while (last != null) {
+  //   if (cur?.val == last.val) {
+  //     needDelete = true;
+  //     last = last.next;
+  //   } else {
+  //     if (needDelete) {
+  //       pre!.next = last;
+  //       cur = last;
+  //       last = last.next;
+  //     } else {
+  //       last = last.next;
+  //       cur = cur?.next;
+  //       pre = pre?.next;
+  //     }
+  //     needDelete = false; // reset flag
+  //   }
+  // }
+  // if (needDelete) {
+  //   pre!.next = last;
+  //   cur = last;
+  // }
+  // return dummy.next;
+
   if (head == null || head.next == null) return head; // no duplicates
   ListNode? dummy = ListNode(0, head);
   ListNode? pre = dummy, cur = head, last = head.next;
-  bool needDelete = false;
   while (last != null) {
     if (cur?.val == last.val) {
-      needDelete = true;
       last = last.next;
+      pre!.next = last; // skip the duplicate
     } else {
-      if (needDelete) {
-        pre!.next = last;
-        cur = last;
+      // 两种情况，删除了重复节点，或者没有删除重复节点
+      if (pre!.next == cur) {
+        // 没有删除重复节点，pre和cur都向后移动
+        pre = pre.next;
+        cur = cur?.next;
         last = last.next;
       } else {
+        // 删除了重复节点，cur和last向后移动，pre不动
+        cur = last;
         last = last.next;
-        cur = cur?.next;
-        pre = pre?.next;
       }
-      needDelete = false; // reset flag
     }
   }
-  if (needDelete) {
-    pre!.next = last;
-    cur = last;
-  }
+
   return dummy.next;
 }
 
@@ -3289,6 +3408,12 @@ ListNode? deleteDuplicates2(ListNode? head) {
  * 输入：heights = [2,1,5,6,2,3]
  * 输出：10
  */
+// 1 2 3 5 5 4
+// 0 1 2 3 4 5
+
+//接雨水，等于也要出栈，逻辑是利用stack[-2]来计算宽度
+// 3 2 1 1 2
+// 0 1 2 3 4
 int largestRectangleArea(List<int> heights) {
   // 使用单调栈，栈内存储单调递增的数据，也就是栈头是最大值
   // 然后遍历数组，如果当前元素小于栈顶元素，就表示栈顶元素所能组成的最大高度的矩形结束了
@@ -3306,6 +3431,7 @@ int largestRectangleArea(List<int> heights) {
     stack.add(i);
   }
   // 栈顶元素所能组成的最大高度的矩形也已经结束
+  // 还留在栈里的表示，从栈顶元素到数组末尾的元素都比它大
   while (stack.last != -1) {
     int height = heights[stack.removeLast()];
     int width = heights.length - stack.last - 1; // 处理剩余元素
@@ -3324,6 +3450,7 @@ int largestRectangleArea(List<int> heights) {
  * 输出：[1,2,2,4,3,5]
  */
 ListNode? partition(ListNode? head, int x) {
+  // 思路：遍历head，然后使用两个链表，一个存放小于x的节点，一个存放大于等于x的节点，最后将两个链表连接起来
   ListNode? lessHead = ListNode(0);
   ListNode? greaterHead = ListNode(0);
   ListNode dummyLess = lessHead;
@@ -3353,6 +3480,7 @@ ListNode? partition(ListNode? head, int x) {
  * 输出：[["a","a","b"],["aa","b"]]
  */
 List<List<String>> partition2(String s) {
+  //思路：使用回溯法，遍历字符串，判断每个子串是否是回文串，如果是则加入当前路径，然后继续递归
   List<List<String>> result = [];
   List<String> current = [];
   bool isPalindrome(String str) {
@@ -3394,12 +3522,29 @@ List<List<String>> partition2(String s) {
  * 输出：[1,2,2,3,5,6]
  */
 void merge2(List<int> nums1, int m, List<int> nums2, int n) {
+  // for (int i = nums1.length - 1; i >= 0; i--) {
+  //   if (n - 1 < 0 || m - 1 >= 0 && nums1[m - 1] > nums2[n - 1]) {
+  //     nums1[i] = nums1[m - 1];
+  //     m--;
+  //   } else {
+  //     nums1[i] = nums2[n - 1];
+  //     n--;
+  //   }
+  // }
+  n--;
+  m--;
   for (int i = nums1.length - 1; i >= 0; i--) {
-    if (n - 1 < 0 || m - 1 >= 0 && nums1[m - 1] > nums2[n - 1]) {
-      nums1[i] = nums1[m - 1];
+    if (n < 0) {
+      nums1[i] = nums1[m];
+      m--;
+    } else if (m < 0) {
+      nums1[i] = nums2[n];
+      n--;
+    } else if (nums1[m] > nums2[n]) {
+      nums1[i] = nums1[m];
       m--;
     } else {
-      nums1[i] = nums2[n - 1];
+      nums1[i] = nums2[n];
       n--;
     }
   }
@@ -3466,6 +3611,8 @@ List<List<int>> subsetsWithDup(List<int> nums) {
  * 示例 1：
  * 输入：nums = [4,6,7,7]
  * 输出：[[4,6],[4,6,7],[4,6,7,7],[4,7],[4,7,7],[6,7],[6,7,7],[7,7]]
+ * // [4, 7, 6, 7]
+ * // 4,7 和 4，7 去重
  */
 List<List<int>> findSubsequences(List<int> nums) {
   List<List<int>> result = [];
@@ -3515,20 +3662,20 @@ List<List<int>> findSubsequences(List<int> nums) {
  */
 int numDecodings(String s) {
   int n = s.length;
-  List<int> f = List.filled(n + 1, 0);
-  f[0] = 1;
+  List<int> dp = List.filled(n + 1, 0);
+  dp[0] = 1;
   for (int i = 1; i <= n; ++i) {
     if (s[i - 1] != '0') {
-      f[i] += f[i - 1];
+      dp[i] += dp[i - 1];
     }
     if (i > 1 &&
         s[i - 2] != '0' &&
         ((s[i - 2] == '1' || s[i - 2] == '2') &&
             s[i - 1].codeUnitAt(0) <= '6'.codeUnitAt(0))) {
-      f[i] += f[i - 2];
+      dp[i] += dp[i - 2];
     }
   }
-  return f[n];
+  return dp[n];
 }
 
 // 1 2 3 4 5
@@ -3816,32 +3963,49 @@ List<int> postOrder3(TreeNode? root) {
  * 输出：[[3],[9,20],[15,7]]
  */
 List<List<int>> levelOrder(TreeNode? root) {
-  if (root == null) return [];
+  // if (root == null) return [];
+  // List<List<int>> result = [];
+  // List<TreeNode> queue = [];
+  // List<int> currentLevel = [];
+  // List<TreeNode> nextQueue = [];
+  // queue.insert(0, root);
+  // while (queue.length > 0 || nextQueue.length > 0) {
+  //   if (queue.length == 0) {
+  //     queue = nextQueue;
+  //     result.add(currentLevel);
+  //     currentLevel = [];
+  //     nextQueue = [];
+  //   }
+  //   TreeNode? node = queue.removeLast();
+  //   currentLevel.add(node.val); // visit the root
+  //   if (node.left != null) {
+  //     nextQueue.insert(0, node.left!); // add left child to next queue
+  //   }
+  //   if (node.right != null) {
+  //     nextQueue.insert(0, node.right!); // add right child to next queue
+  //   }
+  // }
+  // if (currentLevel.isNotEmpty) {
+  //   result.add(currentLevel); // add the last level if not empty
+  // }
+  // return result;
+
   List<List<int>> result = [];
+  if (root == null) return result; // empty tree
   List<TreeNode> queue = [];
-  List<int> currentLevel = [];
-  List<TreeNode> nextQueue = [];
   queue.insert(0, root);
-  while (queue.length > 0 || nextQueue.length > 0) {
-    if (queue.length == 0) {
-      queue = nextQueue;
-      result.add(currentLevel);
-      currentLevel = [];
-      nextQueue = [];
+  while (queue.isNotEmpty) {
+    List<int> currentLevel = [];
+    int size = queue.length;
+    for (int i = 0; i < size; i++) {
+      TreeNode node = queue.removeLast();
+      currentLevel.add(node.val);
+      if (node.left != null) queue.insert(0, node.left!);
+      if (node.right != null) queue.insert(0, node.right!);
     }
-    TreeNode? node = queue.removeLast();
-    currentLevel.add(node.val); // visit the root
-    if (node.left != null) {
-      nextQueue.insert(0, node.left!); // add left child to next queue
-    }
-    if (node.right != null) {
-      nextQueue.insert(0, node.right!); // add right child to next queue
-    }
+    result.add(currentLevel);
   }
-  if (currentLevel.isNotEmpty) {
-    result.add(currentLevel); // add the last level if not empty
-  }
-  return result;
+  return result; // reverse the result for bottom-up order
 }
 
 /**
@@ -3965,7 +4129,6 @@ bool isValidBST(TreeNode? root) {
   return backTrack(root);
 }
 
-// 1 6 3 4 5 2 7
 /**
  * 99. 恢复二叉搜索树
  * 给你二叉搜索树的根节点 root，该树中的恰好两个节点的值被错误地交换。请在不改变其结构的情况下，恢复这棵树。
@@ -3974,6 +4137,7 @@ bool isValidBST(TreeNode? root) {
  * 输入：root = [1,3,null,null,2]
  * 输出：[3,1,null,null,2]
  */
+// 1 6 3 4 5 2 7  6 3 5 2
 void recoverTree(TreeNode? root) {
   List<TreeNode> stack = [];
   List<TreeNode> swappedNodes = [];
@@ -4175,23 +4339,41 @@ int sumOfLeftLeaves(TreeNode? root) {
  * 输出：["1->2->5","1->3"]
  */
 List<String> binaryTreePaths(TreeNode? root) {
+  // 终止条件必须用node.left == null && node.right == null来判断叶子节点，否者会出现
+  // if (root == null) return [];
+  // List<String> res = [];
+  // List<int> path = [];
+  // void backTrack(TreeNode node) {
+  //   path.add(node.val);
+  //   if (node.left == null && node.right == null) {
+  //     res.add(path.join('->'));
+  //     return;
+  //   }
+  //   if (node.left != null) {
+  //     backTrack(node.left!);
+  //     path.removeLast();
+  //   }
+  //   if (node.right != null) {
+  //     backTrack(node.right!);
+  //     path.removeLast();
+  //   }
+  // }
+
+  // backTrack(root);
+  // return res;
+
   if (root == null) return [];
   List<String> res = [];
   List<int> path = [];
-  void backTrack(TreeNode node) {
+  void backTrack(TreeNode? node) {
+    if (node == null) return;
     path.add(node.val);
     if (node.left == null && node.right == null) {
       res.add(path.join('->'));
-      return;
     }
-    if (node.left != null) {
-      backTrack(node.left!);
-      path.removeLast();
-    }
-    if (node.right != null) {
-      backTrack(node.right!);
-      path.removeLast();
-    }
+    backTrack(node.left);
+    backTrack(node.right);
+    path.removeLast();
   }
 
   backTrack(root);
@@ -4410,13 +4592,22 @@ TreeNode? sortedArrayToBST(List<int> nums) {
 
 /**
  * 112. 路径总和
- * 给你二叉树的根节点 root 和一个表示目标和的整数 targetSum。判断该树中是否存在根节点到叶子节点的路径，这条路径上所有节点值相加等于目标和 targetSum。如果存在，返回 true；否则，返回 false。
+ * 给你二叉树的根节点 root 和一个表示目标和的整数 targetSum。判断该树中是否存在根节点到叶子节点的路径，这条路径上所有节点值相加等于目标和 
+ * targetSum。如果存在，返回 true；否则，返回 false。
  * 
  * 示例 1：
  * 输入：root = [5,4,8,11,null,13,4,7,2,null,null,null,1], targetSum = 22
  * 输出：true
  */
 bool hasPathSum(TreeNode? root, int targetSum) {
+  if (root == null) {
+    if (targetSum == 0)
+      return true;
+    else
+      return false;
+  }
+  return hasPathSum(root.left, targetSum - root.val) ||
+      hasPathSum(root.right, targetSum - root.val);
   // if (root == null) return false; // empty tree, check if targetSum is 0
   // if (root.left == null && root.right == null) {
   //   return targetSum ==
@@ -4446,22 +4637,22 @@ bool hasPathSum(TreeNode? root, int targetSum) {
 
   // return backTrack(root);
 
-  if (root == null) return false; // empty tree, check if targetSum is 0
-  int sum = 0;
-  bool backTrack(TreeNode? node) {
-    if (node == null) return false;
-    sum += node.val;
-    if (node.left == null && node.right == null) {
-      if (sum == targetSum)
-        return true; // 只有true才返回，false还需要回溯 sum -= node.val;
-    }
-    if (backTrack(node.left)) return true; // 如果在左子树找到了路径，尽快返回true，不需要再继续了
-    if (backTrack(node.right)) return true;
-    sum -= node.val; // 没有找到，回溯，继续从（右 右）子树找
-    return false;
-  }
+  // if (root == null) return false; // empty tree, check if targetSum is 0
+  // int sum = 0;
+  // bool backTrack(TreeNode? node) {
+  //   if (node == null) return false;
+  //   sum += node.val;
+  //   if (node.left == null && node.right == null) {
+  //     if (sum == targetSum)
+  //       return true; // 只有true才返回，false还需要回溯 sum -= node.val;
+  //   }
+  //   if (backTrack(node.left)) return true; // 如果在左子树找到了路径，尽快返回true，不需要再继续了
+  //   if (backTrack(node.right)) return true;
+  //   sum -= node.val; // 没有找到，回溯，继续从（右 右）子树找
+  //   return false;
+  // }
 
-  return backTrack(root);
+  // return backTrack(root);
 }
 
 /**
@@ -4475,26 +4666,26 @@ bool hasPathSum(TreeNode? root, int targetSum) {
 List<List<int>> pathSum(TreeNode? root, int targetSum) {
   List<List<int>> result = [];
   List<int> currentPath = [];
+  int currentSum = 0;
   if (root == null) return result; // empty tree, return empty result
 
-  void backTrack(TreeNode? node, int currentSum) {
+  void backTrack(TreeNode? node) {
     if (node == null) return; // base case: empty node
     currentPath.add(node.val); // add the leaf node value
-    final int remaining = currentSum - node.val;
+    currentSum += node.val;
     if (node.left == null && node.right == null) {
-      if (remaining == 0) {
+      if (currentSum == targetSum) {
         result.add(List.from(currentPath)); // add the current path to result
       }
-      currentPath.removeLast(); // backtrack, remove the leaf node value
-      return;
     }
 
-    backTrack(node.left, remaining); // start backtracking from the root
-    backTrack(node.right, remaining); // check right subtree
+    backTrack(node.left); // start backtracking from the root
+    backTrack(node.right); // check right subtree
     currentPath.removeLast(); // remove the root value from the current path
+    currentSum -= node.val;
   }
 
-  backTrack(root, targetSum); // start backtracking from the root
+  backTrack(root); // start backtracking from the root
   return result;
 }
 
@@ -4509,23 +4700,42 @@ List<List<int>> pathSum(TreeNode? root, int targetSum) {
  * 输出：[1,null,2,null,3,null,4,null,5,null,6]
  */
 void flatten(TreeNode? root) {
+  // if (root == null) return; // empty tree, nothing to flatten
+  // List<TreeNode> stack = [];
+  // List<TreeNode> result = [];
+  // stack.add(root);
+  // while (stack.length > 0) {
+  //   TreeNode? node = stack.removeLast();
+  //   result.add(node); // visit the root
+  //   if (node.right != null) {
+  //     stack.add(node.right!); // add right child to stack
+  //   }
+  //   if (node.left != null) {
+  //     stack.add(node.left!); // add left child to stack
+  //   }
+  // }
+  // for (int i = 0; i < result.length - 1; i++) {
+  //   result[i].left = null; // set left child to null
+  //   result[i].right = result[i + 1]; // link to the next node
+  // }
+
   if (root == null) return; // empty tree, nothing to flatten
   List<TreeNode> stack = [];
-  List<TreeNode> result = [];
+  TreeNode? last = null;
   stack.add(root);
   while (stack.length > 0) {
     TreeNode? node = stack.removeLast();
-    result.add(node); // visit the root
+    if (last != null) {
+      last.left = null; // set left child to null
+      last.right = node; // link to the next node
+    }
+    last = node;
     if (node.right != null) {
       stack.add(node.right!); // add right child to stack
     }
     if (node.left != null) {
       stack.add(node.left!); // add left child to stack
     }
-  }
-  for (int i = 0; i < result.length - 1; i++) {
-    result[i].left = null; // set left child to null
-    result[i].right = result[i + 1]; // link to the next node
   }
 }
 
@@ -4579,11 +4789,11 @@ List<int> getRow(int rowIndex) {
   }
   return currentRow;
 }
+
 //0    2
 //1   3 4
 //2  6 5 7
 //3 4 1 8 3
-
 /**
  * 120. 三角形最小路径和
  * 给定一个三角形 triangle，找出自顶向下的最小路径和。
@@ -4765,6 +4975,7 @@ int maxProfit3(List<int> prices) {
  * 示例 1：
  * 输入：root = [1,2,3]
  * 输出：6
+ * 解释：最优路径是 2 -> 1 -> 3 ，路径和为 2 + 1 + 3 = 6
  */
 int maxPathSum(TreeNode? root) {
   int maxSum = -10001; // minimum value for int
@@ -4773,17 +4984,22 @@ int maxPathSum(TreeNode? root) {
     if (node == null) return -10001; // empty tree has no path sum
     int leftMax = backTrack(node.left); // path sum of left subtree
     int rightMax = backTrack(node.right); // path sum of right subtree
-
-    int currentMax = node.val;
-    currentMax = max(currentMax, node.val + leftMax); // 连接左子树
-    currentMax = max(currentMax, node.val + rightMax); // 连接右子树
-
-    int maxWithBoth = node.val;
-    if (leftMax > -10001) maxWithBoth += leftMax;
-    if (rightMax > -10001) maxWithBoth += rightMax;
-    maxSum = max(maxSum, maxWithBoth); // 更新全局和
-    maxSum = max(maxSum, currentMax); // 当前节点的单路径
-
+    int currentMax = 0;
+    if (leftMax < 0 || rightMax < 0) {
+      // 返回值和最大值是一样的，因为只能选一边或者不选
+      //左右有一方小于0，则返回大于0+当前节点值
+      //都小于0，则返回当前节点值
+      if (leftMax >= 0) currentMax = leftMax + node.val;
+      if (rightMax >= 0) currentMax = rightMax + node.val;
+      if (leftMax < 0 && rightMax < 0) currentMax = node.val;
+    } else {
+      //左右都大于0，则返回左右最大值+当前节点值
+      currentMax = node.val + max(leftMax, rightMax);
+      // 返回值和最大值不一样
+      // 因为最大值是可以选择左右，而返回值只能选择一边
+      maxSum = max(maxSum, leftMax + rightMax + node.val);
+    }
+    maxSum = max(maxSum, currentMax); // update the global maximum path sum
     return currentMax;
   }
 
@@ -4828,6 +5044,7 @@ bool isPalindrome2(String s) {
  * 输出：4
  */
 int longestConsecutive(List<int> nums) {
+  //思路：先把nums装入set， 然后遍历nums，对于每个num，检查num-1，num-1-1，num-1-1-1是否在set中
   if (nums.isEmpty) return 0;
 
   // 使用 Set 去重
@@ -4867,16 +5084,29 @@ int longestConsecutive(List<int> nums) {
  * 输出：25
  */
 int sumNumbers(TreeNode? root) {
-  int backTrack(TreeNode? node, int sum) {
-    if (node == null) return 0;
-    int newSum = sum * 10 + node.val;
-    if (node.left == null && node.right == null) return newSum;
-    int left = backTrack(node.left, newSum);
-    int right = backTrack(node.right, newSum);
-    return left + right;
+  // int backTrack(TreeNode? node, int sum) {
+  //   if (node == null) return 0;
+  //   int newSum = sum * 10 + node.val;
+  //   if (node.left == null && node.right == null) return newSum;
+  //   int left = backTrack(node.left, newSum);
+  //   int right = backTrack(node.right, newSum);
+  //   return left + right;
+  // }
+
+  // return backTrack(root, 0);
+  int res = 0;
+  int currentSum = 0;
+  void backTrack(TreeNode? node) {
+    if (node == null) return;
+    currentSum = currentSum * 10 + node.val;
+    if (node.left == null && node.right == null) res += currentSum;
+    backTrack(node.left);
+    backTrack(node.right);
+    currentSum = currentSum ~/ 10;
   }
 
-  return backTrack(root, 0);
+  backTrack(root);
+  return res;
 }
 
 /**
@@ -4902,6 +5132,7 @@ void solve(List<List<String>> board) {
     backTrack(i, j - 1);
   }
 
+  // 只找i=0， j=0, i=board.length-1, j=board[0].length-1四条边界
   for (int i = 0; i < board.length; i++) {
     backTrack(i, 0);
     backTrack(i, board[i].length - 1);
@@ -5035,7 +5266,7 @@ int candy(List<int> ratings) {
  * 输入：[5,5,5,10,20]
  * 输出：true
  */
-//bills[i] 不是 5 就是 10 或是 20 
+//bills[i] 不是 5 就是 10 或是 20
 bool lemonadeChange(List<int> bills) {
   int five = 0;
   int ten = 0;
@@ -5362,6 +5593,7 @@ List<int> preorderTraversal3(TreeNode? root) {
 }
 
 /**
+ * // 关键：map《int， ListNode》
  * 146. LRU 缓存
  * 请你设计并实现一个满足 LRU (最近最少使用) 缓存约束的数据结构。
  * 实现 LRUCache 类：
@@ -5407,7 +5639,7 @@ class LRUCache {
   LRUCache(int capacity) {
     size = 0;
     this.capacity = capacity;
-        // 方便向头部添加，和尾部删除
+    // 方便向头部添加，和尾部删除
     head = TowListNode(0, 0);
     tail = TowListNode(0, 0);
     head?.next = tail;
@@ -5560,6 +5792,7 @@ ListNode? sortList(ListNode? head) {
 }
 
 /**
+ * // 两层for，然后用map存储每两个点的斜率
  * 149. 直线上最多的点数
  * 给你一个数组 points，其中 points[i] = [xi, yi] 表示 X-Y 平面上的一个点。求最多有多少个点在同一条直线上。
  * 
@@ -5662,7 +5895,8 @@ push(value)：如果push的元素value大于入口元素的数值，那么就将
   // 1,3,-1,-3,5,3,6,7
   if (k > nums.length) return [];
   List<int> result = [];
-  DoubleLinkedQueue<int> deque = DoubleLinkedQueue<int>(); // 双端队列，存储索引
+  DoubleLinkedQueue<int> deque =
+      DoubleLinkedQueue<int>(); // 双端队列，存储索引， 不是单调队列，是普通的双端队列，人为维持单调递减队列（从左到右看）
   for (int i = 0; i < nums.length; i++) {
     // 移除超出窗口范围的索引
     if (deque.isNotEmpty && deque.first < i - k + 1) {
@@ -5738,13 +5972,30 @@ int kmpSearch(String text, String pattern) {
 
   return -1; // 未找到匹配
 }
+// A A A C DA B C F
+// A A C
+
+// 模式: 0 0 1 2 0
 // 下标  0 1 2 3 4 5 6 7 8
 // 文本  A B A B A B A B C
+//              i
+// 模式: A B A B C
+//              j
+//第一次匹配失败，j回退到next[j-1]=2
+// 文本  A B A B A B A B C
+//              i
+// 模式:     A B A B C
+//              j
 
+// 文本  A B A B A B A B C
+//                  i
+// 模式:     A B A B C
+//                  j
+// 第二次匹配失败，j回退到next[j-1]=2
+// 文本  A B A B A B A B C
+//                  i
 // 模式:         A B A B C
-
-// 下标: 0 0 1 2 0
-
+//                  j
 /**
  * 28. 实现 strStr()
  * 实现 strStr() 函数。
@@ -5854,6 +6105,7 @@ int findContentChildren(List<int> g, List<int> s) {
  * 解释：整个序列均为摆动序列。
  */
 int wiggleMaxLength(List<int> nums) {
+  //思路：lastDiff >= 0 && currentDiff < 0 || lastDiff <= 0 && currentDiff > 0
   if (nums.length < 2) return nums.length;
   int res = 1;
   int lastDiff = 0;
@@ -5880,6 +6132,7 @@ int wiggleMaxLength(List<int> nums) {
  * 每个字母最多出现在一个片段中。 像 "ababcbacadefegde", "hijhklij" 的划分是错误的，因为划分的片段数较少。
  */
 List<int> partitionLabels(String s) {
+  //思路：myMap = List.filled(26, 0);  // 记录每个字母最后出现的位置，然后用一个cover记录前段字符出现的最远位置
   List<int> myMap = List.filled(26, 0);
   List<int> res = [];
   for (int i = 0; i < s.length; i++) {
@@ -6037,6 +6290,7 @@ int change(int target, List<int> coins) {
  * 解释：11 = 5 + 5 + 1
  */
 int coinChange(List<int> coins, int amount) {
+  //关键点是初始化的值是amount + 1，不能是0，因为最坏情况是amount个1元硬币组成amount
   List<int> dp = List.filled(amount + 1, amount + 1);
   // 金额为0时，只需0个硬币就能组成金额为0
   dp[0] = 0;
@@ -6100,6 +6354,12 @@ int numSquares(int n) {
 2 3 1 1
 物
 品
+    0 1 2 3 4 5 6 7 8 
+0 2 1 0 1 0 1 0 1 0 1
+1 4 1 0 1 0 2 0 2 0 3
+2 
+3
+
 
 */
 int combinationSum4(List<int> nums, int target) {
@@ -6127,6 +6387,8 @@ int combinationSum4(List<int> nums, int target) {
   // print(dp);
   // return dp[nums.length][target];
   List<int> dp = List.filled(target + 1, 0);
+  dp[0] = 1
+  
   for (int j = 1; j <= target; j++) {
     for (int i = 0; i < nums.length; i++) {
       //这个是所有背包问题必须的，j< nums[i]时，容量放不下物品，而且dp[j - nums[i]]会越界
@@ -6248,6 +6510,9 @@ int findLengthOfLCIS(List<int> nums) {
     if (nums[i] > nums[i - 1]) {
       dp[i] = dp[i - 1] + 1;
     }
+    // 辅助理解
+    else
+      dp[i] = 1;
     res = max(res, dp[i]);
   }
   return res;
@@ -6262,6 +6527,10 @@ int findLengthOfLCIS(List<int> nums) {
  * 输出：3
  * 解释：长度最长的公共子数组是 [3, 2, 1]。
  */
+
+// 1 2 3 4  A
+// 1 2 1 4  B
+// 1 2 0 1  公共子数组长度
 int findLength(List<int> nums1, List<int> nums2) {
   List<List<int>> dp = List.generate(
       nums1.length + 1, (index) => List.filled(nums2.length + 1, 0));
@@ -6271,7 +6540,8 @@ int findLength(List<int> nums1, List<int> nums2) {
       if (nums1[i - 1] == nums2[j - 1]) {
         dp[i][j] = dp[i - 1][j - 1] + 1;
         res = max(res, dp[i][j]);
-      }
+      } else
+        dp[i][j] = 0; //辅助理解
     }
   }
   return res;
@@ -6624,6 +6894,75 @@ List<int> nextGreaterElements(List<int> nums) {
 }
 
 /*
+数组
+数组过于简单，但你该了解这些！
+数组：704.二分查找          search 
+数组：27.移除元素           removeElement
+数组：977.有序数组的平方     sortedSquares 【-4，2，1，5，6】 双指针，额外空间
+数组：209.长度最小的子数组   minSubArrayLen target = 7, nums = [2,3,1,2,4,3]， 输出2， 滑动窗口
+数组：区间和               NumArray  前缀和
+数组：59.螺旋矩阵II        generateMatrix
+数组：总结篇
+链表
+关于链表，你该了解这些！
+链表：203.移除链表元素     removeElements
+链表：707.设计链表        MyLinkedList
+链表：206.翻转链表        reverseList
+链表：24.两两交换链表中的节点  swapPairs
+链表：19.删除链表的倒数第 N 个结点 removeNthFromEnd
+链表：链表相交      getIntersectionNode
+链表：142.环形链表  detectCycle
+链表：总结篇！
+哈希表
+关于哈希表，你该了解这些！
+哈希表：242.有效的字母异位词  isAnagram
+哈希表：1002.查找常用字符    commonChars
+哈希表：349.两个数组的交集 intersection
+哈希表：202.快乐数       isHappy
+哈希表：1.两数之和        twoSum        把一个数放入哈希表，然后一层for看target-nums[i]是否在map中
+哈希表：454.四数相加II    fourSumCount  把两数之和放入哈希表，然后两层for看-（i+j）是否在map中
+哈希表：383.赎金信       canConstruct，     一个字符串是否由另一个字符串的字符构成
+哈希表：15.三数之和       threeSum
+双指针法：18.四数之和     fourSum
+哈希表：总结篇！
+
+字符串
+字符串：344.反转字符串    reverseString
+字符串：541.反转字符串II  reverseStr
+字符串：替换数字          replaceDigits
+字符串：151.翻转字符串里的单词 reverseWords
+帮你把KMP算法学个通透
+字符串：459.重复的子字符串  repeatedSubstringPattern   
+                                                  a b c a b c a b c a b c       a b a a b a a b a a b a
+                                                  0 0 0 1 2 3 4 5 6 7 8 9       0 0 1 1 2 3 4 5 6 7 8 9
+字符串：28.实现 strStr()    strStr  
+字符串：总结篇！
+
+双指针法
+双指针法基本都是应用在数组，字符串与链表的题目上
+数组：27.移除元素
+字符串：344.反转字符串
+字符串：替换数字
+字符串：151.翻转字符串里的单词
+链表：206.翻转链表
+链表：19.删除链表的倒数第 N 个结点
+链表：链表相交
+链表：142.环形链表
+双指针：15.三数之和
+双指针：18.四数之和
+双指针：总结篇！
+
+栈与队列
+栈与队列：理论基础
+栈与队列：232.用栈实现队列              MyQueue 双栈实现队列
+栈与队列：225.用队列实现栈              MyStack 双队列实现栈
+栈与队列：20.有效的括号                 isValid
+栈与队列：1047.删除字符串中的所有相邻重复项 removeDuplicates
+栈与队列：150.逆波兰表达式求值            evalRPN   单栈，用来存储数字，遇到操作符就弹出两个数进行计算， 再把结果入栈
+栈与队列：239.滑动窗口最大值         maxSlidingWindow 双端队列
+栈与队列：347.前K个高频元素        topKFrequent  大顶堆
+栈与队列：总结篇！
+
 关于二叉树，你该了解这些！
 二叉树：二叉树的递归遍历          inorder、 preorder、 postorder
 二叉树：二叉树的迭代遍历          inorder1、 preorder1、postorder1
@@ -6635,75 +6974,75 @@ List<int> nextGreaterElements(List<int> nums) {
 二叉树：104.二叉树的最大深度      maxDepth
 二叉树：111.二叉树的最小深度      minDepth
 二叉树：222.完全二叉树的节点个数   countNodes
-二叉树：110.平衡二叉树         isBalanced
-二叉树：257.二叉树的所有路径     binaryTreePaths
+二叉树：110.平衡二叉树           isBalanced
+二叉树：257.二叉树的所有路径      binaryTreePaths
 本周总结！（二叉树）
-二叉树：404.左叶子之和        sumOfLeftLeaves
-二叉树：513.找树左下角的值     findBottomLeftValue
-二叉树：112.路径总和          hasPathSum
-二叉树：106.构造二叉树       buildTree
-二叉树：654.最大二叉树     constructMaximumBinaryTree //
+二叉树：404.左叶子之和            sumOfLeftLeaves
+二叉树：513.找树左下角的值         findBottomLeftValue
+二叉树：112.路径总和              hasPathSum
+二叉树：106.构造二叉树            buildTree
+二叉树：654.最大二叉树            constructMaximumBinaryTree //
 本周小结！（二叉树）
-二叉树：617.合并两个二叉树 mergeTrees//
-二叉树：700.二叉搜索树登场，找到树中对应的值 searchBST
-二叉树：98.验证二叉搜索树     isValidBST
-二叉树：530.搜索树的最小绝对差 getMinimumDifference//
-二叉树：501.二叉搜索树中的众数 findMode//
-二叉树：236.公共祖先问题 lowestCommonAncestor//
+二叉树：617.合并两个二叉树                  mergeTrees//
+二叉树：700.二叉搜索树登场，找到树中对应的值   searchBST
+二叉树：98.验证二叉搜索树                   isValidBST
+二叉树：530.搜索树的最小绝对差              getMinimumDifference//
+二叉树：501.二叉搜索树中的众数              findMode//
+二叉树：236.公共祖先问题                  lowestCommonAncestor//
 本周小结！（二叉树）
-二叉树：235.搜索树的最近公共祖先 lowestCommonAncestor1//
-二叉树：701.搜索树中的插入操作 insertIntoBST//
-二叉树：450.搜索树中的删除操作 deleteNode//
-二叉树：669.修剪二叉搜索树 trimBST//
-二叉树：108.将有序数组转换为二叉搜索树 sortedArrayToBST
-二叉树：538.把二叉搜索树转换为累加树 convertBST
+二叉树：235.搜索树的最近公共祖先           lowestCommonAncestor1//
+二叉树：701.搜索树中的插入操作          insertIntoBST//
+二叉树：450.搜索树中的删除操作         deleteNode//
+二叉树：669.修剪二叉搜索树            trimBST//
+二叉树：108.将有序数组转换为二叉搜索树    sortedArrayToBST
+二叉树：538.把二叉搜索树转换为累加树      convertBST
 二叉树：总结篇！
 
 */
 
 /**
  关于回溯算法，你该了解这些！
-回溯算法：77.组合            combine
-回溯算法：216.组合总和III.    combinationSum3
-回溯算法：17.电话号码的字母组合 letterCombinations
+回溯算法：77.组合            combine                k个数的组合
+回溯算法：216.组合总和III.    combinationSum3        k个数的和为n的组合，1-9
+回溯算法：17.电话号码的字母组合 letterCombinations    电话号码的字母组合
 本周小结！（回溯算法系列一）
-回溯算法：39.组合总和         combinationSum
-回溯算法：40.组合总和II    combinationSum2
-回溯算法：131.分割回文串   partition
-回溯算法：93.复原IP地址 restoreIpAddresses
-回溯算法：78.子集         subsets
+回溯算法：39.组合总和         combinationSum        元素可重复使用, 组合的和为target
+回溯算法：40.组合总和II    combinationSum2          元素不可重复使用, 组合的和为target
+回溯算法：131.分割回文串   partition                分割回文串
+回溯算法：93.复原IP地址 restoreIpAddresses          复原IP地址
+回溯算法：78.子集         subsets                  子集，没有终止条件，for循环自动终止
 本周小结！（回溯算法系列二）
-回溯算法：90.子集II       subsetsWithDup
-回溯算法：491.递增子序列 findSubsequences
-回溯算法：46.全排列     permute
+回溯算法：90.子集II       subsetsWithDup           子集去重，子集和组合去重逻辑一样，i > index && nums[i] == nums[i-1] continue
+回溯算法：491.递增子序列 findSubsequences  
+回溯算法：46.全排列     permute 
 回溯算法：47.全排列II   permuteUnique
 本周小结！（回溯算法系列三）
 回溯算法去重问题的另一种写法
-回溯算法：51.N皇后       solveNQueens
+回溯算法：51.N皇后       solveNQueens 
 回溯算法：37.解数独      solveSudoku
 回溯算法总结篇
  */
 /*
 关于贪心算法，你该了解这些！
-贪心算法：455.分发饼干   findContentChildren
+贪心算法：455.分发饼干   findContentChildren       局部最优，大饼干先分配给大胃口避免浪费
 贪心算法：376.摆动序列   wiggleMaxLength
 贪心算法：53.最大子序和.  maxSubArray
 本周小结！（贪心算法系列一）
-贪心算法：122.买卖股票的最佳时机II maxProfit
+贪心算法：122.买卖股票的最佳时机II maxProfit  交易不限次数
 贪心算法：55.跳跃游戏   canJump
 贪心算法：45.跳跃游戏II jump
 贪心算法：1005.K次取反后最大化的数组和 largestSumAfterKNegations
 本周小结！（贪心算法系列二）
 贪心算法：134.加油站    canCompleteCircuit
 贪心算法：135.分发糖果  candy
-贪心算法：860.柠檬水找零 lemonadeChange
-贪心算法：406.根据身高重建队列 reconstructQueue
+贪心算法：860.柠檬水找零 lemonadeChange            优先用大面额找零，优先用10找零
+贪心算法：406.根据身高重建队列 reconstructQueue     先按h降序，k升序排序，然后插入res[k]位置
 本周小结！（贪心算法系列三）
-贪心算法：435.无重叠区间    eraseOverlapIntervals
-贪心算法：763.划分字母区间  partitionLabels
+贪心算法：435.无重叠区间    eraseOverlapIntervals  【1 5】【1 3】【3 5】【6 10】
+贪心算法：763.划分字母区间  partitionLabels         用end记录每个字母最后出现的位置，遍历时更新maxEnd，i==maxEnd时划分区间
 贪心算法：56.合并区间       merge
 本周小结！（贪心算法系列四）
-贪心算法：738.单调递增的数字 monotoneIncreasingDigits
+贪心算法：738.单调递增的数字 monotoneIncreasingDigits  323-》299
 
 */
 /**
@@ -6716,20 +7055,25 @@ List<int> nextGreaterElements(List<int> nums) {
 动态规划：70.爬楼梯         climbStairs
 动态规划：746.使用最小花费爬楼梯 minCostClimbingStairs
 本周小结！（动态规划系列一）
-动态规划：62.不同路径     uniquePaths
-动态规划：63.不同路径II  uniquePathsWithObstacles
-动态规划：343.整数拆分 integerBreak
-动态规划：96.不同的二叉搜索树  numTrees
+动态规划：62.不同路径                            uniquePaths
+动态规划：63.不同路径II                         uniquePathsWithObstacles
+动态规划：343.整数拆分                          integerBreak for (int j = 1; j <= i / 2; j++) {dp[i] = max(dp[i], max((i - j) * j, dp[i - j] * j));}
+动态规划：96.不同的二叉搜索树                    numTrees
 本周小结！（动态规划系列二）
 
 
-动态规划：01背包理论基础（二维dp数组）背包某容量最多能装下多少价值的物品
+// 背包问题的核心是放物品i和不放物品i的选择。 01背包：一维倒序遍历，完全背包：一维正序遍历。 组合是先遍历物品，排列是先遍历背包容量。
+// 背包0容量能装下的价值是0. 能装满背包0的组合是1.
+// 求背包容量的价值：dp[j] = max(dp[j], dp[j-weight[i]] + value[i])
+// 求背包容量的组合数：dp[j] =dp[j] + dp[j-weight[i]]
+动态规划：01背包理论基础（二维dp数组）背包某容量最多能装下多少价值的物品          
 动态规划：01背包理论基础（一维dp数组）背包某容量最多能装下多少价值的物品
-动态规划：416.分割等和子集          canPartition， 一半sum大小的背包能否装满，能装满则true
-动态规划：1049.最后一块石头的重量II  lastStoneWeightII， 一半sum大小的背包能装下多重的石头，返回sum-2*dp[target]
+动态规划：416.分割等和子集          canPartition   一半sum大小的背包能否装满，能装满则true
+动态规划：1049.最后一块石头的重量II  lastStoneWeightII 一半sum大小的背包能装下多重的石头，返回sum-2*dp[target]
 本周小结！（动态规划系列三）
 动态规划：494.目标和               findTargetSumWays  left  = target + right, right = sum - left, left = (sum + target) / 2, left为正数，right为负数
                                 left 为背包容量，nums为物品重量，求有多少种组合能装满背包，不能重复使用物品，则一维数组倒叙便利
+                                dp[0] = 1; dp[j] = dp[j] + dp[j-nums[i]]
 动态规划：完全背包理论基础（二维dp数组） 背包某容量最多能装下多少价值的物品，物品可以重复使用
 动态规划：完全背包理论基础（一维dp数组）
 动态规划：518.零钱兑换II           change ，背包容量amount，物品重量coins，求有多少种组合能装满背包，物品可以重复使用
@@ -6747,12 +7091,12 @@ List<int> nextGreaterElements(List<int> nums) {
 动态规划：337.打家劫舍III          rob3   dp表示以i为根节点的子树所能偷的最大的金钱，dp[i][0]表示不偷i节点，dp[i][1]表示偷i节点
 
 股票系列：
-动态规划：121.买卖股票的最佳时机    maxProfit， dp[i][0]表示第i天持有股票后手中剩余的最大金钱, dp[i][1]表示第i天不持有股票后手中剩余的最大金钱
+动态规划：121.买卖股票的最佳时机    maxProfit 交易一次    dp[i][0]表示第i天持有股票后手中剩余的最大金钱, dp[i][1]表示第i天不持有股票后手中剩余的最大金钱
 动态规划：本周小结（系列六）
-动态规划：122.买卖股票的最佳时机II  maxProfit2 ， dp[i][0]表示第i天持有股票后手中剩余的最大金钱, dp[i][1]表示第i天不持有股票后手中剩余的最大金钱
-动态规划：123.买卖股票的最佳时机III maxProfit3 ， dp[i][0]表示第i天第一次持有股票后手中剩余的最大金钱, dp[i][1]表示第i天第一次不持有股票后手中剩余的最大金钱
-                                             dp[i][2]表示第i天第二次持有股票后手中剩余的最大金钱, dp[i][3]表示第i天第二次不持有股票后手中剩余的最大金钱
-动态规划：188.买卖股票的最佳时机IV  maxProfit4 ， k次交易，
+动态规划：122.买卖股票的最佳时机II  maxProfit2 交易多次  dp[i][0]表示第i天持有股票后手中剩余的最大金钱, dp[i][1]表示第i天不持有股票后手中剩余的最大金钱
+动态规划：123.买卖股票的最佳时机III maxProfit3 交易两次  dp[i][0]表示第i天第一次持有股票后手中剩余的最大金钱, dp[i][1]表示第i天第一次不持有股票后手中剩余的最大金钱
+                                                   dp[i][2]表示第i天第二次持有股票后手中剩余的最大金钱, dp[i][3]表示第i天第二次不持有股票后手中剩余的最大金钱
+动态规划：188.买卖股票的最佳时机IV  maxProfit4  k次交易，
 动态规划：本周小结（系列七）
 动态规划：714.买卖股票的最佳时机含手续费  maxProfit5 ， dp[i][0]表示第i天持有股票后手中剩余的最大金钱, dp[i][1]表示第i天不持有股票后手中剩余的最大金钱然后在减去手续费
 动态规划：股票系列总结篇
@@ -6762,8 +7106,8 @@ List<int> nextGreaterElements(List<int> nums) {
 动态规划：300.最长递增子序列       lengthOfLIS dp[i]表示以nums[i]结尾的最长递增子序列的长度, if nums[i]>nums[j] dp[i] = max(dp[i], dp[j]+1) 
 动态规划：674.最长连续递增序列     findLengthOfLCIS dp[i]表示以nums[i]结尾的最长 连续 递增子序列的长度, if nums[i]>nums[i-1] dp[i] = dp[i-1]+1
 动态规划：718.最长重复子数组       findLength dp[i][j]表示以A[i-1]和B[j-1]结尾的最长重复子数组的长度, if A[i-1]==B[j-1] dp[i][j] = dp[i-1][j-1]+1
-动态规划：1143.最长公共子序列     longestCommonSubsequence dp[i][j]表示以text1[i-1]和text2[j-1]结尾的最长公共子序列的长度, if text1[i-1]==text2[j-1] dp[i][j] = dp[i-1][j-1]+1 else dp[i][j] = max(dp[i-1][j], dp[i][j-1])
 
+动态规划：1143.最长公共子序列     longestCommonSubsequence dp[i][j]表示以text1[i-1]和text2[j-1]结尾的最长公共子序列的长度, if text1[i-1]==text2[j-1] dp[i][j] = dp[i-1][j-1]+1 else dp[i][j] = max(dp[i-1][j], dp[i][j-1])
 动态规划：53.最大子序和          maxSubArray dp[i]表示以nums[i]结尾的最大子数组和, dp[i] = max(dp[i-1]+nums[i], nums[i])
 动态规划：392.判断子序列         isSubsequence dp[i][j]表示以text1[i-1]和text2[j-1]结尾的最长公共子序列的长度, if s[i-1]==t[j-1] dp[i][j] = dp[i-1][j-1]+1 else dp[i][j] = dp[i][j-1]
 动态规划：115.不同的子序列        numDistinct dp[i][j]表示以s[i-1]和t[j-1]结尾的不同子序列的个数, if s[i-1]==t[j-1] dp[i][j] = dp[i-1][j-1]+dp[i-1][j] else dp[i][j] = dp[i-1][j]
@@ -6782,3 +7126,454 @@ List<int> nextGreaterElements(List<int> nums) {
 单调栈：84.柱状图中最大的矩形    largestRectangleArea  单调递增，下一个更小元素使得栈顶元素形成了一个矩形
  */
 
+/**
+ 1. 两数之和
+简单
+
+2. 两数相加
+中等
+
+3. 无重复字符的最长子串
+中等
+
+4. 寻找两个正序数组的中位数
+困难
+
+5. 最长回文子串
+中等
+
+6. Z 字形变换
+中等
+
+7. 整数反转
+中等
+
+8. 字符串转换整数 (atoi)
+中等
+
+9. 回文数
+简单
+
+10. 正则表达式匹配
+困难
+
+11. 盛最多水的容器
+中等
+
+12. 整数转罗马数字
+中等
+
+13. 罗马数字转整数
+简单
+
+14. 最长公共前缀
+简单
+
+15. 三数之和
+中等
+
+16. 最接近的三数之和
+中等
+
+17. 电话号码的字母组合
+中等
+
+18. 四数之和
+中等
+
+19. 删除链表的倒数第 N 个结点
+中等
+
+20. 有效的括号
+简单
+
+21. 合并两个有序链表
+简单
+
+22. 括号生成
+中等
+
+23. 合并 K 个升序链表
+困难
+
+24. 两两交换链表中的节点
+中等
+
+25. K 个一组翻转链表
+困难
+
+26. 删除有序数组中的重复项
+简单
+
+27. 移除元素
+简单
+
+28. 找出字符串中第一个匹配项的下标
+简单
+
+29. 两数相除
+中等
+
+30. 串联所有单词的子串
+困难
+
+31. 下一个排列
+中等
+
+32. 最长有效括号
+困难
+
+33. 搜索旋转排序数组
+中等
+
+34. 在排序数组中查找元素的第一个和最后一个位置
+中等
+
+35. 搜索插入位置
+简单
+
+36. 有效的数独
+中等
+
+37. 解数独
+困难
+
+38. 外观数列
+中等
+
+39. 组合总和
+中等
+
+40. 组合总和 II
+中等
+
+41. 缺失的第一个正数
+困难
+
+42. 接雨水
+困难
+
+43. 字符串相乘
+中等
+
+44. 通配符匹配
+困难
+
+45. 跳跃游戏 II
+中等
+
+46. 全排列
+中等
+
+47. 全排列 II
+中等
+
+48. 旋转图像
+中等
+
+49. 字母异位词分组
+中等
+
+50. Pow(x, n)
+中等
+
+51. N 皇后
+困难
+
+52. N 皇后 II
+困难
+
+53. 最大子数组和
+中等
+
+54. 螺旋矩阵
+中等
+
+55. 跳跃游戏
+中等
+
+56. 合并区间
+中等
+
+57. 插入区间
+中等
+
+58. 最后一个单词的长度
+简单
+
+59. 螺旋矩阵 II
+中等
+
+60. 排列序列
+困难
+
+61. 旋转链表
+中等
+
+62. 不同路径
+中等
+
+63. 不同路径 II
+中等
+
+64. 最小路径和
+中等
+
+65. 有效数字
+困难
+
+66. 加一
+简单
+
+67. 二进制求和
+简单
+
+68. 文本左右对齐
+困难
+
+69. x 的平方根
+简单
+
+70. 爬楼梯
+简单
+
+71. 简化路径
+中等
+
+72. 编辑距离
+中等
+
+73. 矩阵置零
+中等
+
+74. 搜索二维矩阵
+中等
+
+75. 颜色分类
+中等
+
+76. 最小覆盖子串
+困难
+
+77. 组合
+中等
+
+78. 子集
+中等
+
+79. 单词搜索
+中等
+
+80. 删除有序数组中的重复项 II
+中等
+
+81. 搜索旋转排序数组 II
+中等
+
+82. 删除排序链表中的重复元素 II
+中等
+
+83. 删除排序链表中的重复元素
+简单
+
+84. 柱状图中最大的矩形
+困难
+
+85. 最大矩形
+困难
+
+86. 分隔链表
+中等
+
+87. 扰乱字符串
+困难
+
+88. 合并两个有序数组
+简单
+
+89. 格雷编码
+中等
+
+90. 子集 II
+中等
+
+91. 解码方法
+中等
+
+92. 反转链表 II
+中等
+
+93. 复原 IP 地址
+中等
+
+94. 二叉树的中序遍历
+简单
+
+95. 不同的二叉搜索树 II
+中等
+
+96. 不同的二叉搜索树
+中等
+
+97. 交错字符串
+中等
+
+98. 验证二叉搜索树
+中等
+
+99. 恢复二叉搜索树
+中等
+
+100. 相同的树
+简单
+
+101. 对称二叉树
+简单
+
+102. 二叉树的层序遍历
+中等
+
+103. 二叉树的锯齿形层序遍历
+中等
+
+104. 二叉树的最大深度
+简单
+
+105. 从前序与中序遍历序列构造二叉树
+中等
+
+106. 从中序与后序遍历序列构造二叉树
+中等
+
+107. 二叉树的层序遍历 II
+中等
+
+108. 将有序数组转换为二叉搜索树
+简单
+
+109. 有序链表转换二叉搜索树
+中等
+
+110. 平衡二叉树
+简单
+
+111. 二叉树的最小深度
+简单
+
+112. 路径总和
+简单
+
+113. 路径总和 II
+中等
+
+114. 二叉树展开为链表
+中等
+
+115. 不同的子序列
+困难
+
+116. 填充每个节点的下一个右侧节点指针
+中等
+
+117. 填充每个节点的下一个右侧节点指针 II
+中等
+
+118. 杨辉三角
+简单
+
+119. 杨辉三角 II
+简单
+
+120. 三角形最小路径和
+中等
+
+121. 买卖股票的最佳时机
+简单
+
+122. 买卖股票的最佳时机 II
+中等
+
+123. 买卖股票的最佳时机 III
+困难
+
+124. 二叉树中的最大路径和
+困难
+
+125. 验证回文串
+简单
+
+126. 单词接龙 II
+困难
+
+127. 单词接龙
+困难
+
+128. 最长连续序列
+中等
+
+129. 求根节点到叶节点数字之和
+中等
+
+130. 被围绕的区域
+中等
+
+131. 分割回文串
+中等
+
+132. 分割回文串 II
+困难
+
+133. 克隆图
+中等
+
+134. 加油站
+中等
+
+135. 分发糖果
+困难
+
+136. 只出现一次的数字
+简单
+
+137. 只出现一次的数字 II
+中等
+
+138. 随机链表的复制
+中等
+
+139. 单词拆分
+中等
+
+140. 单词拆分 II
+困难
+
+141. 环形链表
+简单
+
+142. 环形链表 II
+中等
+
+143. 重排链表
+中等
+
+144. 二叉树的前序遍历
+简单
+
+145. 二叉树的后序遍历
+简单
+
+146. LRU 缓存
+中等
+
+147. 对链表进行插入排序
+中等
+
+148. 排序链表
+中等
+
+149. 直线上最多的点数
+困难
+
+150. 逆波兰表达式求值
+中等
+ */
